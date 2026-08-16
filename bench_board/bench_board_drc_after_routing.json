@@ -1,0 +1,588 @@
+** Drc report for bench_board.kicad_pcb **
+** Created on 2026-08-16T16:19:12 **
+** Report includes: Errors, Warnings **
+
+** Found 158 DRC violations **
+[hole_clearance]: Hole clearance violation (board setup constraints hole clearance 0.2500 mm; actual 0.2250 mm)
+    Rule: board setup constraints hole; error
+    @(70.2900 mm, 27.2000 mm): Track [GND] on F.Cu, length 0.6851 mm
+    @(69.6400 mm, 26.4000 mm): NPTH pad of J3
+[hole_clearance]: Hole clearance violation (board setup constraints hole clearance 0.2500 mm; actual 0.2259 mm)
+    Rule: board setup constraints hole; error
+    @(69.6049 mm, 27.2000 mm): Track [GND] on F.Cu, length 0.1407 mm
+    @(69.6400 mm, 26.4000 mm): NPTH pad of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)
+    Local override; error
+    @(70.9900 mm, 27.6000 mm): PTH pad B2 [<no net>] of J3
+    @(70.2900 mm, 27.2000 mm): PTH pad B1 [GND] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)
+    Local override; error
+    @(70.9900 mm, 27.6000 mm): PTH pad B2 [<no net>] of J3
+    @(70.9900 mm, 28.4000 mm): PTH pad B3 [<no net>] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)
+    Local override; error
+    @(70.9900 mm, 27.6000 mm): PTH pad B2 [<no net>] of J3
+    @(70.2900 mm, 27.2000 mm): PTH pad B1 [GND] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)
+    Local override; error
+    @(70.9900 mm, 27.6000 mm): PTH pad B2 [<no net>] of J3
+    @(70.9900 mm, 28.4000 mm): PTH pad B3 [<no net>] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)
+    Local override; error
+    @(70.9900 mm, 27.6000 mm): PTH pad B2 [<no net>] of J3
+    @(70.2900 mm, 27.2000 mm): PTH pad B1 [GND] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)
+    Local override; error
+    @(70.9900 mm, 27.6000 mm): PTH pad B2 [<no net>] of J3
+    @(70.9900 mm, 28.4000 mm): PTH pad B3 [<no net>] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)
+    Local override; error
+    @(70.9900 mm, 27.6000 mm): PTH pad B2 [<no net>] of J3
+    @(70.2900 mm, 27.2000 mm): PTH pad B1 [GND] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)
+    Local override; error
+    @(70.9900 mm, 27.6000 mm): PTH pad B2 [<no net>] of J3
+    @(70.9900 mm, 28.4000 mm): PTH pad B3 [<no net>] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)
+    Local override; error
+    @(70.9900 mm, 28.4000 mm): PTH pad B3 [<no net>] of J3
+    @(70.2900 mm, 28.8000 mm): PTH pad B4 [USB_VBUS] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)
+    Local override; error
+    @(70.9900 mm, 28.4000 mm): PTH pad B3 [<no net>] of J3
+    @(70.9900 mm, 29.2000 mm): PTH pad B5 [CC2] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)
+    Local override; error
+    @(70.9900 mm, 28.4000 mm): PTH pad B3 [<no net>] of J3
+    @(70.2900 mm, 28.8000 mm): PTH pad B4 [USB_VBUS] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)
+    Local override; error
+    @(70.9900 mm, 28.4000 mm): PTH pad B3 [<no net>] of J3
+    @(70.9900 mm, 29.2000 mm): PTH pad B5 [CC2] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)
+    Local override; error
+    @(70.9900 mm, 28.4000 mm): PTH pad B3 [<no net>] of J3
+    @(70.9900 mm, 29.2000 mm): PTH pad B5 [CC2] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)
+    Local override; error
+    @(70.9900 mm, 28.4000 mm): PTH pad B3 [<no net>] of J3
+    @(70.2900 mm, 28.8000 mm): PTH pad B4 [USB_VBUS] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)
+    Local override; error
+    @(70.9900 mm, 28.4000 mm): PTH pad B3 [<no net>] of J3
+    @(70.2900 mm, 28.8000 mm): PTH pad B4 [USB_VBUS] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)
+    Local override; error
+    @(70.9900 mm, 28.4000 mm): PTH pad B3 [<no net>] of J3
+    @(70.9900 mm, 29.2000 mm): PTH pad B5 [CC2] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)
+    Local override; error
+    @(70.2900 mm, 28.8000 mm): PTH pad B4 [USB_VBUS] of J3
+    @(70.9900 mm, 29.2000 mm): PTH pad B5 [CC2] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)
+    Local override; error
+    @(70.2900 mm, 28.8000 mm): PTH pad B4 [USB_VBUS] of J3
+    @(70.9900 mm, 29.2000 mm): PTH pad B5 [CC2] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)
+    Local override; error
+    @(70.2900 mm, 28.8000 mm): PTH pad B4 [USB_VBUS] of J3
+    @(70.9900 mm, 29.2000 mm): PTH pad B5 [CC2] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)
+    Local override; error
+    @(70.2900 mm, 28.8000 mm): PTH pad B4 [USB_VBUS] of J3
+    @(70.9900 mm, 29.2000 mm): PTH pad B5 [CC2] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)
+    Local override; error
+    @(70.2900 mm, 29.6000 mm): PTH pad B6 [USB_DP] of J3
+    @(70.2900 mm, 28.8000 mm): PTH pad B4 [USB_VBUS] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)
+    Local override; error
+    @(70.2900 mm, 29.6000 mm): PTH pad B6 [USB_DP] of J3
+    @(70.9900 mm, 29.2000 mm): PTH pad B5 [CC2] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)
+    Local override; error
+    @(70.2900 mm, 29.6000 mm): PTH pad B6 [USB_DP] of J3
+    @(70.2900 mm, 30.4000 mm): PTH pad B7 [USB_DM] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)
+    Local override; error
+    @(70.2900 mm, 29.6000 mm): PTH pad B6 [USB_DP] of J3
+    @(70.2900 mm, 28.8000 mm): PTH pad B4 [USB_VBUS] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)
+    Local override; error
+    @(70.2900 mm, 29.6000 mm): PTH pad B6 [USB_DP] of J3
+    @(70.9900 mm, 29.2000 mm): PTH pad B5 [CC2] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)
+    Local override; error
+    @(70.2900 mm, 29.6000 mm): PTH pad B6 [USB_DP] of J3
+    @(70.2900 mm, 30.4000 mm): PTH pad B7 [USB_DM] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)
+    Local override; error
+    @(70.2900 mm, 29.6000 mm): PTH pad B6 [USB_DP] of J3
+    @(70.2900 mm, 30.4000 mm): PTH pad B7 [USB_DM] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)
+    Local override; error
+    @(70.2900 mm, 29.6000 mm): PTH pad B6 [USB_DP] of J3
+    @(70.9900 mm, 29.2000 mm): PTH pad B5 [CC2] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)
+    Local override; error
+    @(70.2900 mm, 29.6000 mm): PTH pad B6 [USB_DP] of J3
+    @(70.2900 mm, 28.8000 mm): PTH pad B4 [USB_VBUS] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)
+    Local override; error
+    @(70.2900 mm, 29.6000 mm): PTH pad B6 [USB_DP] of J3
+    @(70.2900 mm, 30.4000 mm): PTH pad B7 [USB_DM] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)
+    Local override; error
+    @(70.2900 mm, 29.6000 mm): PTH pad B6 [USB_DP] of J3
+    @(70.2900 mm, 28.8000 mm): PTH pad B4 [USB_VBUS] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)
+    Local override; error
+    @(70.2900 mm, 29.6000 mm): PTH pad B6 [USB_DP] of J3
+    @(70.9900 mm, 29.2000 mm): PTH pad B5 [CC2] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)
+    Local override; error
+    @(70.2900 mm, 30.4000 mm): PTH pad B7 [USB_DM] of J3
+    @(70.9900 mm, 30.8000 mm): PTH pad B8 [<no net>] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)
+    Local override; error
+    @(70.2900 mm, 30.4000 mm): PTH pad B7 [USB_DM] of J3
+    @(70.2900 mm, 31.2000 mm): PTH pad B9 [USB_VBUS] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)
+    Local override; error
+    @(70.2900 mm, 30.4000 mm): PTH pad B7 [USB_DM] of J3
+    @(70.9900 mm, 30.8000 mm): PTH pad B8 [<no net>] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)
+    Local override; error
+    @(70.2900 mm, 30.4000 mm): PTH pad B7 [USB_DM] of J3
+    @(70.2900 mm, 31.2000 mm): PTH pad B9 [USB_VBUS] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)
+    Local override; error
+    @(70.2900 mm, 30.4000 mm): PTH pad B7 [USB_DM] of J3
+    @(70.2900 mm, 31.2000 mm): PTH pad B9 [USB_VBUS] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)
+    Local override; error
+    @(70.2900 mm, 30.4000 mm): PTH pad B7 [USB_DM] of J3
+    @(70.9900 mm, 30.8000 mm): PTH pad B8 [<no net>] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)
+    Local override; error
+    @(70.2900 mm, 30.4000 mm): PTH pad B7 [USB_DM] of J3
+    @(70.9900 mm, 30.8000 mm): PTH pad B8 [<no net>] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)
+    Local override; error
+    @(70.2900 mm, 30.4000 mm): PTH pad B7 [USB_DM] of J3
+    @(70.2900 mm, 31.2000 mm): PTH pad B9 [USB_VBUS] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)
+    Local override; error
+    @(70.9900 mm, 30.8000 mm): PTH pad B8 [<no net>] of J3
+    @(70.9900 mm, 31.6000 mm): PTH pad B10 [<no net>] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)
+    Local override; error
+    @(70.9900 mm, 30.8000 mm): PTH pad B8 [<no net>] of J3
+    @(70.9900 mm, 31.6000 mm): PTH pad B10 [<no net>] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)
+    Local override; error
+    @(70.9900 mm, 30.8000 mm): PTH pad B8 [<no net>] of J3
+    @(70.9900 mm, 31.6000 mm): PTH pad B10 [<no net>] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)
+    Local override; error
+    @(70.9900 mm, 30.8000 mm): PTH pad B8 [<no net>] of J3
+    @(70.9900 mm, 31.6000 mm): PTH pad B10 [<no net>] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)
+    Local override; error
+    @(70.2900 mm, 31.2000 mm): PTH pad B9 [USB_VBUS] of J3
+    @(70.9900 mm, 30.8000 mm): PTH pad B8 [<no net>] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)
+    Local override; error
+    @(70.2900 mm, 31.2000 mm): PTH pad B9 [USB_VBUS] of J3
+    @(70.9900 mm, 31.6000 mm): PTH pad B10 [<no net>] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)
+    Local override; error
+    @(70.2900 mm, 31.2000 mm): PTH pad B9 [USB_VBUS] of J3
+    @(70.9900 mm, 30.8000 mm): PTH pad B8 [<no net>] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)
+    Local override; error
+    @(70.2900 mm, 31.2000 mm): PTH pad B9 [USB_VBUS] of J3
+    @(70.9900 mm, 31.6000 mm): PTH pad B10 [<no net>] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)
+    Local override; error
+    @(70.2900 mm, 31.2000 mm): PTH pad B9 [USB_VBUS] of J3
+    @(70.9900 mm, 30.8000 mm): PTH pad B8 [<no net>] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)
+    Local override; error
+    @(70.2900 mm, 31.2000 mm): PTH pad B9 [USB_VBUS] of J3
+    @(70.9900 mm, 31.6000 mm): PTH pad B10 [<no net>] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)
+    Local override; error
+    @(70.2900 mm, 31.2000 mm): PTH pad B9 [USB_VBUS] of J3
+    @(70.9900 mm, 30.8000 mm): PTH pad B8 [<no net>] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)
+    Local override; error
+    @(70.2900 mm, 31.2000 mm): PTH pad B9 [USB_VBUS] of J3
+    @(70.9900 mm, 31.6000 mm): PTH pad B10 [<no net>] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)
+    Local override; error
+    @(70.9900 mm, 31.6000 mm): PTH pad B10 [<no net>] of J3
+    @(70.9900 mm, 32.4000 mm): PTH pad B11 [<no net>] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)
+    Local override; error
+    @(70.9900 mm, 31.6000 mm): PTH pad B10 [<no net>] of J3
+    @(70.9900 mm, 32.4000 mm): PTH pad B11 [<no net>] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)
+    Local override; error
+    @(70.9900 mm, 31.6000 mm): PTH pad B10 [<no net>] of J3
+    @(70.9900 mm, 32.4000 mm): PTH pad B11 [<no net>] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)
+    Local override; error
+    @(70.9900 mm, 31.6000 mm): PTH pad B10 [<no net>] of J3
+    @(70.9900 mm, 32.4000 mm): PTH pad B11 [<no net>] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)
+    Local override; error
+    @(70.2900 mm, 32.8000 mm): PTH pad B12 [GND] of J3
+    @(70.9900 mm, 32.4000 mm): PTH pad B11 [<no net>] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)
+    Local override; error
+    @(70.2900 mm, 32.8000 mm): PTH pad B12 [GND] of J3
+    @(70.9900 mm, 32.4000 mm): PTH pad B11 [<no net>] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)
+    Local override; error
+    @(70.2900 mm, 32.8000 mm): PTH pad B12 [GND] of J3
+    @(70.9900 mm, 32.4000 mm): PTH pad B11 [<no net>] of J3
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)
+    Local override; error
+    @(70.2900 mm, 32.8000 mm): PTH pad B12 [GND] of J3
+    @(70.9900 mm, 32.4000 mm): PTH pad B11 [<no net>] of J3
+[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.5000 mm; actual 0.2259 mm)
+    Rule: board setup constraints edge; error
+    @(69.6400 mm, 26.4000 mm): NPTH pad of J3
+    @(69.6049 mm, 27.2000 mm): Track [GND] on F.Cu, length 0.1407 mm
+[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.5000 mm; actual 0.3615 mm)
+    Rule: board setup constraints edge; error
+    @(69.6400 mm, 26.4000 mm): NPTH pad of J3
+    @(69.5054 mm, 27.2995 mm): Track [GND] on F.Cu, length 0.4759 mm
+[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.5000 mm; actual 0.2250 mm)
+    Rule: board setup constraints edge; error
+    @(69.6400 mm, 26.4000 mm): NPTH pad of J3
+    @(70.2900 mm, 27.2000 mm): Track [GND] on F.Cu, length 0.6851 mm
+[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.5000 mm; actual 0.3341 mm)
+    Rule: board setup constraints edge; error
+    @(69.6400 mm, 26.4000 mm): NPTH pad of J3
+    @(68.9800 mm, 27.2500 mm): Pad A12 [GND] of J3 on F.Cu
+[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.5000 mm; actual 0.2692 mm)
+    Rule: board setup constraints edge; error
+    @(69.6400 mm, 26.4000 mm): NPTH pad of J3
+    @(70.2900 mm, 27.2000 mm): PTH pad B1 [GND] of J3
+[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.5000 mm; actual 0.2982 mm)
+    Rule: board setup constraints edge; error
+    @(69.6400 mm, 26.4000 mm): NPTH pad of J3
+    @(70.8900 mm, 25.8700 mm): PTH pad SH [GND] of J3
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(66.4867 mm, 23.3992 mm): Track [USB_DM] on F.Cu, length 0.4938 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(67.3281 mm, 23.3992 mm): Track [USB_DM] on F.Cu, length 0.8414 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(68.9305 mm, 29.7995 mm): Track [USB_DM] on F.Cu, length 0.0700 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(66.4778 mm, 29.7995 mm): Track [USB_DM] on F.Cu, length 2.4527 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(63.7236 mm, 29.7995 mm): Track [USB_DM] on F.Cu, length 2.7542 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(40.7233 mm, 28.2017 mm): Track [USB_DM_MCU] on F.Cu, length 1.2667 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(40.6750 mm, 28.2500 mm): Track [USB_DM_MCU] on F.Cu, length 0.0683 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(29.2755 mm, 28.2005 mm): Track [HSE_IN] on F.Cu, length 0.0700 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(28.0273 mm, 28.2005 mm): Track [HSE_IN] on F.Cu, length 1.2482 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(30.2705 mm, 28.7005 mm): Track [HSE_OUT] on F.Cu, length 0.8960 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(29.3745 mm, 28.7005 mm): Track [HSE_OUT] on F.Cu, length 0.0700 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(69.5054 mm, 27.2995 mm): Track [GND] on F.Cu, length 0.4759 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(69.0295 mm, 32.7005 mm): Track [GND] on F.Cu, length 0.0700 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(70.2900 mm, 32.7248 mm): Track [GND] on F.Cu, length 0.7133 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(69.5767 mm, 32.7248 mm): Track [GND] on F.Cu, length 0.0980 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(44.7839 mm, 38.9685 mm): Track [GND] on F.Cu, length 0.1703 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(27.5863 mm, 31.7005 mm): Track [GND] on F.Cu, length 1.6892 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(44.4422 mm, 38.6268 mm): Track [GND] on F.Cu, length 0.4832 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(69.0295 mm, 27.2995 mm): Track [GND] on F.Cu, length 0.0700 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(69.4624 mm, 32.7005 mm): Track [GND] on F.Cu, length 0.4329 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(29.2755 mm, 31.7005 mm): Track [GND] on F.Cu, length 0.0700 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(41.9899 mm, 26.2995 mm): Track [3V3] on F.Cu, length 1.2654 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(30.3835 mm, 32.2005 mm): Track [3V3] on F.Cu, length 1.0090 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(29.3745 mm, 32.2005 mm): Track [3V3] on F.Cu, length 0.0700 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(40.7245 mm, 26.2995 mm): Track [3V3] on F.Cu, length 0.0700 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(29.3745 mm, 29.2005 mm): Track [NRST] on F.Cu, length 0.0700 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(48.5030 mm, 39.2168 mm): Track [NRST] on F.Cu, length 0.9417 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(30.6266 mm, 29.2005 mm): Track [NRST] on F.Cu, length 1.2521 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(47.5613 mm, 39.2168 mm): Track [NRST] on F.Cu, length 0.5364 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(30.3841 mm, 32.7995 mm): Track [VBAT_SENSE] on F.Cu, length 1.0096 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(29.3745 mm, 32.7995 mm): Track [VBAT_SENSE] on F.Cu, length 0.0700 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(13.9636 mm, 45.6008 mm): Track [VBAT_2S] on F.Cu, length 0.7519 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(15.4867 mm, 44.6508 mm): Track [VBAT_2S] on F.Cu, length 0.4938 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(12.5133 mm, 45.6008 mm): Track [VBAT_2S] on F.Cu, length 0.4938 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(6.0000 mm, 45.6008 mm): Track [VBAT_2S] on F.Cu, length 6.5133 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(13.2117 mm, 45.6008 mm): Track [VBAT_2S] on F.Cu, length 0.4938 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(16.8139 mm, 44.6508 mm): Track [VBAT_2S] on F.Cu, length 1.3272 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(68.9800 mm, 30.7500 mm): Track [CC1] on F.Cu, length 0.0727 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(68.9286 mm, 30.8014 mm): Track [CC1] on F.Cu, length 0.8214 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(69.0295 mm, 28.7995 mm): Track [USB_VBUS] on F.Cu, length 0.0700 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(69.0295 mm, 31.2005 mm): Track [USB_VBUS] on F.Cu, length 0.0700 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(70.2900 mm, 28.7995 mm): Track [USB_VBUS] on F.Cu, length 1.2605 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(70.2900 mm, 31.2005 mm): Track [USB_VBUS] on F.Cu, length 1.2605 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(67.3116 mm, 24.3492 mm): Track [USB_VBUS] on F.Cu, length 0.8249 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(66.4867 mm, 24.3492 mm): Track [USB_VBUS] on F.Cu, length 0.4938 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(69.4420 mm, 30.2995 mm): Track [USB_DP] on F.Cu, length 0.4125 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(69.0295 mm, 30.2995 mm): Track [USB_DP] on F.Cu, length 0.0700 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(37.1778 mm, 26.7500 mm): Track [VCAP2] on F.Cu, length 0.3932 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(40.6750 mm, 26.7500 mm): Track [VCAP2] on F.Cu, length 3.4972 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(40.6271 mm, 28.7979 mm): Track [CRSF_RX] on F.Cu, length 3.5971 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(40.6750 mm, 28.7500 mm): Track [CRSF_RX] on F.Cu, length 0.0677 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(27.5981 mm, 32.2194 mm): Track [VCAP1] on F.Cu, length 0.0590 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(27.5391 mm, 32.2194 mm): Track [VCAP1] on F.Cu, length 0.5086 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(28.1754 mm, 32.9291 mm): Track [VCAP1] on F.Cu, length 0.0829 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(28.2340 mm, 32.8705 mm): Track [VCAP1] on F.Cu, length 0.1503 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1000 mm)
+    Rule: netclass 'Default'; error
+    @(13.8537 mm, 44.4506 mm): Track [SW_NODE] on F.Cu, length 0.1463 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1000 mm)
+    Rule: netclass 'Default'; error
+    @(13.7074 mm, 44.4506 mm): Track [SW_NODE] on F.Cu, length 0.2297 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1200 mm)
+    Rule: netclass 'Default'; error
+    @(13.5450 mm, 44.6130 mm): Track [SW_NODE] on F.Cu, length 0.1203 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(40.6255 mm, 27.2995 mm): Track [SWDIO] on F.Cu, length 0.0700 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(38.3990 mm, 27.2995 mm): Track [SWDIO] on F.Cu, length 2.2265 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(41.6133 mm, 27.7005 mm): Track [USB_DP_MCU] on F.Cu, length 0.8888 mm
+[track_width]: Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)
+    Rule: netclass 'Default'; error
+    @(40.7245 mm, 27.7005 mm): Track [USB_DP_MCU] on F.Cu, length 0.0700 mm
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(48.5030 mm, 38.5630 mm): Reference field of C15
+    @(47.5542 mm, 38.1790 mm): Segment of C16 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(44.8590 mm, 40.2860 mm): Reference field of C8
+    @(44.8272 mm, 39.9330 mm): Segment of C10 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(45.9712 mm, 34.4010 mm): Segment of C21 on F.Silkscreen
+    @(45.1880 mm, 34.6910 mm): Reference field of C7
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(45.0802 mm, 36.2110 mm): Segment of C7 on F.Silkscreen
+    @(44.9380 mm, 36.5760 mm): Reference field of C14
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(44.8302 mm, 38.0960 mm): Segment of C14 on F.Silkscreen
+    @(44.9350 mm, 38.4130 mm): Reference field of C10
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(26.0000 mm, 31.5500 mm): Reference field of Y1
+    @(25.5880 mm, 31.8530 mm): Reference field of C11
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(33.0112 mm, 39.5760 mm): Segment of C17 on F.Silkscreen
+    @(33.1790 mm, 39.9840 mm): Reference field of C18
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(25.9670 mm, 27.2810 mm): Reference field of C12
+    @(26.2620 mm, 27.6594 mm): Segment of R4 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(53.5000 mm, 28.6700 mm): Reference field of R6
+    @(53.6536 mm, 29.1200 mm): Segment of R5 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(46.2550 mm, 31.7070 mm): Reference field of C20
+    @(46.0790 mm, 32.8810 mm): Reference field of C21
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(37.6194 mm, 40.3290 mm): Segment of C13 on F.Silkscreen
+    @(38.5670 mm, 40.7390 mm): Reference field of C9
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(48.5030 mm, 38.5630 mm): Reference field of C15
+    @(47.1820 mm, 37.8190 mm): Pad 1 [NRST] of C16 on F.Cu
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(48.5030 mm, 38.5630 mm): Reference field of C15
+    @(48.1420 mm, 37.8190 mm): Pad 2 [GND] of C16 on F.Cu
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(44.8590 mm, 40.2860 mm): Reference field of C8
+    @(44.4550 mm, 39.5730 mm): Pad 1 [3V3] of C10 on F.Cu
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(44.8590 mm, 40.2860 mm): Reference field of C8
+    @(45.4150 mm, 39.5730 mm): Pad 2 [GND] of C10 on F.Cu
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(45.1880 mm, 34.6910 mm): Reference field of C7
+    @(45.5990 mm, 34.0410 mm): Pad 1 [3V3] of C21 on F.Cu
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(44.9380 mm, 36.5760 mm): Reference field of C14
+    @(44.7080 mm, 35.8510 mm): Pad 1 [3V3] of C7 on F.Cu
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(44.9350 mm, 38.4130 mm): Reference field of C10
+    @(44.4580 mm, 37.7360 mm): Pad 1 [3V3] of C14 on F.Cu
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(44.9350 mm, 38.4130 mm): Reference field of C10
+    @(45.4180 mm, 37.7360 mm): Pad 2 [GND] of C14 on F.Cu
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(44.9380 mm, 36.5760 mm): Reference field of C14
+    @(45.6680 mm, 35.8510 mm): Pad 2 [GND] of C7 on F.Cu
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(44.9710 mm, 42.1000 mm): Reference field of C6
+    @(45.3390 mm, 41.4460 mm): Pad 2 [GND] of C8 on F.Cu
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(44.9710 mm, 42.1000 mm): Reference field of C6
+    @(44.3790 mm, 41.4460 mm): Pad 1 [3V3] of C8 on F.Cu
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(25.9670 mm, 27.2810 mm): Reference field of C12
+    @(26.6420 mm, 28.3230 mm): Pad 2 [GND] of R4 on F.Cu
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(53.5000 mm, 28.6700 mm): Reference field of R6
+    @(54.0100 mm, 29.5000 mm): Pad 1 [USB_DM] of R5 on F.Cu
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(25.9670 mm, 27.2810 mm): Reference field of C12
+    @(26.6420 mm, 27.3030 mm): Pad 1 [BOOT0] of R4 on F.Cu
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(46.0790 mm, 32.8810 mm): Reference field of C21
+    @(45.0950 mm, 32.1870 mm): Pad 2 [3V3] of C20 on F.Cu
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(38.5670 mm, 40.7390 mm): Reference field of C9
+    @(38.5350 mm, 39.8190 mm): Pad 2 [GND] of C13 on F.Cu
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(33.1790 mm, 39.9840 mm): Reference field of C18
+    @(32.6390 mm, 39.2160 mm): Pad 1 [HSE_IN] of C17 on F.Cu
+
+** Found 0 unconnected pads **
+
+** Found 0 Footprint errors **
+
+** Ignored checks **
+    - Footprint has no courtyard defined
+    - Track endpoint not centered on via
+    - Tuning profile track geometries
+    - Footprint doesn't match symbol's footprint filters
+    - Footprint component type doesn't match footprint pads
+
+** End of Report **
