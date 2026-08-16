@@ -5689,7 +5689,7 @@
 				)
 			)
 		)
-		(property "Value" "2.2uH"
+		(property "Value" "10uH"
 			(at 425.45 52.07 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5931,7 +5931,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "2.2nF"
+		(property "Value" "100nF"
 			(at 374.65 77.47 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6011,7 +6011,7 @@
 				)
 			)
 		)
-		(property "Value" "40.2k"
+		(property "Value" "33.2k"
 			(at 400.05 77.47 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6090,7 +6090,7 @@
 				)
 			)
 		)
-		(property "Value" "7.32k"
+		(property "Value" "10.0k"
 			(at 425.45 77.47 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6219,251 +6219,6 @@
 			(project "bench_board"
 				(path "/b1d50a66-1761-4ba7-abb7-c1970eec7e0d"
 					(reference "FLG2")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Regulator_Linear:AMS1117-3.3")
-		(at 350.52 100.33 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "702f53ea-7b44-4361-b702-9348e78be25d")
-		(property "Reference" "U3"
-			(at 350.52 97.79 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "AMS1117-3.3"
-			(at 350.52 102.87 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Package_TO_SOT_SMD:SOT-223-3_TabPin2"
-			(at 350.52 105.41 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" "http://www.advanced-monolithic.com/pdf/ds1117.pdf"
-			(at 353.06 93.98 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "1A Low Dropout regulator, positive, 3.3V fixed output, SOT-223"
-			(at 350.52 100.33 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "14b952bb-450d-48ec-a3bc-ad7f5f24d1ea")
-		)
-		(pin "2"
-			(uuid "2a6aab09-6301-41e5-b8e2-f8137a1ffcdb")
-		)
-		(pin "3"
-			(uuid "e716aa62-7966-4e6c-a3e1-bd084d8a9ef7")
-		)
-		(instances
-			(project "bench_board"
-				(path "/b1d50a66-1761-4ba7-abb7-c1970eec7e0d"
-					(reference "U3")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:C")
-		(at 374.65 100.33 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "123e4eb1-072c-41b5-849e-578f36236991")
-		(property "Reference" "C4"
-			(at 374.65 97.79 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "10uF"
-			(at 374.65 102.87 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
-			(at 375.615 96.52 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 374.65 100.33 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Unpolarized capacitor"
-			(at 374.65 100.33 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "b429d333-7f2b-423b-b1e3-b57995492125")
-		)
-		(pin "2"
-			(uuid "1ca8a7af-fa6f-4c56-88a3-76f05d5533a0")
-		)
-		(instances
-			(project "bench_board"
-				(path "/b1d50a66-1761-4ba7-abb7-c1970eec7e0d"
-					(reference "C4")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:C")
-		(at 400.05 100.33 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "deab6207-1859-4599-8a46-6fd3067ce654")
-		(property "Reference" "C5"
-			(at 400.05 97.79 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "22uF"
-			(at 400.05 102.87 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
-			(at 401.015 96.52 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 400.05 100.33 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Unpolarized capacitor"
-			(at 400.05 100.33 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "d91acf8b-2596-4c49-bc60-fd51185e5d45")
-		)
-		(pin "2"
-			(uuid "ae2f404e-d3f1-4304-a3b7-60900f242094")
-		)
-		(instances
-			(project "bench_board"
-				(path "/b1d50a66-1761-4ba7-abb7-c1970eec7e0d"
-					(reference "C5")
 					(unit 1)
 				)
 			)
@@ -6645,16 +6400,6 @@
 		)
 		(uuid "12bd06af-dced-4763-b3e8-cb4b7cb019b1")
 	)
-	(label "5V"
-		(at 425.45 53.34 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "33d968dc-92ad-4d71-b4c1-1188557bfbfe")
-	)
 	(label "VBAT_2S"
 		(at 449.58 45.72 270)
 		(effects
@@ -6674,16 +6419,6 @@
 			(justify left bottom)
 		)
 		(uuid "25f60af3-9751-415f-bde8-a001c3200085")
-	)
-	(label "5V"
-		(at 350.52 71.12 270)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "9ed3890c-61a2-46db-906d-0fc207a2885a")
 	)
 	(label "GND"
 		(at 350.52 78.74000000000001 90)
@@ -6715,16 +6450,6 @@
 		)
 		(uuid "8490bf57-bd4c-4b47-888a-5d8ff082e2ea")
 	)
-	(label "5V"
-		(at 400.05 71.12 270)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "d55f3774-6358-4593-8288-c517cfcc5586")
-	)
 	(label "VFB"
 		(at 400.05 78.74000000000001 90)
 		(effects
@@ -6754,86 +6479,6 @@
 			(justify left bottom)
 		)
 		(uuid "b977dfd7-9b10-4ab7-aa22-96fc432dc4c3")
-	)
-	(label "5V"
-		(at 449.58 74.93 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "29da807a-079b-4517-86a5-b51d691863f9")
-	)
-	(label "GND"
-		(at 350.52 107.95 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "817c87b5-5ae2-48b8-82cb-7d96f27698a1")
-	)
-	(label "3V3"
-		(at 358.14 100.33 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "0e1bbbeb-abce-49f2-9895-bab535164022")
-	)
-	(label "5V"
-		(at 342.9 100.33 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "f5219fc2-b124-4442-90d9-7c758e15b120")
-	)
-	(label "5V"
-		(at 374.65 96.52 270)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "4a21ef6a-e49d-47e8-807e-e8fd2dd7a5af")
-	)
-	(label "GND"
-		(at 374.65 104.14 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "0e7c3de5-1565-472f-90d3-ad6b24950712")
-	)
-	(label "3V3"
-		(at 400.05 96.52 270)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "4480fc92-a3da-4028-ad71-3428ca0c4d43")
-	)
-	(label "GND"
-		(at 400.05 104.14 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "8a65f9b6-958e-41c4-aad2-24759134b5e7")
 	)
 	(label "GND"
 		(at 449.58 100.33 90)
@@ -10186,16 +9831,6 @@
 			)
 		)
 	)
-	(label "5V"
-		(at 355.59999999999997 397.51 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "bf62d054-4a85-4a7f-adcc-13084dfa5927")
-	)
 	(label "GND"
 		(at 355.59999999999997 400.05 180)
 		(effects
@@ -10355,10 +9990,6 @@
 		(uuid "0780322a-38c1-46c2-9eb2-255064a57608")
 	)
 	(no_connect
-		(at 219.70999999999998 158.75)
-		(uuid "0178fda4-5377-4bc7-b510-7a9385112a3e")
-	)
-	(no_connect
 		(at 219.70999999999998 161.29)
 		(uuid "f41813d4-d29d-4f4e-b5fe-a53041883ccc")
 	)
@@ -10480,6 +10111,365 @@
 			(justify left bottom)
 		)
 		(uuid "04849130-a08d-478d-8d7d-49857ac44e48")
+	)
+	(label "3V3"
+		(at 425.45 53.34 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "b7efd3d5-7668-4199-8f59-74cc1531878a")
+	)
+	(label "3V3"
+		(at 350.52 71.12 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "a317aabe-1a47-43fe-9910-c1a521ea6912")
+	)
+	(label "3V3"
+		(at 400.05 71.12 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "2ecd5362-bedc-44e0-93a1-de7fed28dfd5")
+	)
+	(label "3V3"
+		(at 449.58 74.93 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "eedebd96-385f-4f2a-8f2a-46870eeb21f4")
+	)
+	(label "3V3"
+		(at 355.59999999999997 397.51 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "d1fc4b6f-b4dc-4d33-bc37-997e5f48c80d")
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 474.98 74.93 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "b3615ba5-916e-4bf6-b9c2-263cc0a33baa")
+		(property "Reference" "R9"
+			(at 477.012 74.93 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "20.0k"
+			(at 474.98 74.93 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 473.202 74.93 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 474.98 74.93 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 474.98 74.93 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "b5263ef8-8ca6-4d01-9ea3-6ec25f1418ac")
+		)
+		(pin "2"
+			(uuid "b164ef86-1545-4061-a0ca-72133382394c")
+		)
+		(instances
+			(project "bench_board"
+				(path "/b1d50a66-1761-4ba7-abb7-c1970eec7e0d"
+					(reference "R9")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 500.38 74.93 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "c0db300a-5234-4602-8dfc-2d7a6270f188")
+		(property "Reference" "R10"
+			(at 502.412 74.93 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "10.0k"
+			(at 500.38 74.93 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 498.602 74.93 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 500.38 74.93 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 500.38 74.93 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "f6d767a6-b124-4a28-aa7e-89070d758ed9")
+		)
+		(pin "2"
+			(uuid "ddfc5a78-ced6-4ea0-8e76-57e05ee5d313")
+		)
+		(instances
+			(project "bench_board"
+				(path "/b1d50a66-1761-4ba7-abb7-c1970eec7e0d"
+					(reference "R10")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 525.78 74.93 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "5a6776aa-5a2a-48e4-9e6b-f4d01ead69e4")
+		(property "Reference" "C22"
+			(at 526.415 77.47 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "100nF"
+			(at 526.415 72.39 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+			(at 526.745 71.12 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 525.78 74.93 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 525.78 74.93 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "45bb6d8d-707e-417d-9b31-1cd7a042551e")
+		)
+		(pin "2"
+			(uuid "00dd0381-0b06-465d-a10c-2fc985e94eb4")
+		)
+		(instances
+			(project "bench_board"
+				(path "/b1d50a66-1761-4ba7-abb7-c1970eec7e0d"
+					(reference "C22")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "VBAT_2S"
+		(at 474.98 71.12 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "30a1d8c5-98ce-4550-b6f0-932a618b5e38")
+	)
+	(label "VBAT_SENSE"
+		(at 474.98 78.74000000000001 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "d9e7fec9-529d-4b4e-942b-19382ff04988")
+	)
+	(label "VBAT_SENSE"
+		(at 500.38 71.12 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "dd4b1e06-1898-4d5f-ab98-66e70aa50ecd")
+	)
+	(label "GND"
+		(at 500.38 78.74000000000001 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "c57ba836-b0c4-4eb8-b685-d731231f281b")
+	)
+	(label "VBAT_SENSE"
+		(at 525.78 71.12 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "7bf44562-58ad-46d7-bc2d-6c933394a312")
+	)
+	(label "GND"
+		(at 525.78 78.74000000000001 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "d0d3e9f8-2f71-4bd5-8d1a-52f747119cf6")
+	)
+	(label "VBAT_SENSE"
+		(at 219.70999999999998 158.75 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "d3066317-2e8b-4ca3-a617-64233621c705")
 	)
 	(sheet_instances
 		(path "/"
