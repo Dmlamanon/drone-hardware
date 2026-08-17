@@ -1,0 +1,75 @@
+* TPS54336ADDA buck regulator - closed-loop verification
+* Real component values from bench_board.kicad_sch / power-verification-4s-2026-08-16.md:
+*   L1 = 10uH, C2 (Cout) = 22uF, R1 (fb top) = 31.6k, R2 (fb bottom) = 10.0k
+* Compensation (Rcomp/Ccomp/Chf): NOT a TI reference-design value -- the TINA-TI/PSpice
+* reference-design schematics (.DSN/.TSM binaries) were not extractable to plain text this
+* pass. Sized instead via standard current-mode Type-II practice: zero placed at the
+* LC double pole (~10.7kHz) to cancel it, Chf adds a high-frequency pole for switching
+* noise rejection. Flagged in the writeup as an estimate, not a verified TI value.
+
+.func if(a,b,c) '(a) ? (b) : (c)'
+.include "TPS54336_AVG_ngspice.lib"
+
+.param VINVAL=14.8
+.param ILOAD_LIGHT=0.2
+.param ILOAD_FULL=0.8
+
+Vin VIN 0 DC {VINVAL}
+
+* Regulator average model: pins VIN VSENSE GND PH COMP
+Xreg VIN VSENSE 0 PH COMP TPS54336_AVG PARAMS: L=10u
+
+* Real output filter (external to the average model, matches physical board)
+L1 PH VOUT_L 10u
+Resr VOUT_L VOUT 5m
+C2 VOUT 0 22u IC=0
+
+* Feedback divider - real values from the schematic rework
+R1 VOUT VSENSE 31.6k
+R2 VSENSE 0 10.0k
+
+* Compensation network, COMP to GND (see header note on sourcing).
+* Rcomp sets the flat-band loop gain (Gm_EA * Rcomp) -- smaller Rcomp means
+* LOWER crossover / more phase margin, the opposite of what a first attempt
+* at "conservative" (100k) assumed; that attempt was still unstable.
+* Zero placed near the LC double pole (~10.7kHz for L=10uH/C2=22uF).
+Rcomp COMP COMP_MID 2k
+Ccomp COMP_MID 0 7.5n
+
+* Load: light load for first 2ms (startup settle), step to full load at 2ms.
+* Light load raised to 0.55A (from an initially-tried 0.2A) -- computed
+* CCM/DCM boundary for L=10uH/Fsw=340kHz is 0.35-0.42A across this input
+* range, so 0.2A was genuinely in DCM. This model's CCM/DCM mode-detection
+* logic is degenerate in this release (its IF()'s true/false branches are
+* identical in TPS54336_AVG.lib), so it cannot represent DCM and goes
+* numerically unstable there -- a real model limitation, not a netlist bug.
+* Staying in CCM throughout (both load points) works around it.
+Iload VOUT 0 PULSE(0.55 1.0 2m 10u 10u 3m 10m)
+
+.tran 0.5u 5m
+
+.control
+run
+set filetype=ascii
+wrdata results_{VINVAL}v.txt v(VOUT) i(L1) v(COMP)
+
+* Startup/settling stats over the light-load window (0 to 2ms)
+meas tran vout_final avg v(VOUT) from=1.5m to=2m
+meas tran vout_peak max v(VOUT) from=0 to=2m
+meas tran vout_min_startup min v(VOUT) from=0 to=2m
+
+* Steady-state ripple, light load (last 0.5ms of light-load window)
+meas tran ripple_light_max max v(VOUT) from=1.5m to=2m
+meas tran ripple_light_min min v(VOUT) from=1.5m to=2m
+
+* Load-step response (2ms step, full load by 3ms, settle window 3.5-4.5ms)
+meas tran vout_after_step_dip min v(VOUT) from=2m to=2.5m
+meas tran vout_full_load_final avg v(VOUT) from=4m to=4.5m
+
+* Steady-state ripple, full load (last 0.5ms)
+meas tran ripple_full_max max v(VOUT) from=4m to=4.5m
+meas tran ripple_full_min min v(VOUT) from=4m to=4.5m
+
+quit
+.endc
+.end
