@@ -1,4 +1,4 @@
-# STEVIE frame v0 — **FIT-CHECK ONLY, NOT A FLIGHT FRAME**
+# STEVIE frame v0.1 — **FIT-CHECK ONLY, NOT A FLIGHT FRAME**
 
 **2026-08-17, Batch F item 6.** First mechanical geometry in this project.
 
@@ -69,14 +69,16 @@ Thickness is the only difference between the two builds:
 | Bottom plate | 3.0 mm | 2.0 mm | 3 mm min wall on load paths / 1.5 mm plate min |
 | Top plate | 3.0 mm | 1.5 mm | same |
 | Arm | 4.0 mm | 2.0 mm | 4 mm at arm roots / 2 mm CF arms |
-| **Structure mass** | **141.4 g** | **96.5 g** | bulk density 1.27 / 1.55 g·cm⁻³ |
+| Leg web | 4.0 mm | 2.0 mm | uses the arm section |
+| **Structure mass** | **201.2 g** | **169.5 g** | now including landing gear | bulk density 1.27 / 1.55 g·cm⁻³ |
 
 Sections are sized to the **weaker** material and the stronger one is
 checked to fit the same envelope, which is what that document asks for.
 
-**Do not read 141 g as beating the 469 g frame line in the AUW budget.**
-That is structure only — no landing gear, no standoffs, no fasteners, no
-canopy, no battery tray. Those are real mass and v0 does not model them.
+**Do not read 201 g as beating the 469 g frame line in the AUW budget.**
+Landing gear is included from v0.1, but standoffs, fasteners, canopy and
+battery tray are not. The fasteners alone are ~60 pieces of M3 stainless —
+see `HARDWARE-BOM.md`, which is a real buy list, not an estimate.
 
 ### The motor pattern carries TWO hole sets, and why
 
@@ -115,13 +117,33 @@ prop diameter (9 in)                = 228.60 mm
 TIP GAP                             =  18.89 mm  =  8.26 %
 ```
 
-The guideline is **≥10 %** of prop diameter. This is **8.26 %**, and the
-script reports it as a FAIL rather than rounding it into acceptability.
-It reproduces the 18.9 mm / 8.3 % figure already in this project exactly.
+The guideline is **≥10 %** of prop diameter. This is **8.26 %**, which
+reproduces the 18.9 mm / 8.3 % figure already in this project exactly.
 
-Item 6 asked to *"do better than the current geometry if arm length
-allows within the wheelbase."* **It does not allow it, and that is a
-proof rather than an opinion:**
+> [!success] **ACCEPTED by the lead, 2026-08-17. Bottleneck #4 is closed.**
+> No prop change, no wheelbase change.
+>
+> **The precedent, checked rather than repeated:** the DJI Phantom 3 ships
+> **9.4 in** props on this same **350 mm** class. Its adjacent motor
+> spacing is therefore the same 247.49 mm, and 9.4 in is 238.76 mm, so its
+> tip gap is **8.73 mm = 3.7 %** — *less than half* this frame's 8.26 %,
+> on an airframe that was flight-proven and built at scale.
+>
+> The ≥10 % figure is a **noise-and-efficiency guideline, not a limit**.
+> Below it you pay in interaction losses and sound, not in airworthiness.
+>
+> The script no longer reports this as a FAIL. It still prints the number
+> in full — accepting a figure is not the same as hiding it — but a
+> standing failure that will never be fixed only teaches people to skim
+> the report. **All 16 geometry checks now pass.**
+
+The analysis below stands and is why the ruling was needed — the geometry
+genuinely cannot be improved, so the only options were to change the prop,
+change the wheelbase, or accept it. **It was accepted.**
+
+The earlier brief asked to *"do better than the current geometry if arm
+length allows within the wheelbase."* **It does not allow it, and that is
+a proof rather than an opinion:**
 
 > Four motors sit on a circle of radius wheelbase/2. The tip gap is set
 > by the *smallest* adjacent spacing. For a rectangular layout with
@@ -134,18 +156,14 @@ proof rather than an opinion:**
 > fixed input.
 
 The script sweeps the whole stretched-X family at constant wheelbase and
-confirms 247.49 mm is the maximum achievable. So the clearance can only
-be bought with one of two things, both of which are **David's call**
-because both change a locked platform decision:
+confirms 247.49 mm is the maximum achievable. The two options that *would*
+have bought the clearance are recorded for the file — **neither was
+taken**:
 
 | option | result | cost |
 |---|---|---|
-| Keep 350 mm, drop to **9.0 → 8.85 in props** (≤ 225.0 mm) | ≥10 % | less thrust and less disc area at the same wheelbase |
+| Keep 350 mm, drop to **8.85 in props** (≤ 225.0 mm) | ≥10 % | less thrust and less disc area |
 | Keep 9 in props, grow wheelbase to **≥ 355.6 mm** | ≥10 % | +1.6 % on a locked class name; re-opens the inertia/gain derivation |
-
-355.6 mm is **1.6 % more than 350 mm**. That is how close this is to
-passing, and it is the cheaper of the two options if the class name can
-move at all. Recorded, not decided.
 
 The remaining note from the source document still stands and is not
 addressed by any of this: **check clearance with the props fitted and
@@ -206,7 +224,58 @@ Three related fixes from the same review:
 
 ---
 
-## Known gaps in v0, listed rather than discovered later
+## Landing gear — new in v0.1
+
+Four legs, one per arm, at **r = 95 mm** — a **190 mm stance** across the
+diagonal, the same order as a Phantom 3's.
+
+**Ground clearance is set by the battery, not the props.** The pack hangs
+under the bottom plate, so the legs have to clear 33.5 mm of pack plus its
+2 mm tolerance. They give **53.5 mm**, which is **18.0 mm of daylight**
+for the strap, the connector and a tuft of grass. The script checks that
+relationship rather than the absolute number, so changing the pack
+re-tests it automatically.
+
+The web is a **flat profile of constant thickness** like everything else
+structural here — printed on edge so the layer lines run along the load
+(rule 2), or cut from the same CF sheet. It is tapered, because the
+bending moment on a landing leg is largest at the top, and splayed 6 mm
+outboard so a side landing becomes a slide rather than a tipping moment.
+
+### The feet are deliberately a separate part
+
+A foot that is part of the leg means a scuffed landing costs you a leg. A
+foot that bolts on costs you **3 g of filament**. It carries one bolt and
+no bending load: it is a **wear pad, not a structural member**, and it is
+sized to fail before the leg does. Print a dozen.
+
+### The one part that is NOT material-independent, said plainly
+
+**The leg-to-arm bracket.** A flat vertical web cannot bolt to a flat
+horizontal arm without something at 90° between them. Modelling a printed
+L that only works in one material would be pretending the rule held when
+it did not, so the bracket is **bought**: an off-the-shelf M3 aluminium
+angle, 20 × 20 × 20 mm, same part for both builds. See `HARDWARE-BOM.md`.
+
+That keeps the rule meaningful. The *frame* is material-independent; the
+one joint that cannot be is an off-the-shelf metal part rather than a
+quiet exception buried in a model.
+
+---
+
+## Fasteners
+
+`HARDWARE-BOM.md` — the joint-by-joint plan, M3 lengths per joint, the
+nuts-versus-heat-set-inserts split (which is the one place the two builds
+genuinely diverge), and a purchasable list at ≈£18.50 for the PETG build.
+
+Two things from it worth repeating here: **threadlocker on the motor bolts
+is not optional**, and **buy the motor bolts to the motor's own spec** —
+one that bottoms out inside the bell destroys the windings.
+
+---
+
+## Known gaps in v0.1, listed rather than discovered later
 
 1. **No FEA.** Sections are material minimums, not analysis results.
 2. **No landing gear, standoffs, canopy or battery tray.** The mass
