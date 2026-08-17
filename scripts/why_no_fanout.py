@@ -1,21 +1,33 @@
-"""Place fanout vias one at a time, revalidating after each.
+"""WHY is there no legal fanout site? Not whether -- why.
 
-The one-at-a-time rule is not ceremony here. U1.18 (/GND) and U1.19 (/3V3)
-are adjacent pins whose best fanout sites are 0.05 mm apart -- place both
-from one batch of pre-computed candidates and you short them. So each via
-is chosen against the board INCLUDING every via placed before it, and a
-pad whose site has been taken by a neighbour simply gets no via and is
-reported.
+`place_fanouts.py` answers "how many legal sites" and gets zero. Zero is
+the right number (verified twice), but zero does not say what to DO about
+it, and the manual guide was written as though it did: it attributed the
+zero to 0.5 mm pin pitch and told a human to drag the traces that own
+each escape channel.
 
-Each via also has to satisfy both halves of the rule this project learned
-the hard way: clear of other-net copper, AND inside the filled polygon of
-the plane carrying that pad's net.
+If the binding constraint is actually that the plane does not reach the
+pad, there are no traces to drag and that advice burns a session.
 
-Usage: python place_fanouts.py <board> <REF.PAD> [...] [--clear mm] [--radius mm]
+So this counts, for every candidate site in the search annulus, which
+constraints it fails -- INDEPENDENTLY, not first-failure-wins, because
+first-failure-wins just reports whatever the code happens to test first.
+
+Two numbers decide it per pad:
+
+  * clear of copper, ignoring the pour  -> is congestion binding?
+  * inside the pour, ignoring copper    -> is plane reach binding?
+
+If the first is large and the second is zero, the fix is the plane, not
+the routing. Reports nothing but counts; it never modifies the board.
+
+Usage: <kicad python> why_no_fanout.py board.kicad_pcb PAD [PAD ...]
 """
-import os as _os, sys as _sys
-_sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
-from kicad_safe import pcbnew, via_width, set_via_width  # noqa: E402
+import sys as _sys
+import os
+
+_sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from kicad_safe import pcbnew, via_width  # noqa: E402  (disables wx asserts)
 
 import math, re, io  # noqa: E402
 
@@ -31,18 +43,7 @@ while i < len(argv):
         RADIUS = float(argv[i + 1]); i += 2; continue
     if argv[i] == "--via":
         VIA = float(argv[i + 1]); i += 2; continue
-    if argv[i] == "--drill":
-        DRILL = float(argv[i + 1]); i += 2; continue
-    if argv[i] == "--stub":
-        STUB_W = float(argv[i + 1]); i += 2; continue
     targets.append(argv[i]); i += 1
-
-# The board's own rules: min_via_diameter 0.45, min_through_hole_diameter
-# 0.30, min_via_annular_width 0.10. So the smallest LEGAL fanout via is
-# 0.50/0.30 -- 0.45/0.25 would break the hole minimum, and 0.45/0.30 would
-# leave a 0.075 mm ring. Smaller vias matter here: at 0.5 mm pin pitch the
-# escape channel is the constraint, and a 0.6 mm via found only one site
-# out of eleven.
 
 b = pcbnew.LoadBoard(BOARD)
 MM = 1e6
@@ -53,13 +54,16 @@ def mm(v):
     return v / MM
 
 
-def V(x, y):
-    return pcbnew.VECTOR2I(int(round(x * MM)), int(round(y * MM)))
-
-
-# --- static geometry, read once ---
+# TRUE PAD GEOMETRY, not a circumscribed circle.
+#
+# place_fanouts.py models every pad as a disc of radius hypot(w,h)/2. For
+# U1's 1.55 x 0.30 mm LQFP pad that is a 0.789 mm disc against a true
+# half-height of 0.15 mm -- it inflates the obstacle by 0.639 mm
+# perpendicular to the pad, more than 3x the 0.2 mm clearance rule. That
+# does not change the ANSWER (zero legal sites either way, checked), but
+# it completely changes WHICH constraint you conclude is binding, and the
+# whole point of this script is to attribute the blame correctly.
 pads = []
-NETS = {}
 for fp in b.GetFootprints():
     for p in fp.Pads():
         pos, sz = p.GetPosition(), p.GetSize()
@@ -69,31 +73,19 @@ for fp in b.GetFootprints():
             ang = 0.0
         pads.append((fp.GetReference(), p.GetNumber(), p.GetNetname(),
                      mm(pos.x), mm(pos.y), mm(sz.x), mm(sz.y), ang))
-        NETS.setdefault(p.GetNetname(), p.GetNet())
 
 
 def pad_dist(x, y, cx, cy, w, h, ang_deg):
-    """Distance from a point to a rotated rectangle; 0 if inside.
-
-    This replaced `hypot(w, h) / 2` as an obstacle radius. For U1's
-    1.55 x 0.30 mm LQFP pad the circumscribed disc is 0.789 mm against a
-    true half-height of 0.15 mm -- it inflated every pad by 0.639 mm
-    perpendicular, more than 3x the 0.2 mm clearance rule.
-
-    That over-strictness was not harmless: it reported ZERO legal sites
-    for U4.11 where there are 29. An over-strict checker is still a
-    checker that measures the wrong thing.
-    """
+    """Distance from a point to a rotated rectangle; 0 if inside."""
     a = math.radians(-ang_deg)
     dx, dy = x - cx, y - cy
     ca, sa = math.cos(a), math.sin(a)
     rx, ry = dx * ca - dy * sa, dx * sa + dy * ca
-    return math.hypot(max(0.0, abs(rx) - w / 2.0), max(0.0, abs(ry) - h / 2.0))
-
-
+    ex = max(0.0, abs(rx) - w / 2.0)
+    ey = max(0.0, abs(ry) - h / 2.0)
+    return math.hypot(ex, ey)
 tracks, vias = [], []
 for t in list(b.GetTracks()):
-    NETS.setdefault(t.GetNetname(), t.GetNet())
     if t.Type() == pcbnew.PCB_VIA_T:
         pos = t.GetPosition()
         vias.append((t.GetNetname(), mm(pos.x), mm(pos.y), mm(via_width(t)) / 2.0))
@@ -155,33 +147,41 @@ def seg_dist(px, py, x1, y1, x2, y2):
     return math.hypot(px - (x1 + t * dx), py - (y1 + t * dy))
 
 
-placed = 0
-skipped = []
+print("candidate-site rejection census   via %.2f mm, clearance %.2f mm, "
+      "search radius %.1f mm" % (VIA, CLR, RADIUS))
+print("")
+print("  %-8s %8s %9s %9s %8s   %s"
+      % ("pad", "annulus", "copper-ok", "in-pour", "BOTH", "binding constraint"))
+print("  %s" % ("-" * 76))
+
+verdicts = {}
 for tgt in targets:
     ref, pn = tgt.split(".")
     hit = [p for p in pads if p[0] == ref and p[1] == pn]
     if not hit:
-        skipped.append((tgt, "pad not found"))
+        print("  %-8s pad not found" % tgt)
         continue
     _, _, net, px, py, pw, ph, pa = hit[0]
-    pr = math.hypot(pw, ph) / 2.0   # own pad: circumscribed IS right here --
-                                    # the via must clear the whole thing
-    if net not in pours:
-        skipped.append((tgt, "no pour on %s" % net))
+    pr = math.hypot(pw, ph) / 2.0   # own pad: circumscribed is correct here,
+                                    # the via must clear the WHOLE pad
+    polys = pours.get(net)
+    if polys is None:
+        print("  %-8s no pour on %s" % (tgt, net))
         continue
-    polys = pours[net]
 
-    best = None
+    n_annulus = n_copper = n_pour = n_both = 0
+    n_via_bad = n_via_ok_stub_bad = 0
     step = 0.05
     n = int(RADIUS / step)
     for i2 in range(-n, n + 1):
         for j2 in range(-n, n + 1):
             x, y = px + i2 * step, py + j2 * step
             d = math.hypot(x - px, y - py)
-            if d > RADIUS or d < pr + VR or (best and d >= best[0]):
+            if d > RADIUS or d < pr + VR:
                 continue
-            if not in_pour(x, y, polys):
-                continue
+            n_annulus += 1
+
+            # --- constraint A: clear of other-net copper (via AND stub) ---
             ok = True
             for r2, p2, n2, x2, y2, w2, h2, a2 in pads:
                 if n2 != net and pad_dist(x, y, x2, y2, w2, h2, a2) - VR < CLR:
@@ -194,15 +194,7 @@ for tgt in targets:
                 for n2, vx, vy, vr in vias:
                     if n2 != net and math.hypot(x - vx, y - vy) - vr - VR < CLR:
                         ok = False; break
-            # the STUB must clear too, not just the via -- checking only the
-            # via is how you get a legal via on the end of an illegal wire
             if ok:
-                # Sample the stub from where it LEAVES THE PAD, not from the
-                # pad centre. Inside the pad footprint the neighbouring
-                # pins' own fanout traces are unavoidably close, and
-                # measuring there rejects every site on the board -- which
-                # is exactly what the first version did (0 of 11 placed
-                # where the site search had found 8).
                 t0 = min(0.95, pr / d) if d > 0 else 1.0
                 stub_pts = [(px + (x - px) * (t0 + (1.0 - t0) * (k / 8.0)),
                              py + (y - py) * (t0 + (1.0 - t0) * (k / 40.0)))
@@ -215,10 +207,6 @@ for tgt in targets:
                             ok = False; break
                     if not ok:
                         break
-                # ...and against PADS. Checking the stub against tracks only
-                # is how U4.11's stub came out legal and then clipped U4's
-                # own pad 10: a stub is copper and every neighbour counts,
-                # not just the ones that happen to be tracks.
                 if ok:
                     for r2, p2, n2, x2, y2, w2, h2, a2 in pads:
                         if n2 == net or (r2 == ref and p2 == pn):
@@ -244,38 +232,67 @@ for tgt in targets:
                                 ok = False; break
                         if not ok:
                             break
-            if ok:
-                best = (d, x, y)
+            copper_ok = ok
 
-    if not best:
-        skipped.append((tgt, "no legal site within %.1f mm" % RADIUS))
-        continue
+            # WHICH copper constraint binds? Evaluated independently too:
+            # if the answer is 'the stub', the escape-channel story is
+            # right and a human has traces to drag. If it is 'the via
+            # body', it is not.
+            if not ok:
+                v_ok = True
+                for r2, p2, n2, x2, y2, w2, h2, a2 in pads:
+                    if n2 != net and pad_dist(x, y, x2, y2, w2, h2, a2) - VR < CLR:
+                        v_ok = False; break
+                if v_ok:
+                    for n2, x1, y1, x2, y2, w in tracks:
+                        if n2 != net and seg_dist(x, y, x1, y1, x2, y2) - w / 2.0 - VR < CLR:
+                            v_ok = False; break
+                if v_ok:
+                    for n2, vx, vy, vr in vias:
+                        if n2 != net and math.hypot(x - vx, y - vy) - vr - VR < CLR:
+                            v_ok = False; break
+                if v_ok:
+                    n_via_ok_stub_bad += 1
+                else:
+                    n_via_bad += 1
 
-    d, x, y = best
-    v = pcbnew.PCB_VIA(b)
-    v.SetPosition(V(x, y))
-    set_via_width(v, int(round(VIA * MM)))
-    v.SetDrill(int(round(DRILL * MM)))
-    v.SetViaType(pcbnew.VIATYPE_THROUGH)
-    v.SetLayerPair(pcbnew.F_Cu, pcbnew.B_Cu)
-    v.SetNet(NETS[net])
-    b.Add(v)
-    t = pcbnew.PCB_TRACK(b)
-    t.SetStart(V(px, py))
-    t.SetEnd(V(x, y))
-    t.SetWidth(int(round(STUB_W * MM)))
-    t.SetLayer(pcbnew.F_Cu)
-    t.SetNet(NETS[net])
-    b.Add(t)
+            # --- constraint B: inside the pour, evaluated INDEPENDENTLY ---
+            pour_ok = in_pour(x, y, polys)
 
-    # register it so the NEXT pad sees it
-    vias.append((net, x, y, VR))
-    tracks.append((net, px, py, x, y, STUB_W))
-    placed += 1
-    print("placed %-8s [%-6s] via at (%7.3f, %7.3f), stub %.2f mm" % (tgt, net, x, y, d))
+            if copper_ok:
+                n_copper += 1
+            if pour_ok:
+                n_pour += 1
+            if copper_ok and pour_ok:
+                n_both += 1
 
-pcbnew.SaveBoard(BOARD, b)
-print("\n%d via(s) placed, %d skipped" % (placed, len(skipped)))
-for tgt, why in skipped:
-    print("   skipped %-8s -- %s" % (tgt, why))
-print("SAVED")
+    if n_both:
+        verdict = "none -- %d legal site(s)" % n_both
+    elif n_pour == 0 and n_copper > 0:
+        verdict = "PLANE REACH (no copper problem at all)"
+    elif n_copper == 0 and n_pour > 0:
+        verdict = "congestion"
+    elif n_copper == 0 and n_pour == 0:
+        verdict = "both"
+    else:
+        verdict = "disjoint (each alone is satisfiable)"
+    verdicts[tgt] = verdict
+    print("  %-8s %8d %9d %9d %8d   %s"
+          % (tgt, n_annulus, n_copper, n_pour, n_both, verdict))
+    if n_copper == 0 and n_annulus:
+        print("           of the %d copper rejections: %d the VIA BODY, "
+              "%d the STUB only (%.0f%% stub)"
+              % (n_annulus, n_via_bad, n_via_ok_stub_bad,
+                 100.0 * n_via_ok_stub_bad / max(1, n_annulus)))
+
+print("")
+plane = [t for t, v in verdicts.items() if v.startswith("PLANE")]
+cong = [t for t, v in verdicts.items() if v == "congestion"]
+print("  plane reach is the ONLY blocker for %d of %d pads: %s"
+      % (len(plane), len(verdicts), ", ".join(plane) or "-"))
+print("  congestion is the only blocker for  %d of %d pads: %s"
+      % (len(cong), len(verdicts), ", ".join(cong) or "-"))
+print("")
+print("  A pad in the first list has NO trace to drag. Telling a human to")
+print("  widen its escape channel sends them after copper that is not")
+print("  there; the fix is to close the plane void under the part.")
