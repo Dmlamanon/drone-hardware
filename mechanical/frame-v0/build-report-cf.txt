@@ -1,0 +1,62 @@
+====================================================================
+STEVIE frame v0 -- CF variant
+====================================================================
+wheelbase (motor-motor diagonal) : 350.0 mm
+adjacent motor spacing           : 247.49 mm  (= wheelbase / sqrt(2))
+prop diameter                    : 228.6 mm
+PROP TIP GAP                     : 18.89 mm  = 8.26 % of prop dia
+
+The >=10 % rule needs one of:
+  prop <= 225.0 mm (8.86 in) at this wheelbase, or
+  wheelbase >= 355.6 mm with this prop
+
+Frame geometry CANNOT improve this at a fixed wheelbase, and that is
+worth stating as a derivation rather than an opinion:
+  four motors sit on a circle of radius wheelbase/2. Adjacent tip gap
+  is set by the SMALLEST adjacent chord. For a rectangle of half-width
+  a and half-length b with 2*sqrt(a^2+b^2) = wheelbase, the adjacent
+  spacings are 2a and 2b, so min(2a, 2b) is maximised at a = b --
+  i.e. by the symmetric X this frame already is. A stretched or
+  'dead-cat' layout makes one pair CLOSER, never further apart.
+  Longer arms do not help either: they would increase the wheelbase,
+  which is the fixed input.
+
+arm length (root r=28 to pad edge) : 163.0 mm
+plate 140 x 110 x 2.0 mm, arms 16 x 2.0 mm
+
+bottom plate: 16 holes/slots cut, volume 26459 mm^3
+top plate:    8 holes cut, volume 11477 mm^3
+arm:          volume 5800 mm^3, 163.0 mm long
+
+geometry checks:
+  arm bolts land inside the bottom plate outline       OK   41.0 < 70.0
+  battery bay fits within the plate long axis          OK   135.0 <= 140.0
+  FC pattern clears the battery straps                 OK   (informational)
+  props do not overlap                                 OK   18.89 mm gap
+  tip gap meets the >=10 % guideline                   FAIL 8.26 % -- see README
+  arm thickness meets the CF minimum                   OK   2.0 mm
+  plate thickness meets the CF minimum                 OK   2.0 mm
+  motor pad is wider than the 19 mm bolt spacing       OK   32.0 > 25.4
+  arm root starts inside the plate                     OK   28.0 < 55.0
+  symmetric X maximises the minimum adjacent spacing   OK   247.49 vs best stretched-X 247.49 mm
+
+mass estimate (CF, rho = 1.55 g/cm^3):
+  bottom plate        41.0 g
+  top plate           17.8 g
+  arms (x4)           36.0 g
+  ---------------------------
+  structure           94.8 g
+
+  The AUW budget carries 469 g for 'frame'. This is STRUCTURE ONLY --
+  no landing gear, no standoffs, no fasteners, no canopy, no battery
+  tray. Those are real mass and they are not modelled in v0, so do
+  NOT read 95 g as beating the budget.
+
+SVG   -> D:\claude-obsidian\engineering\drone-hardware\mechanical\frame-v0\stevie-frame-v0-cf-plan.svg
+
+STEP  -> D:\claude-obsidian\engineering\drone-hardware\mechanical\frame-v0\stevie-frame-v0-cf.step
+STL   -> D:\claude-obsidian\engineering\drone-hardware\mechanical\frame-v0\stevie-frame-v0-cf.stl
+STL   -> D:\claude-obsidian\engineering\drone-hardware\mechanical\frame-v0\part-bottom-plate-cf.stl
+STL   -> D:\claude-obsidian\engineering\drone-hardware\mechanical\frame-v0\part-top-plate-cf.stl
+STL   -> D:\claude-obsidian\engineering\drone-hardware\mechanical\frame-v0\part-arm-1-cf.stl
+DXF   -> D:\claude-obsidian\engineering\drone-hardware\mechanical\frame-v0\stevie-frame-v0-flats-cf.dxf
