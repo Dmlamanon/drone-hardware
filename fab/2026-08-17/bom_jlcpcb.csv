@@ -1,5 +1,5 @@
 Comment,Designator,Footprint,LCSC Part #,JLCPCB Library,Sourcing Note
-10uF 35V,C1,C_0805_2012Metric,,UNRESOLVED-EXTENDED,"MUST be >=35V. Sits on VBAT_4S (16.8V max). The JLCPCB Basic 0805 10uF (C15850) is 25V and an X5R at 16.8V DC bias loses most of its capacitance - NOT an acceptable substitute. Select a 35V or 50V 0805 10uF X7R at order time."
+10uF 50V X7R 1210,C1,C_1210_3225Metric,,UNRESOLVED-EXTENDED,"RESPECIFIED 2026-08-17. The earlier note confused voltage RATING with DC-BIAS DERATING: a 35V 0805 at 16.8V also loses most of its capacitance, and 25V at 16.8V is not a rating violation (1.49x margin). Bias derating is driven by dielectric and CASE SIZE. Spec is therefore CAPACITANCE AT 16.8V BIAS, not nameplate. Example part: Murata GRM32ER71H106KA12L (1210, 50V, X7R). MUST read the vendor C-vs-Vdc curve and confirm it meets the TPS54336A input requirement before ordering."
 22uF,C2,C_0805_2012Metric,C45783,Basic,"25V part; sits on 3V3 so margin is ample."
 100nF,"C3,C6,C7,C8,C9,C10,C16,C19,C20,C21,C22",C_0402_1005Metric,C1525,Basic,"16V X7R decoupling."
 2.2uF,"C11,C12",C_0603_1608Metric,C23630,Basic,16V
@@ -30,9 +30,9 @@ EXPANSION_BUS,J9,PinHeader_1x14_P2.54mm_Vertical,,HAND-SOLDER,Through-hole.
 2k,R11,R_0402_1005Metric,C4109,Basic,1%
 73.2k,R12,R_0603_1608Metric,,UNRESOLVED-EXTENDED,"1% E96, boost feedback divider - sets the 5V rail. Not substitutable."
 10.0k,R13,R_0603_1608Metric,C25804,Basic,"Boost feedback divider bottom leg."
-STM32F405RGT6,U1,LQFP-64_10x10mm_P0.5mm,C15742,Extended,"Needs an assembly fixture per the JLCPCB part page."
-TPS54336ADDA,U2,SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.41x3.81mm,C1355769,Extended,"STOCK UNCERTAIN - a search result indicated out of stock at LCSC. VERIFY AVAILABILITY BEFORE ORDERING; this is the main 3.3V buck and has no drop-in alternate on this footprint."
+STM32F405RGT6,U1,LQFP-64_10x10mm_P0.5mm,C15742,Extended,"Needs an assembly fixture per the JLCPCB part page. 264 in stock, $6.68/1, $5.88/10+ (verified 2026-08-17)."
+TPS54336ADDA,U2,SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.41x3.81mm,C1355769,Extended,"IN STOCK, verified against the LCSC part page 2026-08-17: 245 units, $1.0689/1, $0.8633/10+. The earlier out-of-stock claim came from a search snippet, not the part page, and was wrong. 245 is a thin buffer for a part with no drop-in alternate on this footprint - fine for a run of 5, re-check before any larger order."
 MPU-6000,U4,InvenSense_QFN-24_4x4mm_P0.5mm,C92401,Extended,"~USD 10.42 each - the single most expensive line by a wide margin, roughly 2/3 of parts cost."
 USBLC6-2SC6,U5,SOT-23-6,C7519,Extended,USB ESD protection.
 MT3608,U6,SOT-23-6,C84817,Extended,"~USD 0.06-0.10. Boost converter for the 5V receiver rail."
-8MHz,Y1,Crystal_SMD_3225-4Pin_3.2x2.5mm,,UNRESOLVED-EXTENDED,"The Basic-library 8MHz crystal (C115962) is SMD-5032-2P - WRONG PACKAGE for this 3225 4-pin footprint. Needs a 3225 4-pin part, or change the footprint."
+8MHz,Y1,Crystal_SMD_5032-2Pin_5.0x3.2mm,C115962,Basic,"RESOLVED 2026-08-17: the board carried a 4-pin 3225 footprint under a 2-PIN schematic symbol, so pads 3/4 were permanently unmatched. Re-footprinted to the 2-pin SMD-5032, which is also the only Basic-library 8MHz part - this removed the one Extended setup fee the audit found removable. Verify C115962 against a live JLCPCB page before ordering; it came from a community snapshot."
