@@ -7,7 +7,7 @@ tags: [drone, hardware, pcb, fab]
 
 # Fab package — bench_board, 2026-08-17
 
-> [!danger] THIS PACKAGE IS STALE — DO NOT ORDER FROM IT
+> [!danger] SUPERSEDED BY `fab/2026-08-17b/` — DO NOT ORDER FROM IT
 > **Marked 2026-08-17, batch F item 8.**
 >
 > These Gerbers were generated before two later batches of change to the board
@@ -25,9 +25,14 @@ tags: [drone, hardware, pcb, fab]
 > through-holes straight into the copper layers. See
 > `docs/buzzer-annunciator.md`.
 >
-> The DRC and parity numbers below are the numbers **as of this
-> package**, and are kept for that reason. The board's current numbers
-> are 64 violations / 15 unconnected — see the batch F final report.
+> **A regenerated package now exists: `fab/2026-08-17b/`.** It has all
+> six missing components, the restored 30.5 mm mounting pattern and a
+> correctly refilled copper plane, and its DRC is 54 / 13 unconnected.
+> It is still not orderable — the 13 unconnected supply pins are the
+> blocker — but it is the package to work from.
+>
+> The DRC and parity numbers below are the numbers **as of this**
+> **package**, and are kept for that reason.
 
 
 ## Status: **NOT READY TO ORDER**
