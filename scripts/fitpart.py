@@ -8,8 +8,9 @@ choice is made on numbers rather than by nudging it in a GUI.
 Usage: python fitpart.py <board> <REF> [search_radius_mm]
 """
 import sys, math
-import pcbnew
-
+import os as _os, sys as _sys
+_sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
+from kicad_safe import pcbnew, via_width, set_via_width  # noqa: F401
 BOARD, REF = sys.argv[1], sys.argv[2]
 RADIUS = float(sys.argv[3]) if len(sys.argv) > 3 else 6.0
 

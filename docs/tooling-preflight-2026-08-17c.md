@@ -105,3 +105,48 @@ DXF export is confirmed working (97 KB written last batch).
   and bulk-deletes the whole net. Pass one or the other.
 - **`sync_schematic_to_board` strips the leading `/` from net names**,
   which disables this board's Power netclass. Re-check after any sync.
+
+---
+
+## BLOCKING-DIALOG HAZARD in headless pcbnew — found and fixed mid-batch
+
+**`PCB_VIA::GetWidth()` and `SetWidth()` trip a wxWidgets debug assert on
+KiCad 10** — *"called without a layer argument"*. Interactively that is a
+modal dialog. **In an unattended batch it is a stall that waits forever
+for a click nobody is there to give**, and the run looks hung rather than
+broken. That is the failure mode that matters here: this batch runs with
+nobody watching.
+
+It fired from `scripts/viasite.py` while searching for a via site.
+
+### The fix, in two layers
+
+`scripts/kicad_safe.py` is now the shared preamble for **every** headless
+pcbnew script in this repo, and it does both halves:
+
+1. **`wx.DisableAsserts()` on import**, before any board is touched, so no
+   script can forget it and no *future* assert of this class can stall a
+   run either. Verified active (`asserts_disabled() -> True`) and the
+   assert output is now zero lines where it was ten.
+2. **Correct accessors**, because suppressing a dialog is not the same as
+   calling the API right. KiCad 10 exposes layer-free
+   `GetFrontWidth()` / `SetFrontWidth()`; `via_width()` and
+   `set_via_width()` wrap them. Every via on this board is a plain
+   through via, so front width *is* the width.
+
+### Audit of every pcbnew call site in the repo
+
+Done by grep rather than by memory, because the point is that none are
+left:
+
+| file | risky call | status |
+|---|---|---|
+| `viasite.py` | `GetWidth()` on a via | **was the one that fired** — now `via_width()` |
+| `mh3_rework.py` | `SetWidth()` on a new via | now `set_via_width()` |
+| `repath.py` | `GetWidth()`/`SetWidth()` | on `PCB_TRACK` only (guarded by an earlier `if via: continue`) — safe |
+| `patternsearch.py` | `GetWidth()` | in the non-via branch — safe; `GetDrill()` on vias takes no layer and does not assert |
+| `courtyards.py`, `fitpart.py`, `check_fc_pattern.py` | — | no via geometry |
+
+**Standing rule for this project: any script that runs unattended imports
+`kicad_safe` first.** A blocking dialog in a batch is not a nuisance, it
+is an unbounded hang.

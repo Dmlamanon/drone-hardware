@@ -11,8 +11,9 @@ Prints what it removed and what it added. Nothing is written unless the
 new path is fully specified.
 """
 import sys, math
-import pcbnew
-
+import os as _os, sys as _sys
+_sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
+from kicad_safe import pcbnew, via_width, set_via_width  # noqa: F401
 args = sys.argv[1:]
 BOARD, NET, LAYER = args[0], args[1], args[2]
 rest = args[3:]
