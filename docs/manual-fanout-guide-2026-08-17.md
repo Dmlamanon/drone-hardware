@@ -25,8 +25,10 @@ the board is done.
 > single filled polygon.** There is no island.
 >
 > An independent review caught it. The corrected position is below: the
-> two jobs are **largely independent**, and six of the fourteen pads can
-> be fixed today with no inner-layer work at all.
+> two jobs are **largely independent**. Of the six pads that looked
+> immediately fixable, **two were placed this batch** and the other four
+> turned out to need the UI as well — because plane coverage under the
+> PAD does not imply a feasible location for the VIA beside it.
 
 ---
 
@@ -120,17 +122,19 @@ correct, but they are not interchangeable functionally.
 The two jobs are **largely independent**. Do them in whichever order
 suits, with one caveat:
 
-1. **Job B on the six covered pads can be done immediately** and will
-   reduce the unconnected count straight away.
-2. **Job A (inner layers) will move copper**, so doing it first may make
-   some of the remaining eight pads trivially fixable — and will
-   certainly change where their vias should go.
-3. So: **do the six now if you want quick progress; do job A before
-   attacking the other eight.**
+1. **The scriptable via work is done** — two placed, unconnected 15 → 13.
+   Nothing further can be sited without moving existing copper.
+2. **Job A (inner layers) comes next**, and it is now the gating item.
+   It extends the pours, which is precisely what the remaining eleven
+   pads need, and it fixes J3's four through-hole shield pads for free.
+3. **Then finish job B in the UI**, re-checking DRC first — several of
+   the remaining edges should disappear once the pours are whole.
 
-The previous version of this document mandated a 1–2 hour irreversible
-operation (delete 214 segments, hand re-route) *before* any via work.
-That was not justified.
+The first version of this document mandated a 1–2 hour irreversible
+operation *before* any via work, on evidence that turned out to be an
+artifact. The corrected ordering above is job-A-first for a different
+and real reason: it is what unblocks the rest, not a precondition
+invented from a bad measurement.
 
 ---
 
