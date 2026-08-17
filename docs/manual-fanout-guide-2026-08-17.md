@@ -45,26 +45,73 @@ both layers. That is a real signal-integrity problem and it is worth
 fixing — but it is a *coverage* problem, not a *fragmentation* one, and
 it does not block via work.
 
-### Which pads can be fixed today
+### Which pads can be fixed today — and what a script could actually reach
 
-Plane copper directly beneath each unconnected pad, on the layer that
-matters for its net:
+**Two of the six were placed this batch. Unconnected went 15 → 13.**
 
-| Pad | Net | Plane | Copper underneath? |
+An earlier version of this section said "six of fourteen pads have plane
+copper underneath, so they can take a fanout via today." That was true of
+the **pad** and not of the **via**. A via has to go *beside* the pad, and
+beside these pads either the plane is voided or the F.Cu fanout ring is
+already congested. Measured, searching 168–396 candidate positions per
+pad out to a 5 mm stub at 0.2 mm clearance:
+
+| Pad | Net | Placed? | Why not |
 |---|---|---|---|
-| U1.13, U1.19, U1.32 | /3V3 | In2.Cu | **YES** |
-| U1.18, U4.11, U4.18 | /GND | In1.Cu | **YES** |
-| U1.1, U1.48, U1.64, U4.13 | /3V3 | In2.Cu | no |
-| U1.12, U1.63, U4.1, C17.2 | /GND | In1.Cu | no |
+| **U4.18** | /GND | **YES** — via (50.827, 20.384), 0.95 mm stub | — |
+| **U1.32** | /3V3 | **YES** — via (42.393, 36.757), 3.80 mm stub | — |
+| U1.13 | /3V3 | no | 101 of 168 near positions blocked by other nets' copper, 61 outside the 3V3 pour |
+| U1.19 | /3V3 | no | 115 of 168 outside the 3V3 pour |
+| U1.18 | /GND | no | 103 of 168 outside the GND pour |
+| U4.11 | /GND | no | 124 of 168 blocked by other nets' copper |
 
-**Six of fourteen can take a fanout via right now.** The other eight sit
-over a void and need either the plane extended (job A) or a short trace
-to somewhere the plane does reach.
+**The U1.32 stub is 3.8 mm, which is long for a supply pin** — roughly
+3 nH of added inductance on a VDD feed. It is better than unconnected and
+it is flagged rather than hidden; a human in the editor should shorten it
+if the plane can be extended nearby.
 
-**Note on pad names:** U1 pad 1 is **VBAT** and pad 13 is **VDDA**, not
-VDD — the four VDD pins are 19, 32, 48 and 64. All are tied to /3V3 on
-this board, so the net is right, but get the names right when working
-pad-by-pad.
+**Everything remaining needs the UI.** Not because scripting is
+forbidden, but because the fix is *move existing copper*, which is a
+judgement call about which trace yields — exactly what an interactive
+router with live DRC is for and what a coordinate search is not.
+
+### The 13 items that remain, verbatim from DRC
+
+```
+Pad 1 [/3V3] of U1        <-> Pad 64 [/3V3] of U1
+Pad 13 [/3V3] of U1       <-> Pad 19 [/3V3] of U1
+Pad 13 [/3V3] of U1       <-> Pad 1  [/3V3] of U1
+Track [/3V3] 1.4016 mm    <-> Pad 19 [/3V3] of U1
+Track [/3V3] 0.7128 mm    <-> Pad 48 [/3V3] of U1
+Pad 13 [/3V3] of U4       <-> Pad 48 [/3V3] of U1
+Track [/GND] 0.3526 mm    <-> Pad 63 [/GND] of U1
+Pad 12 [/GND] of U1       <-> Track [/GND] 0.3526 mm
+Pad 18 [/GND] of U1       <-> Pad 2 [/GND] of C17
+Pad 1  [/GND] of U4       <-> Track [/GND] 0.9500 mm
+Pad 11 [/GND] of U4       <-> Track [/GND] 0.9500 mm
+Pad A1 [/GND] of J3       <-> PTH pad B12 [/GND] of J3
+PTH pad B1 [/GND] of J3   <-> Pad A12 [/GND] of J3
+```
+
+That is **11 distinct pads** (U1: 1, 12, 13, 18, 19, 48, 63, 64; U4: 1,
+11, 13) plus J3's four shield pads, spread across 13 ratsnest edges.
+
+**Do them in this order:**
+
+1. **J3's four (A1, A12, B1, B12).** These are *not* fanout misses — B1
+   and B12 are through-hole and their barrels already cross both inner
+   layers. They report unconnected because the GND pour does not reach
+   them. **Job A fixes these for free**, so do the inner-layer work
+   first and re-check before touching them.
+2. **U1's four VDD pins (19, 32, 48, 64) and VBAT (1) / VDDA (13).**
+   32 is done. The rest want the 3V3 pour extended under the MCU, which
+   is the same work as job A.
+3. **The GND pins** (U1 12, 18, 63; U4 1, 11) — same story on In1.Cu.
+
+**Get the pad names right when working pad-by-pad:** on an LQFP-64
+STM32F405, **pad 1 is VBAT** and **pad 13 is VDDA**; the four VDD pins
+are **19, 32, 48, 64**. All are tied to /3V3 on this board so the net is
+correct, but they are not interchangeable functionally.
 
 ---
 

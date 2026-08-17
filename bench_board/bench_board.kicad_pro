@@ -313,24 +313,24 @@
     },
     "net_colors": null,
     "netclass_assignments": {
-      "/VBAT_4S": {
-        "netclass": "Power"
-      },
-      "/3V3": {
-        "netclass": "Power"
-      },
-      "/5V_RX": {
-        "netclass": "Power"
-      },
-      "/GND": {
-        "netclass": "Power"
-      },
-      "/SW_NODE": {
-        "netclass": "Power"
-      },
-      "/BOOST_SW": {
-        "netclass": "Power"
-      }
+      "/3V3": [
+        "Power"
+      ],
+      "/5V_RX": [
+        "Power"
+      ],
+      "/BOOST_SW": [
+        "Power"
+      ],
+      "/GND": [
+        "Power"
+      ],
+      "/SW_NODE": [
+        "Power"
+      ],
+      "/VBAT_4S": [
+        "Power"
+      ]
     },
     "netclass_patterns": [
       {
