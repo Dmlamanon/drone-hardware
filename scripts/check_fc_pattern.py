@@ -28,6 +28,8 @@ DXF = sys.argv[2] if len(sys.argv) > 2 else os.path.join(
 PITCH = 30.5
 TOL = 0.05          # mm; the pattern is a mechanical interface, not a fit
 M3_R = (1.5, 1.75)  # plausible radius range for an M3 clearance hole in the frame
+M3_CLEAR_D = 3.2    # an M3 CLEARANCE hole. 3.0 is the thread, not the hole.
+DRILL_TOL = 0.15    # mm; board drill vs frame hole
 
 fails = []
 
@@ -94,9 +96,21 @@ print("board: %s" % os.path.normpath(BOARD))
 for x, y, d, ref in sorted(board_holes, key=lambda h: (h[1], h[0])):
     print("   %-4s at (%8.3f, %8.3f)  drill %.2f mm" % (ref, x, y, d))
 board = square_of([(h[0], h[1]) for h in board_holes], "board")
+drills = sorted(set(round(h[2], 3) for h in board_holes))
 check("board holes are all the same drill size",
-      len(set(round(h[2], 3) for h in board_holes)) == 1,
-      "%s mm" % sorted(set(round(h[2], 3) for h in board_holes)))
+      len(drills) == 1, "%s mm" % drills)
+
+# AN M3 HAS TO FIT THROUGH IT.
+#
+# This script used to check only that the four drills matched EACH OTHER.
+# Mutating all four to 2.0 mm left it printing "ok: board holes are all
+# the same drill size [2.0] mm" and "the board bolts to the frame",
+# exiting 0 -- for a board no M3 bolt passes through. Matching each other
+# is not the property that matters; matching the bolt is.
+BOARD_D = drills[0] if len(drills) == 1 else 0.0
+check("an M3 bolt actually fits through the board holes",
+      BOARD_D >= M3_CLEAR_D - 1e-9,
+      "%.2f mm drill vs %.2f mm needed for M3 clearance" % (BOARD_D, M3_CLEAR_D))
 
 # ---------------- the frame DXF ----------------
 # DXF is a flat stream of (group code, value) PAIRS, two lines each. An
@@ -154,6 +168,7 @@ print("   %d FC-pattern circles across %d plate(s) -> deduplicated per plate:"
       % (len(fc_all), len(by_layer)))
 
 frame = None
+frame_hole_r = None
 for lay in sorted(by_layer):
     holes = sorted(by_layer[lay])
     print("   [%s]" % lay)
@@ -162,19 +177,35 @@ for lay in sorted(by_layer):
     res = square_of([(h[0], h[1]) for h in holes], "frame %s" % lay)
     if res and frame is None:
         frame = res
+        frame_hole_r = holes[0][2] if holes else None
 
 check("the FC pattern is on BOTH plates, so the stack bolts together",
       len(by_layer) >= 2, "found on: %s" % ", ".join(sorted(by_layer)))
 
 # ---------------- do they match ----------------
 if board and frame:
-    bd, _, bc = board
-    fd, _, fc_c = frame
+    bd, bdy, bc = board
+    fd, fdy, fc_c = frame
     check("board pitch == frame pitch", abs(bd - fd) <= TOL,
           "%.3f vs %.3f mm (delta %.3f)" % (bd, fd, abs(bd - fd)))
-    check("the board bolts to the frame (patterns are congruent)",
-          abs(bd - fd) <= TOL,
-          "board %.3f, frame %.3f" % (bd, fd))
+
+    # BOTH AXES. This used to be `abs(bd - fd) <= TOL` twice -- the same
+    # predicate under two names, which inflated the pass count by one and
+    # meant a board square in x and oblong in y could still "bolt to the
+    # frame". square_of returns (dx, dy, centre) and both call sites were
+    # throwing dy away.
+    check("the board bolts to the frame (congruent on BOTH axes)",
+          abs(bd - fd) <= TOL and abs(bdy - fdy) <= TOL,
+          "x %.3f vs %.3f, y %.3f vs %.3f" % (bd, fd, bdy, fdy))
+
+    # ...and through holes of compatible size, not just at compatible
+    # spacing. A pattern that lines up but whose holes disagree by a
+    # millimetre does not bolt together either.
+    frame_d = 2.0 * frame_hole_r if frame_hole_r else 0.0
+    check("board hole size matches the frame's",
+          frame_d > 0 and abs(BOARD_D - frame_d) <= DRILL_TOL,
+          "board %.2f mm vs frame %.2f mm (tol %.2f)"
+          % (BOARD_D, frame_d, DRILL_TOL))
     print("\n   board pattern centre (%.3f, %.3f) in board coordinates" % bc)
     print("   frame pattern centre (%.3f, %.3f) in frame coordinates" % fc_c)
     print("   (centres are in different coordinate systems -- only the")
