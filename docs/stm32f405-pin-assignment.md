@@ -51,10 +51,10 @@ states which AF it needs and why that pin (not just "any free GPIO").
 | 34 | PB13 | unused | **EXP_SPI_SCK** | SPI2_SCK, AF5 |
 | 35 | PB14 | unused | **EXP_SPI_MISO** | SPI2_MISO, AF5 |
 | 36 | PB15 | unused | **EXP_SPI_MOSI** | SPI2_MOSI, AF5 |
-| 37 | PC6 | unused | unused | Free |
-| 38 | PC7 | unused | unused | Free |
-| 39 | PC8 | unused | unused | Free |
-| 40 | PC9 | unused | unused | Free |
+| 37 | PC6 | unused | unused | Free — **TIM3_CH1 / TIM8_CH1 (AF2/AF3)**. Reserved for a tiltrotor servo, see the note below the table. |
+| 38 | PC7 | unused | unused | Free — **TIM3_CH2 / TIM8_CH2 (AF2/AF3)**. Reserved for a tiltrotor servo, see the note below the table. |
+| 39 | PC8 | unused | unused | Free — **TIM3_CH3 / TIM8_CH3 (AF2/AF3)**. Reserved for a tiltrotor servo, see the note below the table. |
+| 40 | PC9 | unused | unused | Free — **TIM3_CH4 / TIM8_CH4 (AF2/AF3)**. Reserved for a tiltrotor servo, see the note below the table. |
 | 41 | PA8 | unused | unused | Free |
 | 42 | PA9 | CRSF_TX | unchanged | USART1_TX, AF7 |
 | 43 | PA10 | CRSF_RX | unchanged | USART1_RX, AF7 |
@@ -119,3 +119,44 @@ not introduced by this batch's additions.
 
 - [[expansion-bus-spec]] (item 4 — the connector this pin table implements)
 - [[power-verification-4s]] (item 3 — PA0/VBAT_SENSE, unaffected by this batch's pin additions)
+
+
+## Tiltrotor provisioning — checked 2026-08-17, no board change needed
+
+Executing the lead ruling *provision on the board, do not build on the
+vehicle*. Checked against this table rather than assumed.
+
+**Four tilt servos fit cleanly.** `PC6`–`PC9` are `TIM3_CH1`–`CH4` (AF2),
+also available as `TIM8_CH1`–`CH4` (AF3). That is **four channels on a
+single timer**, which is what you want: one timebase, one prescaler, four
+synchronised outputs, and no interaction with `TIM4`, which already
+drives DShot on M1–M4.
+
+Spare timer-capable pins beyond those four, if a different grouping is
+ever wanted: `PA8` (TIM1_CH1), `PA15`/`PB3` (TIM2_CH1/CH2), `PB0`/`PB1`
+(TIM3_CH3/CH4), `PB4`/`PB5` (TIM3_CH1/CH2).
+
+**An airspeed sensor also fits with no new pin.** The conversion corridor
+is defined in terms of airspeed, so a tiltrotor requires one; the usual
+parts (MS4525DO, SDP3x class) are I²C, and I²C2 is already on the
+expansion bus at `PB10`/`PB11`.
+
+**What is NOT provisioned, stated plainly** — this is the real content of
+"provisioned but not built":
+
+1. **The servo pins are not brought out to a connector.** They are free
+   at the MCU; the expansion header does not expose them. A tilt build
+   needs a board revision to route them out.
+2. **There is no servo power rail.** Four digital servos draw amps when
+   stalled. They must not be fed from the 3.3 V rail or from the 1 A 5 V
+   boost, which is sized for the receiver — browning out the RX is the
+   worst possible thing to share a rail with.
+3. **No tilt-angle feedback input is allocated.** Position feedback is
+   argued for in the requirements analysis (a servo that has not reached
+   its commanded angle while the mixer assumes it has is an
+   uncommanded-attitude event). That would be four more ADC channels, and
+   the ADC driver is itself still a stub.
+
+Full reasoning, including why a wingless tiltrotor buys speed rather than
+efficiency: `wiki/projects/STEVIE Tiltrotor Variant — Requirements
+Analysis.md`.
