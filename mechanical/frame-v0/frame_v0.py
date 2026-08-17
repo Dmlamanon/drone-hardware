@@ -148,6 +148,23 @@ LEG_SPLAY = 6.0          # how far the foot sits outboard of the top, mm.
                          # A splayed leg turns a side landing into a slide
                          # rather than a tipping moment.
 FOOT_L, FOOT_W, FOOT_T = 18.0, LEG_W, 6.0
+
+# WHICH PARTS COME OFF A SHEET AND WHICH DO NOT.
+#
+# The project rule is that every structural part is a flat profile of
+# constant thickness, so a printed frame and a CF frame differ only in
+# thickness. That rule holds for the plates and the arms -- their
+# thickness IS a function of MATERIAL. It does NOT hold for the landing
+# gear: LEG_W and FOOT_T above are plain constants, identical in both
+# builds, and 14 mm CF plate is not a thing you buy.
+#
+# That is a deliberate design choice, not an oversight. A 2 mm CF blade
+# 47.5 mm tall is a bad landing leg -- bending stiffness about the weak
+# axis goes as thickness cubed, so it would have 1/343 of the modelled
+# value. The legs and feet are therefore PRINTED IN BOTH BUILDS, which
+# also suits them: they are the crash consumables.
+SHEET_PARTS   = ("bottom_plate", "top_plate", "arm_1")
+PRINTED_PARTS = ("leg_1", "foot_1")
 FOOT_HOLE_D = 3.2
 
 # --- Fillets --------------------------------------------------------
@@ -176,7 +193,18 @@ ARM_LEN = MOTOR_R + MOTOR_PAD_D / 2.0 - ARM_ROOT_R
 # Ground clearance is measured from the bottom plate's UNDERSIDE, because
 # that is what the battery hangs from.
 BATT_DROP = BATT_H + BATT_TOL          # how far the pack hangs below the plate
-LEG_H = BATT_DROP + 12.0               # web height, plate underside to foot top
+# LEG_H IS AN INDEPENDENT CONSTANT, DELIBERATELY.
+#
+# It used to be `BATT_DROP + 12.0`, which made the ground-clearance check
+# below unfalsifiable: both sides of `GROUND_CLEAR > BATT_DROP` moved
+# together, so the predicate reduced to `12 + FOOT_T > 0` and the margin
+# was pinned at 18.0 mm for every conceivable battery. Setting BATT_H to
+# 200 mm produced 214 mm legs and still passed all sixteen checks.
+#
+# Fixing the number in place is what makes the check mean something:
+# change the pack and the check now actually re-tests the gear.
+LEG_H = 47.5                           # web height, plate underside to foot top
+LEG_BATT_MARGIN = 12.0                 # required air under the pack, mm
 GROUND_CLEAR = LEG_H + FOOT_T          # plate underside to the ground
 
 report = []
@@ -387,10 +415,19 @@ def build_arm():
 def build_leg():
     """One landing-gear web, built in the (r, z) plane then placed.
 
-    A FLAT PROFILE OF CONSTANT THICKNESS, like everything else structural
-    here, so it prints on edge (layer lines along the load, rule 2) or
-    cuts from the same CF sheet. Tapered because the bending moment on a
-    landing leg is largest at the top.
+    A flat profile, but NOT a sheet part -- and this is the one place the
+    project's material-independence rule genuinely does not hold. The web
+    is LEG_W = 14 mm thick in BOTH builds, because thickness is what a
+    landing leg needs: bending stiffness about the weak axis goes as the
+    cube of it, so a 2 mm CF blade would have 1/343 of this one. 14 mm CF
+    plate is also not something you buy.
+
+    So the legs are PRINTED IN BOTH BUILDS, on edge (layer lines along the
+    load, rule 2), and they are excluded from the flats DXF. That suits
+    them anyway -- with the feet, they are the crash consumables.
+
+    Tapered because the bending moment on a landing leg is largest at the
+    top.
 
     It does NOT bolt directly to the arm. A flat vertical plate cannot
     bolt to a flat horizontal plate without something at 90 degrees
@@ -564,21 +601,48 @@ for i in range(1, 90):
     b = MOTOR_R * math.sin(ang)
     best_alt = max(best_alt, min(2 * a, 2 * b))
 check("the landing gear clears the slung battery",
-      GROUND_CLEAR > BATT_DROP,
-      "%.1f mm ground clearance vs a %.1f mm pack drop (%.1f mm to spare)"
-      % (GROUND_CLEAR, BATT_DROP, GROUND_CLEAR - BATT_DROP))
+      GROUND_CLEAR >= BATT_DROP + LEG_BATT_MARGIN,
+      "%.1f mm ground clearance vs a %.1f mm pack drop (%.1f mm of air, %.1f required)"
+      % (GROUND_CLEAR, BATT_DROP, GROUND_CLEAR - BATT_DROP, LEG_BATT_MARGIN))
+# The FOOT is the outermost thing, not the web: FOOT_L is 18 mm centred
+# at LEG_R + LEG_SPLAY, so it reaches further than the 12 mm web bottom.
+# The detail string used to print the web's reach and call it the foot.
+FOOT_REACH_R = LEG_R + LEG_SPLAY + FOOT_L / 2.0
 check("the legs sit inboard of the motors",
-      LEG_R + LEG_SPLAY + LEG_BOT / 2.0 < MOTOR_R,
-      "foot reaches r=%.1f, motor at r=%.1f" % (LEG_R + LEG_SPLAY + LEG_BOT / 2.0, MOTOR_R))
+      FOOT_REACH_R < MOTOR_R,
+      "web reaches r=%.1f, foot reaches r=%.1f, motor at r=%.1f"
+      % (LEG_R + LEG_SPLAY + LEG_BOT / 2.0, FOOT_REACH_R, MOTOR_R))
 check("the legs mount on the arm, not off the end of it",
       LEG_R + LEG_TOP / 2.0 < MOTOR_R and LEG_R - LEG_TOP / 2.0 > ARM_ROOT_R,
       "top land spans r=%.1f..%.1f, arm spans %.1f..%.1f"
       % (LEG_R - LEG_TOP / 2.0, LEG_R + LEG_TOP / 2.0, ARM_ROOT_R, MOTOR_R))
-check("the feet are a separate part (crash consumable, not a member)",
-      FOOT_T > 0 and len(feet) == 4, "%d feet, %.1f mm thick" % (len(feet), FOOT_T))
-check("leg thickness meets the %s minimum" % MATERIAL,
-      ARM_T >= (4.0 if MATERIAL == "PETG" else 2.0),
-      "%.1f mm (the web uses the arm section)" % ARM_T)
+# `FOOT_T > 0 and len(feet) == 4` was the old check here. FOOT_T is a
+# positive constant and `feet` is filled unconditionally with four
+# entries, so it could not fail. Replaced with the property the landing
+# gear actually has to have: you can tilt it and it comes back.
+#
+# The tip-over axis of an X-configuration runs between two ADJACENT feet,
+# at footprint_radius / sqrt(2) from the centre -- not at the full radius.
+# CG height is taken as the plate underside, which is conservative: the
+# battery hangs below it and drags the real CG lower.
+TIP_AXIS_MM  = FOOT_REACH_R / math.sqrt(2.0)
+TIP_ANGLE_DEG = math.degrees(math.atan2(TIP_AXIS_MM, GROUND_CLEAR))
+check("the gear is not tippy (static tip-over angle)",
+      TIP_ANGLE_DEG >= 25.0,
+      "%.1f deg about the axis between two adjacent feet (>= 25 required)"
+      % TIP_ANGLE_DEG)
+
+# This check used to read `ARM_T >= ...` and print "(the web uses the arm
+# section)". ARM_T appears NOWHERE in build_leg() -- the web is extruded
+# by LEG_W. Setting LEG_W to 0.5 mm left the check printing "OK 4.0 mm".
+# It measures the leg now, against the rule that actually applies: the
+# leg is printed in both builds, so the PETG minimum is the only one.
+check("leg web thickness meets the printed-part minimum",
+      LEG_W >= 4.0,
+      "%.1f mm (printed in both builds -- see SHEET_PARTS)" % LEG_W)
+check("the landing gear is printed, not cut from the sheet",
+      set(PRINTED_PARTS).isdisjoint(SHEET_PARTS),
+      "sheet: %s | printed: %s" % (", ".join(SHEET_PARTS), ", ".join(PRINTED_PARTS)))
 check("symmetric X maximises the minimum adjacent spacing",
       ADJACENT_SPACING >= best_alt - 1e-6,
       "%.2f vs best stretched-X %.2f mm" % (ADJACENT_SPACING, best_alt))
@@ -587,17 +651,28 @@ check("symmetric X maximises the minimum adjacent spacing",
 # 4b. MASS — a cross-check against the 469 g frame line in the AUW budget
 # ----------------------------------------------------------------------
 
-vol_mm3 = (bottom.Volume + top.Volume + 4 * arm_proto.Volume
-           + 4 * leg_proto.Volume + 4 * foot_proto.Volume)
-mass_g = vol_mm3 / 1000.0 * DENSITY
+# THE LANDING GEAR IS PRINTED IN BOTH BUILDS, so it weighs PETG in both
+# builds. Costing it at CF density in the CF build inflated the estimate
+# by ~14 g -- a small number, but wrong in the flattering direction, and
+# it would have quietly contradicted the decision made two screens up.
+PETG_DENSITY = 1.27
+GEAR_DENSITY = PETG_DENSITY
+sheet_mm3 = bottom.Volume + top.Volume + 4 * arm_proto.Volume
+gear_mm3  = 4 * leg_proto.Volume + 4 * foot_proto.Volume
+mass_g = sheet_mm3 / 1000.0 * DENSITY + gear_mm3 / 1000.0 * GEAR_DENSITY
 
 say("")
-say("mass estimate (%s, rho = %.2f g/cm^3):" % (MATERIAL, DENSITY))
+say("mass estimate (%s sheet parts, rho = %.2f g/cm^3;" % (MATERIAL, DENSITY))
+say("               printed gear, rho = %.2f g/cm^3):" % GEAR_DENSITY)
 say("  bottom plate      %6.1f g" % (bottom.Volume / 1000.0 * DENSITY))
 say("  top plate         %6.1f g" % (top.Volume / 1000.0 * DENSITY))
 say("  arms (x4)         %6.1f g" % (4 * arm_proto.Volume / 1000.0 * DENSITY))
-say("  legs (x4)         %6.1f g" % (4 * leg_proto.Volume / 1000.0 * DENSITY))
-say("  feet (x4)         %6.1f g" % (4 * foot_proto.Volume / 1000.0 * DENSITY))
+say("  legs (x4)         %6.1f g  (printed%s)"
+    % (4 * leg_proto.Volume / 1000.0 * GEAR_DENSITY,
+       "" if MATERIAL == "PETG" else " -- PETG even in the CF build"))
+say("  feet (x4)         %6.1f g  (printed%s)"
+    % (4 * foot_proto.Volume / 1000.0 * GEAR_DENSITY,
+       "" if MATERIAL == "PETG" else " -- PETG even in the CF build"))
 say("  ---------------------------")
 say("  structure         %6.1f g" % mass_g)
 say("")
@@ -757,9 +832,15 @@ for o in objs:
 # rather than a claim -- the same outline that gets printed gets cut.
 try:
     import importDXF
+    # ONLY SHEET PARTS. leg_1 (14.0 mm) and foot_1 (6.0 mm) used to be in
+    # here, and they are not sheet parts in either build -- their thickness
+    # is a constant, not a function of MATERIAL. A builder who cut leg_1
+    # from 2 mm CF because this file said "flats" would get a leg with
+    # (2/14)^3 = 1/343 of the modelled sideways stiffness, and the M3x20
+    # bolts in the hardware BOM (sized 14 + 6) would protrude 12 mm.
     flat = []
     for o in objs:
-        if o.Name in ("bottom_plate", "top_plate", "arm_1", "leg_1", "foot_1"):
+        if o.Name in SHEET_PARTS:
             flat.append(o)
     dxf_path = out("stevie-frame-v0-flats-%s.dxf" % tag)
     importDXF.export(flat, dxf_path)

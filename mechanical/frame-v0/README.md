@@ -57,20 +57,31 @@ bottom and a top plate.
 
 `cfd-structural-recommendation-2026-08-17.md` requires the frame to build
 as FDM-printed PETG-class **or** as carbon plate, resin never structural.
-That requirement is what makes every structural part here a **flat
-profile of constant thickness** — no draft, no ribs, no bosses, nothing
-that only a printer can produce. The same outline is either printed or
-cut, off the same DXF, which is exported.
+That requirement is what makes the plates and arms here **flat profiles
+of constant thickness** — no draft, no ribs, no bosses, nothing that only
+a printer can produce. The same outline is either printed or cut, off the
+same DXF, which is exported.
 
-Thickness is the only difference between the two builds:
+**The landing gear is the exception, and it is a deliberate one.** The
+leg web is 14 mm and the foot is 6 mm *in both builds* — their thickness
+is a constant, not a function of material. Bending stiffness about a
+leg's weak axis goes as the cube of thickness, so a 2 mm CF blade 47.5 mm
+tall would have **1/343** of the modelled value, and 14 mm CF plate is
+not something you buy. So **legs and feet are printed in both builds**,
+and they are excluded from the flats DXF. That suits them: with the
+bracket they are the crash consumables.
+
+For the parts that do come off a sheet, thickness is the only difference
+between the two builds:
 
 | | PETG | CF plate | rule |
 |---|---|---|---|
 | Bottom plate | 3.0 mm | 2.0 mm | 3 mm min wall on load paths / 1.5 mm plate min |
 | Top plate | 3.0 mm | 1.5 mm | same |
 | Arm | 4.0 mm | 2.0 mm | 4 mm at arm roots / 2 mm CF arms |
-| Leg web | 4.0 mm | 2.0 mm | uses the arm section |
-| **Structure mass** | **201.2 g** | **169.5 g** | now including landing gear | bulk density 1.27 / 1.55 g·cm⁻³ |
+| Leg web | **14.0 mm** | **14.0 mm** | printed both builds — not a sheet part |
+| Foot | **6.0 mm** | **6.0 mm** | printed both builds — not a sheet part |
+| **Structure mass** | **201.2 g** | **156.3 g** | incl. landing gear; sheet at 1.27 / 1.55 g·cm⁻³, printed gear at 1.27 in both |
 
 Sections are sized to the **weaker** material and the stronger one is
 checked to fit the same envelope, which is what that document asks for.
@@ -179,7 +190,8 @@ one.
 | `stevie-frame-v0-petg.step` / `-cf.step` | full assembly, both variants |
 | `stevie-frame-v0-petg.stl` / `-cf.stl` | assembly mesh |
 | `part-bottom-plate-*.stl`, `part-top-plate-*.stl`, `part-arm-1-*.stl` | per-part, because you print the arm four times |
-| `stevie-frame-v0-flats-*.dxf` | **flat outlines for CF cutting** — this is what makes the carbon option real rather than claimed |
+| `stevie-frame-v0-flats-*.dxf` | **flat outlines for CF cutting** — this is what makes the carbon option real rather than claimed. **Sheet parts only:** bottom plate, top plate, arm. The legs and feet are printed in both builds and are deliberately *not* in this file |
+| `part-leg-1-*.stl`, `part-foot-1-*.stl` | the landing gear — **print these even for the CF build** |
 | `stevie-frame-v0-*-plan.svg` | scale plan view, gallery render |
 | `build-report-*.txt` | the run's own numbers and check results |
 

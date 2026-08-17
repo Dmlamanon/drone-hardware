@@ -51,19 +51,34 @@ bracket, where the insert is doing real work in a crash.
 
 ---
 
-## The one part that is not material-independent
+## The parts that are not material-independent
 
-**The landing-leg angle bracket.** Everything else this project emits is a
-flat profile of constant thickness, printed or cut off the same DXF. A leg
-bracket cannot be: a flat vertical web cannot bolt to a flat horizontal
-arm without something at 90° between them, and modelling a printed L that
-only works in one material would be pretending otherwise.
+There are **three**, and an earlier version of this file claimed one.
+Naming them properly matters, because the flats DXF is a cutting file and
+anything wrongly described as a sheet part gets cut from sheet.
+
+**1–2. The landing legs and their feet.** The leg web is **14 mm** and the
+foot **6 mm** — in *both* builds. Bending stiffness about a leg's weak
+axis goes as thickness cubed, so a 2 mm CF blade 47.5 mm tall would have
+**1/343** of the modelled stiffness, and 14 mm CF plate is not something
+you buy. So the gear is **printed in both builds**, and `frame_v0.py`
+excludes it from `stevie-frame-v0-flats-*.dxf`. That suits it: with the
+bracket, the gear is the crash consumable.
+
+The M3 × 20 in joint 5 below is sized for exactly this — 14 mm web plus
+6 mm foot. If you ever see a 2 mm leg, the bolt is the tell.
+
+**3. The landing-leg angle bracket.** A flat vertical web cannot bolt to a
+flat horizontal arm without something at 90° between them, and modelling a
+printed L that only works in one material would be pretending otherwise.
 
 So it is bought, not made: **an off-the-shelf M3 aluminium angle bracket,
 20 × 20 × 20 mm, 2 mm wall, four M3 holes.** Same part for both builds.
-That keeps the rule meaningful — the *frame* is material-independent, and
-the one joint that cannot be is an off-the-shelf metal part rather than a
-quiet exception.
+
+The rule still means something — the *load-bearing sheet* (plates, arms)
+is genuinely material-independent, and the three exceptions are named
+here and enforced by a check in `frame_v0.py` rather than left as a
+comment.
 
 ---
 
