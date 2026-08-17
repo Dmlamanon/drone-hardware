@@ -92,6 +92,15 @@ BATT_TOL = 2.0           # the published tolerance
 BATT_CLEAR = 2.0         # strap/heat-shrink slop on top of the tolerance
 STRAP_W = 22.0           # a 20 mm hook-and-loop strap plus slop
 STRAP_SLOT_T = 3.5       # slot short dimension
+# Distance of each strap slot from the centreline, along the long axis.
+# This was derived from the battery length (bay_l/2 - 12 = 56.5) and that
+# put the slots' outer ends at x+y = 98.75, THROUGH the octagon's chamfer
+# at x+y = 95 -- so all four "slots" were open notches and a strap would
+# have slid straight out. An independent review caught it in the exported
+# STL. It is now an explicit number with a check behind it (see the
+# feature-inside-outline check in section 4). 96 mm apart on a 133 mm
+# pack is still sensible strap spacing.
+STRAP_X = 46.0
 
 # --- Motor mount ----------------------------------------------------
 # TWO patterns are drilled, and the reason is a real mismatch found while
@@ -226,6 +235,23 @@ def slot(x, y, w, h, t, z=-1.0):
     return body.fuse(c1).fuse(c2)
 
 
+def inside_octagon(x, y, sx, sy, corner, margin=0.0):
+    """Is (x, y) inside the chamfered rectangle, with `margin` to spare?
+
+    Every cut feature has to be checked against THIS, not against the
+    bounding rectangle. The bounding rectangle is what the first version
+    of the arm-bolt check used, and it is why four battery-strap slots
+    ran off through the chamfer without anything noticing: |x| < 70 and
+    |y| < 55 are both true at (58.25, 40.5), and that point is outside
+    the plate.
+    """
+    hx, hy = sx / 2.0 - margin, sy / 2.0 - margin
+    if abs(x) > hx or abs(y) > hy:
+        return False
+    # the four chamfers, all of the form |x| + |y| <= (sx + sy)/2 - corner
+    return (abs(x) + abs(y)) <= (sx / 2.0 + sy / 2.0 - corner) - margin * 1.4142
+
+
 ARM_ANGLES = [45.0, 135.0, 225.0, 315.0]
 
 
@@ -260,11 +286,16 @@ for (x, y) in arm_bolt_positions():
 
 # battery strap slots -- two pairs straddling the pack, across the short axis
 bay_l = BATT_L + BATT_TOL + BATT_CLEAR
+# +8 rather than +6: at +6 the strap slot's inner edge cleared the FC
+# mount holes by 0.05 mm, which the check above now prints rather than
+# hides. 0.05 mm is not clearance, it is a coincidence.
+strap_y = BATT_W / 2.0 + BATT_TOL / 2.0 + 8.0
+strap_slots = []
 for sx in (-1, 1):
-    xs = sx * (bay_l / 2.0 - 12.0)
     for sy in (-1, 1):
-        cuts.append(slot(xs, sy * (BATT_W / 2.0 + BATT_TOL / 2.0 + 6.0),
-                         STRAP_SLOT_T, STRAP_W, PLATE_T_BOTTOM))
+        strap_slots.append((sx * STRAP_X, sy * strap_y))
+for (x, y) in strap_slots:
+    cuts.append(slot(x, y, STRAP_SLOT_T, STRAP_W, PLATE_T_BOTTOM))
 
 for c in cuts:
     bottom = bottom.cut(c)
@@ -356,14 +387,36 @@ def check(label, cond, detail=""):
 
 say("")
 say("geometry checks:")
-check("arm bolts land inside the bottom plate outline",
-      ARM_BOLT_R2 * math.cos(math.radians(45)) < PLATE_X / 2.0,
-      "%.1f < %.1f" % (ARM_BOLT_R2 * math.cos(math.radians(45)), PLATE_X / 2.0))
+# Every hole and slot in the bottom plate, checked against the ACTUAL
+# outline rather than its bounding box, with 2 mm of material to spare.
+feature_pts = []
+for (bx, by) in arm_bolt_positions():
+    feature_pts.append(("arm bolt", bx, by, ARM_HOLE_D / 2.0))
+for sgn in ((-1, -1), (-1, 1), (1, -1), (1, 1)):
+    feature_pts.append(("FC mount", sgn[0] * FC_MOUNT / 2.0, sgn[1] * FC_MOUNT / 2.0,
+                        FC_HOLE_D / 2.0))
+for (x, y) in strap_slots:
+    # a slot's worst point is its far corner, so check all four
+    for dx in (-STRAP_SLOT_T / 2.0, STRAP_SLOT_T / 2.0):
+        for dy in (-STRAP_W / 2.0, STRAP_W / 2.0):
+            feature_pts.append(("strap slot", x + dx, y + dy, 0.0))
+
+bad = [(n, x, y) for (n, x, y, r) in feature_pts
+       if not inside_octagon(x, y, PLATE_X, PLATE_Y, PLATE_CORNER, margin=2.0 + r)]
+check("every hole and slot is inside the plate OUTLINE, not just its bbox",
+      not bad,
+      "all %d clear" % len(feature_pts) if not bad
+      else "%s at (%.2f, %.2f) breaks out" % (bad[0][0], bad[0][1], bad[0][2]))
 check("battery bay fits within the plate long axis",
       BATT_L + BATT_TOL <= PLATE_X, "%.1f <= %.1f" % (BATT_L + BATT_TOL, PLATE_X))
-check("FC pattern clears the battery straps",
-      FC_MOUNT / 2.0 + FC_HOLE_D < BATT_W / 2.0 + BATT_TOL / 2.0 + 6.0 - STRAP_W / 2.0 or True,
-      "(informational)")
+# NOT "or True". An earlier version had that on the end of this
+# condition, inside a block headed "checked not assumed", which made it
+# print OK unconditionally. The real margin is worth seeing: it passes by
+# 0.05 mm, which is exactly the kind of thing a rigged check hides.
+_fc_edge = FC_MOUNT / 2.0 + FC_HOLE_D
+_strap_edge = strap_y - STRAP_W / 2.0
+check("FC mount pattern clears the battery straps",
+      _fc_edge < _strap_edge, "%.2f < %.2f mm" % (_fc_edge, _strap_edge))
 check("props do not overlap", TIP_GAP > 0, "%.2f mm gap" % TIP_GAP)
 check("tip gap meets the >=10 % guideline", TIP_GAP_PCT >= 10.0,
       "%.2f %% -- see README" % TIP_GAP_PCT)
@@ -574,9 +627,19 @@ try:
 except Exception as exc:                                   # noqa: BLE001
     say("DXF   -> NOT WRITTEN: %s" % exc)
 
-with open(out("build-report-%s.txt" % tag), "w") as fh:
-    fh.write("\n".join(report) + "\n")
-
 say("")
 say("RESULT: %s" % ("all geometry checks passed" if ok else
                     "one or more geometry checks FAILED -- see above"))
+
+# The report is written AFTER the verdict, not before. The first version
+# wrote it first, so every build-report-*.txt ended at the DXF line with
+# no pass/fail line in it at all -- the one thing a reader looks for.
+with open(out("build-report-%s.txt" % tag), "w") as fh:
+    fh.write(chr(10).join(report) + chr(10))
+
+# And a failed check is visible to whatever ran this. The exports still
+# happen deliberately -- a v0 fit-check model with a known-failing prop
+# clearance is exactly what this batch hands over -- but the process must
+# not exit 0 while reporting a FAIL.
+if not ok:
+    sys.exit(1)

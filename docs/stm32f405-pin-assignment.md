@@ -110,13 +110,19 @@ NRST/BOOT0, IMU SPI1, CRSF USART1, USB, SWD, DShot TIM4). This batch adds
 counted precisely: PC0, PC1, PC2, PC3, PB10, PB11, PB13, PB14, PB15, PC10,
 PC11 = **11 newly assigned pins**), bringing the total to 42 of 64. **The
 expansion bus fits the pin budget with no compromise and no AF conflicts**
-— roughly 22 GPIOs remained free after that batch. **Three have since been
-spent** (2026-08-17): PA1 to GPS_RX, PA3 to ESC_TELEM_RX, PA8 to the buzzer,
-leaving **19 free** (PC13-15, PA15, PB0-2, PB3-5, PC5-9, PC12, PD2) — still
-comfortably more than the "spare capacity" a v1 board needs, and PC6-PC9 of
-those are the reserved tiltrotor servo channels rather than general spares.
-The one real flag is pre-existing (PB2/BOOT1 floating), not introduced by
-any of these additions.
+— **TWO** GPIOs have since been spent (2026-08-17): PA1 to GPS_RX and PA8
+to the buzzer. PA3 was already allocated to ESC_TELEM_RX before that batch
+— the "before" column of this table says so — and an earlier version of
+this paragraph wrongly counted it as newly spent.
+
+**17 remain free**, counted rather than estimated: PC13, PC14, PC15, PA15,
+PB0, PB1, PB2, PB3, PB4, PB5, PC5, PC6, PC7, PC8, PC9, PC12, PD2. (The
+previous "roughly 22" also contradicted its own list, which had 19 entries
+— hence counting them here.) Four of the 17, PC6-PC9, are the reserved
+tiltrotor servo channels rather than general spares, so **13 are genuinely
+uncommitted**. Still comfortably more than the spare capacity a v1 board
+needs. The one real flag is pre-existing (PB2/BOOT1 floating), not
+introduced by any of these additions.
 
 ## Related
 

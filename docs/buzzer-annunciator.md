@@ -120,6 +120,29 @@ otherwise have shipped:
   against the actual `filled_polygon` geometry**, not against the zone
   outline and not by eye.
 
+> [!warning] That second check was NOT in the committed tool when this was
+> first written
+> The point-in-polygon work had been done once, ad hoc, in a throwaway
+> script, and then written up here as though `scripts/padclear.py`
+> performed it. It did not — it parsed only `(segment ...)` and
+> `(via ...)`. An independent review ran the committed file and got a
+> clean `CLEAR` on a placement KiCad's own DRC flagged with eight zone
+> errors.
+>
+> **The tool now actually does it.** It parses the zones' `filled_polygon`
+> geometry and, for every through-hole pad, checks both directions: that
+> the pad is *inside* the pour carrying its own net, and *clear of* every
+> other net's pour. Re-run against the current board it reports the four
+> J10/zone pairs that DRC reports; re-run against a deliberately bad
+> placement it reports `is OUTSIDE its own /GND pour ... it connects to
+> NOTHING`.
+>
+> The same review found a second latent fault in that file: the layer
+> filter was hard-coded to `F.Cu`, so a **bottom-side** pad would have
+> been compared against top-side tracks and against nothing on its own
+> layer — a guaranteed false pass. Fixed. It had not bitten because every
+> part placed so far is top-side.
+
 That checker had a bug of its own on first use — it applied KiCad's
 rotation with the wrong sign, so J10's pad 2 was checked at x=52.46 when
 it is really at x=57.54. A rotated footprint was therefore being
@@ -167,9 +190,26 @@ the authority here — see the note below about the SWIG backend.
 | violations | 46 | 64 | +18 |
 | unconnected | 13 | 15 | +2 |
 
-The +2 unconnected are exactly the two items listed above. Of the +18
-violations, **+12 are `clearance`/`hole_clearance` between the new pads
-and the stored zone fill**, and they are all one thing:
+The +2 unconnected are exactly the two items listed above. The +18
+breaks down as:
+
+| type | delta | what |
+|---|---|---|
+| `clearance` | +6 | new pads/vias vs. the stored zone fill |
+| `hole_clearance` | +6 | same four pad/zone pairs, counted again |
+| `silk_overlap` | +3 | cosmetic; board-wide norm, see below |
+| `silk_over_copper` | +1 | cosmetic |
+| `silk_edge_clearance` | +1 | C27's reference text near the board edge |
+| `copper_edge_clearance` | +1 | J3's USB-C shield — **a genuinely new error**, not pre-existing, and not caused by the buzzer either; it appeared when the `/`-prefix restore re-enabled the Power netclass and tightened J3's clearance |
+
+An earlier version of this table said "+4 silk overlaps" (it is 5 across
+the three silk categories) and dismissed the `copper_edge_clearance` as
+"pre-existing, unrelated". It is on J3, which is a pre-existing area, but
+it is **not** in the 46-violation baseline — so it is a new error and is
+recorded as one.
+
+**+12 are `clearance`/`hole_clearance` between the new pads and the
+stored zone fill**, and they are all one thing:
 
 > **The stored zone fill predates these six footprints and must be
 > regenerated before Gerber export.** Open the board in KiCad and run

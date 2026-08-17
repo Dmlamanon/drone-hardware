@@ -127,6 +127,10 @@ plus the two buzzer items above, for 15 in total.
    32 is done. The rest want the 3V3 pour extended under the MCU, which
    is the same work as job A.
 3. **The GND pins** (U1 12, 18, 63; U4 1, 11) — same story on In1.Cu.
+4. **U4 pad 13 (`/3V3`).** Called out separately because it was in the
+   pad list and the verbatim DRC block above but in **none** of the three
+   ordered steps — step 2 was U1-only and step 3 is GND-only — so anyone
+   working this list top-down would have skipped it silently.
 
 **Get the pad names right when working pad-by-pad:** on an LQFP-64
 STM32F405, **pad 1 is VBAT** and **pad 13 is VDDA**; the four VDD pins

@@ -57,7 +57,7 @@ Checked directly:
 | Input | Status |
 |---|---|
 | `docs/cfd-structural-recommendation-2026-08-17.md` | **EXISTS** — written last batch, contains the material-independence rules |
-| `docs/mechanical-requirements.md` | **DOES NOT EXIST** anywhere in either repo or the vault |
+| `docs/mechanical-requirements.md` | **DID NOT EXIST** when this was written. **Now created** (2026-08-17, item 8) — see the correction below the table |
 | `engineering/drone-hardware/mechanical/` and a board STEP | **DOES NOT EXIST** — no `mechanical/` directory, and `find` turns up no `.step`/`.stp` anywhere in the repo |
 
 This is the same false-premise shape this project has hit before — the
@@ -70,10 +70,33 @@ silently treated as real prior work.
 - The **board STEP is generated** this batch with
   `kicad-cli pcb export step`, which is real output from the real board
   rather than a document that was supposed to exist.
-- The **mechanical requirements are written** this batch from constraints
-  that genuinely do exist and are cited to their sources: the 350 mm
+- The **mechanical requirements are written** this batch —
+  `docs/mechanical-requirements.md` — from constraints that genuinely do
+  exist and are cited to their sources: the 350 mm
   wheelbase and mass budget from
   `drone-firmware/docs/inertia-estimate-350class-REAL-2026-08-16.md`, the
   30.5 mm FC mount pattern, the 18.9 mm / 8.3 % prop-clearance finding
   from the CFD doc, and the PETG/PA-CF/CF-plate section minimums from the
   same.
+
+---
+
+## Correction — 2026-08-17, batch F item 8
+
+This document asserted that "the mechanical requirements are written this
+batch". **When item 6 was finished they were not.** They existed only as
+prose scattered through `mechanical/frame-v0/README.md`; no file named
+`mechanical-requirements.md` existed anywhere in either repo or the
+vault, and the item-6 diff created none.
+
+An independent review of the batch caught it — and the shape of the miss
+is worth recording, because this document is the one that *warned about
+exactly this shape*: it flagged the missing input as "the same
+false-premise shape this project has hit before", and then asserted the
+remedy in the same breath without delivering it. Flagging a false premise
+and then producing one is a specific failure mode, not a clerical slip.
+
+`docs/mechanical-requirements.md` now exists, with every requirement
+traced to a source and the two weakest figures (the INVENTED ×1.4 frame
+multiplier, and the battery's implausible 176 Wh/kg) flagged as weak
+rather than presented as data.

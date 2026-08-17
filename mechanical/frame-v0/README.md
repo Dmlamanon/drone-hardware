@@ -69,7 +69,7 @@ Thickness is the only difference between the two builds:
 | Bottom plate | 3.0 mm | 2.0 mm | 3 mm min wall on load paths / 1.5 mm plate min |
 | Top plate | 3.0 mm | 1.5 mm | same |
 | Arm | 4.0 mm | 2.0 mm | 4 mm at arm roots / 2 mm CF arms |
-| **Structure mass** | **141.5 g** | **96.6 g** | bulk density 1.27 / 1.55 g·cm⁻³ |
+| **Structure mass** | **141.4 g** | **96.5 g** | bulk density 1.27 / 1.55 g·cm⁻³ |
 
 Sections are sized to the **weaker** material and the stronger one is
 checked to fit the same envelope, which is what that document asks for.
@@ -172,6 +172,40 @@ the STL would actually hide.
 
 ---
 
+## The battery-strap slots were wrong, and the check that now catches it
+
+The first version put all four strap slots at x = ±56.5. Their outer ends
+reach x + y = 98.75, and the octagon's chamfer is the line x + y = 95 —
+so **all four "slots" were open notches** in the exported STL, STEP and
+DXF, with a ~4.4 mm gap wider than the 3.5 mm slot itself. A strap would
+have slid straight out. An independent review found it by reading the
+exported mesh and confirmed it in the volume figure.
+
+The slots are now at x = ±46 and, more importantly, **the script checks
+it**. Every hole and slot corner is tested against the actual outline —
+chamfers included — with 2 mm of material to spare. That check would have
+caught this on the first run. It also replaced a weaker arm-bolt check
+that compared only against the bounding rectangle, and so could not have
+caught it either: |x| < 70 and |y| < 55 are both true at (58.25, 40.5),
+and that point is outside the plate.
+
+Verified in the rebuilt mesh: the slot's rounded tip arc is present, and
+no vertex lies on the chamfer line anywhere in the slot region.
+
+Three related fixes from the same review:
+
+- The strap slots' inner edge cleared the FC mount holes by **0.05 mm**,
+  which is a coincidence rather than clearance. Now 2.05 mm — and the
+  check prints the margin instead of a bare OK.
+- One check ended in `... or True`, inside a block headed *"geometry that
+  must hold, checked not assumed"*, so it passed unconditionally. Removed.
+- The build report was written *before* the verdict line, so every
+  `build-report-*.txt` ended at the DXF path with no pass/fail in it at
+  all. It now contains the verdict, and the script exits non-zero when a
+  check fails.
+
+---
+
 ## Known gaps in v0, listed rather than discovered later
 
 1. **No FEA.** Sections are material minimums, not analysis results.
@@ -200,7 +234,18 @@ the STL would actually hide.
    corners that matter are where the arm meets the plate in the sandwich
    — which in this construction is a bolted joint, not a moulded corner,
    so the rule applies differently. Worth a deliberate pass in v1.
-5. **Arm print orientation is a slicer decision, not captured here.**
+5. **The battery figure deserves a second look before `PLATE_X` is
+   locked.** 5.2 Ah × 14.8 V = 77.0 Wh at 436.5 g is **176 Wh/kg**, above
+   the practical ceiling for a 35C LiPo (typically 130–160). Mass and
+   volume are mutually consistent (2.18 g/cm³, normal for a pack) and
+   436.5 g is a pre-existing project number classed RETAIL-LISTING, so
+   this is a flag rather than a proven error. It matters because the plate
+   is sized to the 133 mm length: **if the real pack is a 148–155 mm
+   variant it does not fit the 137 mm bay.** Weigh and measure the actual
+   pack on thrust-stand day before locking the plate. Note also that
+   "matches the mass the AUW budget assumes" is circular — both trace to
+   the same listing.
+6. **Arm print orientation is a slicer decision, not captured here.**
    Rule 2 requires arms printed on edge so bending is not across layer
    lines. The STL is exported in the assembly orientation; whoever slices
    it must rotate the arm.
