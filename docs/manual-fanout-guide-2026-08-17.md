@@ -77,7 +77,24 @@ forbidden, but because the fix is *move existing copper*, which is a
 judgement call about which trace yields — exactly what an interactive
 router with live DRC is for and what a coordinate search is not.
 
-### The 13 items that remain, verbatim from DRC
+### The 15 items that remain, verbatim from DRC
+
+**Updated 2026-08-17 after the buzzer went on the board (batch F item 5).**
+Two items were added by that work and both are ordinary routing rather
+than fanout:
+
+```
+Pad 41 [/BUZZER_GPIO] of U1  <-> Pad 1 [/BUZZER_GPIO] of R14
+Track [/5V_RX] 4.7000 mm     <-> PTH pad 1 [/5V_RX] of J7
+```
+
+The first is the one wire that makes the buzzer work at all — until it
+exists the annunciator is placed and inert. The second ties the buzzer's
+local 5 V cluster (D2/C27/J10) back to the boost rail.
+
+The original thirteen follow.
+
+
 
 ```
 Pad 1 [/3V3] of U1        <-> Pad 64 [/3V3] of U1
@@ -96,7 +113,8 @@ PTH pad B1 [/GND] of J3   <-> Pad A12 [/GND] of J3
 ```
 
 That is **11 distinct pads** (U1: 1, 12, 13, 18, 19, 48, 63, 64; U4: 1,
-11, 13) plus J3's four shield pads, spread across 13 ratsnest edges.
+11, 13) plus J3's four shield pads, spread across 13 ratsnest edges --
+plus the two buzzer items above, for 15 in total.
 
 **Do them in this order:**
 

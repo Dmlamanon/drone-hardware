@@ -7,6 +7,29 @@ tags: [drone, hardware, pcb, fab]
 
 # Fab package — bench_board, 2026-08-17
 
+> [!danger] THIS PACKAGE IS STALE — DO NOT ORDER FROM IT
+> **Marked 2026-08-17, batch F item 8.**
+>
+> These Gerbers were generated before two later batches of change to the board
+> and no longer describe it:
+>
+> | change | effect on this package |
+> |---|---|
+> | Items 1 + 2 — two fanout vias placed, inner-layer cleanup | vias and inner-layer copper differ |
+> | Item 5 — the buzzer (Q1, R14, R15, D2, C27, J10 on PA8) | **six components and their copper are missing entirely** |
+>
+> **Before regenerating:** the board's stored zone fill predates the
+> buzzer footprints and must be refilled in the KiCad UI
+> (Edit → Fill All Zones). Regenerating Gerbers against the current
+> stored fill would bake a fill with no antipads for J10's two
+> through-holes straight into the copper layers. See
+> `docs/buzzer-annunciator.md`.
+>
+> The DRC and parity numbers below are the numbers **as of this
+> package**, and are kept for that reason. The board's current numbers
+> are 64 violations / 15 unconnected — see the batch F final report.
+
+
 ## Status: **NOT READY TO ORDER**
 
 This is a complete set of fabrication outputs, and it is **not**
