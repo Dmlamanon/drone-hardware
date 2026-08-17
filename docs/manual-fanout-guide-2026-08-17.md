@@ -442,11 +442,21 @@ PTH pad B12 [/GND] of J3 <-> Pad A1 [/GND] of J3
 
 ### Why a script cannot finish these
 
-At **0.5 mm pin pitch** the escape channel between adjacent LQFP-64 pads
-is smaller than the smallest legal via this board allows. So a fanout via
-cannot sit *between* pins; it has to sit *outside* the pin row, and the
-stub reaching it has to cross whatever is already routed there — which,
-on the supply pins, is the fanout of the neighbouring signal pins.
+The escape channel between adjacent LQFP-64 pads is **4.5x too narrow**,
+measured off this board rather than estimated:
+
+| | |
+|---|---|
+| U1 pad size | 1.550 x **0.300** mm |
+| pin pitch | **0.500** mm |
+| **gap between adjacent pads** | **0.200 mm** |
+| smallest legal via here | **0.500 mm** dia (0.30 drill + 2 x 0.10 annular) |
+| channel a via would need | 0.500 + 2 x 0.200 clearance = **0.900 mm** |
+
+So a fanout via **cannot sit between pins**. It has to sit *outside* the
+pin row, and the stub reaching it has to cross whatever is already routed
+there -- which, on the supply pins, is the fanout of the neighbouring
+signal pins.
 
 Measured, at 0.50 mm via / 0.30 mm drill / 0.20 mm stub / 0.20 mm
 clearance, searching every 0.05 mm out to 3 mm: **no site satisfies all
