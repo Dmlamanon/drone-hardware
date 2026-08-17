@@ -25,10 +25,14 @@ Regenerated from the board at commit `5d17ea9` (batch 4, after item 3).
 | All components present in the CPL | **yes**, verified by diff |
 | Copper planes coherent | **yes**, 2 and 1 filled polygons |
 
-**The blocker is the 13 unconnected items.** Twelve of them are the
-MCU's and IMU's own supply pins. **An STM32 whose VDD pins are not
+**The blocker is the 13 unconnected items.** Every one is on `/3V3` or
+`/GND`, and between them they span **15 pads: 8 on U1 (MCU), 3 on U4
+(IMU), 4 on J3's USB-C shield**. **An STM32 whose VDD pins are not
 connected does not run**, so this cannot be ordered as-is regardless of
 how good the rest looks.
+
+(Two of the thirteen are J3 shield-to-shield and touch no chip; they are
+still real, and they are still unrouted.)
 
 `docs/manual-fanout-guide-2026-08-17.md` has the measured position: at
 0.5 mm pin pitch there is **no legal fanout site** for any of them, so the
