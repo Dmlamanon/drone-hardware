@@ -1,3 +1,25 @@
+> [!warning] STALE — describes a superseded power architecture, found and flagged 2026-08-16 during this batch's own independent review
+> This entire document's substantive findings (not just the path
+> references, already fixed) analyze the **original 2-stage 2S design**
+> — switching buck (`TPS563201`) dropping to 5V, then an LDO (`AMS1117-
+> 3.3`) dropping 5V→3.3V. **Neither part exists on the current board.**
+> The actual current design is a single-stage buck (`TPS54336ADDA`)
+> direct to 3.3V, no LDO, no 5V rail at all — confirmed directly against
+> `bench_board.kicad_sch`'s real placed components (only one regulator
+> `lib_id` instance exists) and `docs/schematic-wip-resolution-2026-08-16.md`.
+> **The "Linear regulator thermal failure" finding below is now moot**
+> (there is no linear regulator); **the "5V regulator failure" and
+> "brownout" findings below describe a rail and a duty-cycle-margin
+> problem specific to the wrong part** (`TPS563201`'s 570kHz/80%-duty
+> figures, not `TPS54336ADDA`'s real 340kHz behavior, already
+> re-verified for real in `docs/power-spice-verification-2026-08-16.md`).
+> **Kept in place rather than moved to `docs/superseded/`** — this
+> wasn't one of the three doc-pairs this batch's item 4 was scoped to
+> archive, and a full re-analysis against the current single-stage
+> topology is real, separate work, not a quick fix. Treat every finding
+> below as historical reasoning about a retired design, not a current
+> risk assessment, until that re-analysis happens.
+
 # Power Stage vs. Known Micro-FC Failure Modes — 2026-08-16
 
 Cross-checking the bench board's power design (schematic + the hand-
