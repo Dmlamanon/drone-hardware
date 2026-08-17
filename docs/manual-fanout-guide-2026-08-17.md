@@ -77,6 +77,33 @@ forbidden, but because the fix is *move existing copper*, which is a
 judgement call about which trace yields — exactly what an interactive
 router with live DRC is for and what a coordinate search is not.
 
+> [!info] SUPERSEDED IN PART — 2026-08-17, batch 4 item 2
+> The two buzzer items in the list below are **done**: `/BUZZER_GPIO` and
+> the `/5V_RX` feed are routed, on B.Cu, and DRC-clean. Unconnected went
+> **15 → 13**.
+>
+> The other thirteen were re-attempted with a checker that tests **both**
+> halves of the rule — clear of other-net copper **and** inside the filled
+> polygon of the plane carrying that pad's net — plus the fanout stub, not
+> just the via. Result: **zero of the eleven MCU/IMU supply pads have a
+> legal fanout site within 3 mm**, even at the smallest via this board's
+> rules allow (0.50 mm / 0.30 mm drill, 0.10 mm annular).
+>
+> That is now a measured fact rather than an impression:
+> `scripts/place_fanouts.py`. Run it and it prints, pad by pad, that there
+> is nowhere to put the via.
+>
+> **Two earlier "successes" were the checker being wrong, not the board
+> being routable.** A first version checked the stub against tracks but
+> not against pads, and placed a via for U4.11 whose stub then clipped
+> U4's own pad 10 — DRC caught it. With pads included, both placements
+> disappear. The number to trust is zero.
+>
+> The conclusion an earlier version of this guide reached stands, and now
+> has evidence: **the remaining work is to MOVE EXISTING COPPER**, which
+> is a judgement about which trace yields, and that is what an interactive
+> router with live DRC is for. See "What actually remains" at the bottom.
+
 ### The 15 items that remain, verbatim from DRC
 
 **Updated 2026-08-17 after the buzzer went on the board (batch F item 5).**
@@ -390,3 +417,60 @@ KC="/c/Program Files/KiCad/10.0/bin/kicad-cli.exe"
 - Parity: 88, of which the 25 remaining `net_conflict` entries are all
   KiCad auto-nets for deliberately unconnected MCU pins
   (`unconnected-(U1-PC13-Pad2)`), which are correct and should stay.
+
+---
+
+## What actually remains — 2026-08-17, batch 4
+
+**13 unconnected items, all of them supply pins or the USB-C shield.**
+
+```
+Pad 1  [/3V3] of U1  <-> Pad 13 [/3V3] of U1
+Pad 13 [/3V3] of U1  <-> Pad 19 [/3V3] of U1
+Pad 64 [/3V3] of U1  <-> Pad 1  [/3V3] of U1
+Pad 19 [/3V3] of U1  <-> Track [/3V3] 1.4016 mm
+Pad 48 [/3V3] of U1  <-> Pad 13 [/3V3] of U4
+Track [/3V3] 0.7128 mm <-> Pad 48 [/3V3] of U1
+Pad 12 [/GND] of U1  <-> Pad 2 [/GND] of R4
+Pad 2  [/GND] of R4  <-> Pad 63 [/GND] of U1
+Pad 18 [/GND] of U1  <-> Pad 2 [/GND] of C17
+Pad 11 [/GND] of U4  <-> Track [/GND] 0.9500 mm
+Track [/GND] 0.9500 mm <-> Pad 1 [/GND] of U4
+Pad A12 [/GND] of J3 <-> PTH pad B1  [/GND] of J3
+PTH pad B12 [/GND] of J3 <-> Pad A1 [/GND] of J3
+```
+
+### Why a script cannot finish these
+
+At **0.5 mm pin pitch** the escape channel between adjacent LQFP-64 pads
+is smaller than the smallest legal via this board allows. So a fanout via
+cannot sit *between* pins; it has to sit *outside* the pin row, and the
+stub reaching it has to cross whatever is already routed there — which,
+on the supply pins, is the fanout of the neighbouring signal pins.
+
+Measured, at 0.50 mm via / 0.30 mm drill / 0.20 mm stub / 0.20 mm
+clearance, searching every 0.05 mm out to 3 mm: **no site satisfies all
+four constraints for any of the eleven pads.**
+
+### The three ways a human can actually fix them, in order of effort
+
+1. **J3's four shield pads (A1, A12, B1, B12) are free.** They are not
+   fanout misses — B1 and B12 are through-hole and their barrels already
+   cross both inner layers. They report unconnected because the GND pour
+   does not reach them, and **refilling the zones connects them**. Do
+   item 3 first and re-check before touching J3 at all.
+2. **Move the neighbouring traces.** For each supply pin, drag the one or
+   two signal traces that own the escape channel a fraction of a
+   millimetre and the via fits. This is the judgement call — which trace
+   yields — and it is a few minutes each in the interactive router.
+3. **Via-in-pad**, if you would rather not move anything. It is the
+   standard answer at this pitch and it is a fab option (filled and
+   capped vias), not a layout change. It costs money per board rather
+   than time per pin.
+
+### Get the pin names right
+
+On an LQFP-64 STM32F405, **pad 1 is VBAT** and **pad 13 is VDDA**; the
+four VDD pins are **19, 32, 48, 64**. Pad 32 is already connected. All are
+on `/3V3` so the net is right, but they are not interchangeable
+functionally.
