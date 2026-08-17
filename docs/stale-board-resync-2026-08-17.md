@@ -81,12 +81,29 @@ verify the pad count.** Never trust the footprint field alone.
   12.8 mm. Moved to x=43, validated with `check_courtyard_overlaps`
   before committing — 0 overlaps, 0 boundary violations.
 - **In2.Cu had no pour.** On a 4-layer board running a 3A switcher,
-  both inner layers should be planes. Added a 3V3 pour; Freerouting
-  then auto-detected *both* inner layers as dedicated power planes, and
-  routed 45 nets where the previous run managed 19.
+  both inner layers should be planes. Added a 3V3 pour, and routing
+  went from 19 nets to 45 and finally to all 51.
+
+  **Correction, added after an independent review:** this section
+  originally said "Freerouting then auto-detected *both* inner layers
+  as dedicated power planes." Freerouting's log does say that, but it
+  is not what happened. **In1.Cu carries 97 track segments across 24
+  nets and In2.Cu carries 90 across 24** — including `SW_NODE`,
+  `BOOST_SW`, `VBAT_4S`, `HSE_OUT` and the regulator feedback nets. The
+  pours exist; dedicated planes do not. The GND reference under the
+  F.Cu signals is sliced by 97 slots, which defeats the reason the pour
+  was added. Tracked as blocker 3 in `fab/2026-08-17/README.md`.
 - **No netclass existed.** Everything, including VBAT_4S and GND, was
   routed at 0.2 mm. Added a `Power` class (0.6 mm track, 0.8/0.4 via)
   covering VBAT_4S, 3V3, 5V_RX, GND, SW_NODE, BOOST_SW.
+- **The design rules were relaxed**, which this document originally did
+  not mention at all: Default netclass clearance 0.2 -> 0.15 mm, min
+  track 0.2 -> 0.15 mm, edge clearance 0.5 -> 0.3 mm, min via 0.5 ->
+  0.45 mm (`min_clearance` went the other way, 0.0 -> 0.127 mm). The
+  values are within JLCPCB capability, but roughly 114 violations were
+  retired by editing numbers rather than copper, and the before/after
+  DRC counts quoted anywhere in this project are therefore NOT
+  like-for-like. Full disclosure in `fab/2026-08-17/README.md`.
 
 ## Why this is the same failure as the firmware ones
 
