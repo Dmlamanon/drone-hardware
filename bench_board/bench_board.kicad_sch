@@ -10184,7 +10184,7 @@
 		(at 368.29999999999995 270.51)
 		(uuid "d4e59199-2fbd-4d4c-8131-ff0cfa984007")
 	)
-	(text "BENCH BOARD — Stage 3/4 (Build Plan two-board strategy)\nIntended fab: 4-layer, generous outline. NOT whoop dimensions — this board never flies.\nIts only job: prove the copper, give firmware real hardware to run on.\nSTM32F405RGT6 + MPU-6000 (SPI) + 2S power (buck->5V, LDO->3.3V) + CRSF UART + 4x DShot + SWD + USB.\nLayout/board outline/stackup NOT done in this pass — schematic only, per task scope."
+	(text "BENCH BOARD — Stage 3/4 (Build Plan two-board strategy)\nIntended fab: 4-layer, generous outline. NOT whoop dimensions — this board never flies.\nIts only job: prove the copper, give firmware real hardware to run on.\nSTM32F405RGT6 + MPU-6000 (SPI) + 4S-service/6S-rated power (single-stage TPS54336ADDA buck, direct to 3.3V, no LDO) + battery-sense divider + CRSF UART + 4x DShot + SWD + USB.\nLayout/board outline/stackup NOT done in this pass — schematic only, per task scope."
 		(exclude_from_sim no)
 		(at 20 20 0)
 		(effects
