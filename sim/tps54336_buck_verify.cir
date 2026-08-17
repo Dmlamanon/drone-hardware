@@ -1,5 +1,5 @@
 * TPS54336ADDA buck regulator - closed-loop verification
-* Real component values from bench_board.kicad_sch / power-verification-4s-2026-08-16.md:
+* Real component values from bench_board.kicad_sch / docs/superseded/power-verification-4s-2026-08-16.md:
 *   L1 = 10uH, C2 (Cout) = 22uF, R1 (fb top) = 31.6k, R2 (fb bottom) = 10.0k
 * Compensation (Rcomp/Ccomp/Chf): NOT a TI reference-design value -- the TINA-TI/PSpice
 * reference-design schematics (.DSN/.TSM binaries) were not extractable to plain text this

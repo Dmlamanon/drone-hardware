@@ -1,7 +1,7 @@
 # Power Stage vs. Known Micro-FC Failure Modes — 2026-08-16
 
 Cross-checking the bench board's power design (schematic + the hand-
-calculation analysis in `power-simulation-2026-08-16.md`) against
+calculation analysis in `docs/superseded/power-simulation-2026-08-16.md`) against
 `.raw/micro-fc-failure-modes.md`. For each failure mode relevant to the
 power stage: does this design address it, and if not, what would.
 
@@ -39,7 +39,7 @@ this connection explicitly: keeping the switching buck (TPS563201) doing
 the large 2S→5V drop, so the LDO (AMS1117-3.3) only has to drop
 5V→3.3V — a small differential — is exactly the mitigation it names, and
 exactly what this schematic already does. Confirmed quantitatively in
-`power-simulation-2026-08-16.md` §3: ~5°C rise above ambient at the
+`docs/superseded/power-simulation-2026-08-16.md` §3: ~5°C rise above ambient at the
 estimated real load, comfortable margin to the SOT-223 package's thermal
 limits.
 
@@ -50,7 +50,7 @@ same way. The IC itself could still fail thermally or short internally;
 no discrete-MOSFET-specific mitigation is relevant here to begin with.
 
 **Brownout (voltage sag under load, connector/battery current capacity).**
-**This is the same failure mode `power-simulation-2026-08-16.md`
+**This is the same failure mode `docs/superseded/power-simulation-2026-08-16.md`
 already found a real margin problem for, from the opposite direction.**
 That analysis showed the buck's 80% max duty cycle caps regulation at
 Vin≥6.25V — a battery sagging under load into the 6.0-6.25V range (a real

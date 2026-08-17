@@ -1,3 +1,20 @@
+> [!warning] SUPERSEDED — moved to docs/superseded/ 2026-08-16 (Cleanup & Consolidation batch)
+> **Superseded by:** `docs/power-verification-4s-2026-08-16.md` (also
+> superseded — see that file's own header), then by the current
+> `docs/power-spice-verification-2026-08-16.md`.
+> **Why:** this doc is a hand-calculation analysis for the original 2S
+> power tree (`TPS563201`), done because `ngspice` wasn't installed yet
+> and no real SPICE run was possible. Both the regulator IC and the
+> battery config it analyzes have since changed twice over (2S → 4S
+> w/`TPS54331DR` documented-but-never-applied → the actual placed
+> `TPS54336ADDA`, verified for real at both 4S and 6S).
+> **Why it's kept, not deleted:** documents a real, honestly-reported
+> tooling blocker (no `ngspice`, no vendor SPICE models available at the
+> time) and the hand-calc methodology used as a fallback — useful
+> precedent if a future component ever needs the same kind of
+> stopgap analysis before real simulation is possible again. Do not use
+> any number below for the current design.
+
 # Bench Board Power Path — Analysis, 2026-08-16
 
 **This is NOT a SPICE simulation, despite being asked for one — tooling

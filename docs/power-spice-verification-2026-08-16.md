@@ -1,7 +1,7 @@
 # Power SPICE Verification — TPS54336ADDA — 2026-08-16
 
 Real `ngspice` simulation, replacing the hand-calculation used in
-`power-verification-4s-2026-08-16.md`. Simulates the part actually placed
+`docs/superseded/power-verification-4s-2026-08-16.md`. Simulates the part actually placed
 in `bench_board.kicad_sch` (`U2` = **`TPS54336ADDA`**) — this is a real,
 previously undocumented discrepancy with the 4S doc, which documents a
 different part (`TPS54331DR`); see `wiki/references/tooling-status.md`

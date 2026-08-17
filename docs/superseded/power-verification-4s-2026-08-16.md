@@ -1,3 +1,22 @@
+> [!warning] SUPERSEDED — moved to docs/superseded/ 2026-08-16 (Cleanup & Consolidation batch)
+> **Superseded by:** `docs/power-spice-verification-2026-08-16.md`.
+> **Why:** this doc documents replacing `TPS563201` with `TPS54331DR`
+> for the 4S revision — but the part actually placed in the schematic
+> turned out to be a different IC, `TPS54336ADDA` (found in the Tier 1
+> build-out batch). The current doc simulates and verifies the real
+> placed part, at both 4S and 6S, with real ngspice data instead of this
+> doc's duty-cycle/ripple hand-calculations.
+> **Why it's kept, not deleted:** real, methodical hand-calculation work
+> (duty cycle across the full voltage range, inductor/ripple sizing,
+> thermal bounds) that the current doc's own §4 explicitly cross-checks
+> its ngspice results against — the two independent methods agreeing is
+> itself a useful confidence signal, only visible by keeping both. The
+> note directly below (already present before this archival) documents a
+> real, separate finding: two of this doc's own derived values (`R9`,
+> `C1` rating) were never actually applied to the schematic and needed
+> further revision once they were. Do not use any number below for the
+> current design without cross-checking the current doc first.
+
 > [!note] Amended 2026-08-16, "close findings" batch — two values below superseded
 > This doc's derived values were never actually applied to the schematic
 > (found while resolving the long-outstanding WIP — see
