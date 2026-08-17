@@ -1,0 +1,38 @@
+Comment,Designator,Footprint,LCSC Part #,JLCPCB Library,Sourcing Note
+10uF 35V,C1,C_0805_2012Metric,,UNRESOLVED-EXTENDED,"MUST be >=35V. Sits on VBAT_4S (16.8V max). The JLCPCB Basic 0805 10uF (C15850) is 25V and an X5R at 16.8V DC bias loses most of its capacitance - NOT an acceptable substitute. Select a 35V or 50V 0805 10uF X7R at order time."
+22uF,C2,C_0805_2012Metric,C45783,Basic,"25V part; sits on 3V3 so margin is ample."
+100nF,"C3,C6,C7,C8,C9,C10,C16,C19,C20,C21,C22",C_0402_1005Metric,C1525,Basic,"16V X7R decoupling."
+2.2uF,"C11,C12",C_0603_1608Metric,C23630,Basic,16V
+1uF,C13,C_0603_1608Metric,C15849,Basic,50V
+10nF,"C14,C24",C_0402_1005Metric,C15195,Basic,50V
+4.7uF,C15,C_0805_2012Metric,C1779,Basic,"25V; on 3V3."
+10pF,"C17,C18",C_0402_1005Metric,C32949,Basic,"50V; crystal load caps."
+7.5nF,C23,C_0402_1005Metric,,UNRESOLVED-EXTENDED,"Not in the Basic library. Regulator compensation - value is not freely substitutable. Extended part or hand-solder."
+10uF 16V,C25,C_0805_2012Metric,C15850,Basic,"25V part; on 3V3, margin fine."
+22uF 16V,C26,C_0805_2012Metric,C45783,Basic,"25V part; on 5V_RX, margin fine."
+SS34,D1,D_SMA,C8678,Basic,"Verified Basic on the JLCPCB part page."
+BATT_4S,J1,PinHeader_1x02_P2.54mm_Vertical,,HAND-SOLDER,"Through-hole 2.54mm header."
+BOOT0_JUMPER,J2,PinHeader_1x02_P2.54mm_Vertical,,HAND-SOLDER,Through-hole.
+USB-C,J3,USB_C_Receptacle_Amphenol_12401548E4-2A,,UNRESOLVED,"SMD USB-C receptacle. Exact JLCPCB equivalent for this Amphenol footprint not confirmed - verify pad compatibility before ordering assembly."
+CRSF_UART,J4,PinHeader_1x04_P2.54mm_Vertical,,HAND-SOLDER,Through-hole.
+DSHOT_M1-M4,J5,PinHeader_1x05_P2.54mm_Vertical,,HAND-SOLDER,Through-hole.
+SWD,J6,PinHeader_1x05_P2.54mm_Vertical,,HAND-SOLDER,Through-hole.
+RX_PWR_5V,J7,PinHeader_1x02_P2.54mm_Vertical,,HAND-SOLDER,Through-hole.
+TELEM_TX,J8,PinHeader_1x03_P2.54mm_Vertical,,HAND-SOLDER,Through-hole.
+EXPANSION_BUS,J9,PinHeader_1x14_P2.54mm_Vertical,,HAND-SOLDER,Through-hole.
+10uH,"L1,L2",L_1210_3225Metric,,UNRESOLVED-EXTENDED,"Power inductors are not in the Basic library. Saturation current matters (L1 is the buck output inductor, L2 the boost inductor) - do not substitute on inductance alone."
+31.6k,R1,R_0402_1005Metric,,UNRESOLVED-EXTENDED,"1% E96 value, buck feedback divider - sets the 3.3V output. Not substitutable."
+10.0k,"R2,R10",R_0402_1005Metric,C25744,Basic,1%
+10k,"R3,R4",R_0402_1005Metric,C25744,Basic,"Same physical part as R2/R10; schematic writes the value two ways (10k vs 10.0k)."
+22R,"R5,R6",R_0402_1005Metric,C25092,Basic,"USB series termination."
+5.1k,"R7,R8",R_0402_1005Metric,C25905,Basic,"USB-C CC pulldowns."
+75.0k,R9,R_0402_1005Metric,C25798,Basic,"Battery sense divider (VBAT_4S -> VBAT_SENSE)."
+2k,R11,R_0402_1005Metric,C4109,Basic,1%
+73.2k,R12,R_0603_1608Metric,,UNRESOLVED-EXTENDED,"1% E96, boost feedback divider - sets the 5V rail. Not substitutable."
+10.0k,R13,R_0603_1608Metric,C25804,Basic,"Boost feedback divider bottom leg."
+STM32F405RGT6,U1,LQFP-64_10x10mm_P0.5mm,C15742,Extended,"Needs an assembly fixture per the JLCPCB part page."
+TPS54336ADDA,U2,SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.41x3.81mm,C1355769,Extended,"STOCK UNCERTAIN - a search result indicated out of stock at LCSC. VERIFY AVAILABILITY BEFORE ORDERING; this is the main 3.3V buck and has no drop-in alternate on this footprint."
+MPU-6000,U4,InvenSense_QFN-24_4x4mm_P0.5mm,C92401,Extended,"~USD 10.42 each - the single most expensive line by a wide margin, roughly 2/3 of parts cost."
+USBLC6-2SC6,U5,SOT-23-6,C7519,Extended,USB ESD protection.
+MT3608,U6,SOT-23-6,C84817,Extended,"~USD 0.06-0.10. Boost converter for the 5V receiver rail."
+8MHz,Y1,Crystal_SMD_3225-4Pin_3.2x2.5mm,,UNRESOLVED-EXTENDED,"The Basic-library 8MHz crystal (C115962) is SMD-5032-2P - WRONG PACKAGE for this 3225 4-pin footprint. Needs a 3225 4-pin part, or change the footprint."
