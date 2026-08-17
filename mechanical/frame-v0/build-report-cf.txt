@@ -21,12 +21,12 @@ worth stating as a derivation rather than an opinion:
   Longer arms do not help either: they would increase the wheelbase,
   which is the fixed input.
 
-arm length (root r=28 to pad edge) : 163.0 mm
+arm length (root r=28 to pad edge) : 165.0 mm
 plate 140 x 110 x 2.0 mm, arms 16 x 2.0 mm
 
 bottom plate: 16 holes/slots cut, volume 26459 mm^3
 top plate:    8 holes cut, volume 11477 mm^3
-arm:          volume 5800 mm^3, 163.0 mm long
+arm:          volume 6096 mm^3, 165.0 mm long
 
 geometry checks:
   arm bolts land inside the bottom plate outline       OK   41.0 < 70.0
@@ -36,21 +36,23 @@ geometry checks:
   tip gap meets the >=10 % guideline                   FAIL 8.26 % -- see README
   arm thickness meets the CF minimum                   OK   2.0 mm
   plate thickness meets the CF minimum                 OK   2.0 mm
-  motor pad is wider than the 19 mm bolt spacing       OK   32.0 > 25.4
+  motor pad clears the 16x19 cross                     OK   36.0 > 25.4
+  motor pad clears the 19x19 square (the chosen X2814) OK   pad r 18.0 > 16.6
+  the two patterns' holes do not merge into each other OK   9.62 mm apart
   arm root starts inside the plate                     OK   28.0 < 55.0
   symmetric X maximises the minimum adjacent spacing   OK   247.49 vs best stretched-X 247.49 mm
 
 mass estimate (CF, rho = 1.55 g/cm^3):
   bottom plate        41.0 g
   top plate           17.8 g
-  arms (x4)           36.0 g
+  arms (x4)           37.8 g
   ---------------------------
-  structure           94.8 g
+  structure           96.6 g
 
   The AUW budget carries 469 g for 'frame'. This is STRUCTURE ONLY --
   no landing gear, no standoffs, no fasteners, no canopy, no battery
   tray. Those are real mass and they are not modelled in v0, so do
-  NOT read 95 g as beating the budget.
+  NOT read 97 g as beating the budget.
 
 SVG   -> D:\claude-obsidian\engineering\drone-hardware\mechanical\frame-v0\stevie-frame-v0-cf-plan.svg
 

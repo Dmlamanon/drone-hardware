@@ -94,13 +94,28 @@ STRAP_W = 22.0           # a 20 mm hook-and-loop strap plus slop
 STRAP_SLOT_T = 3.5       # slot short dimension
 
 # --- Motor mount ----------------------------------------------------
-# 2212-class outrunners use a 16 mm x 19 mm cross of M3 holes. Both
-# spacings are drilled so a motor with either fits the same pad.
-MOTOR_BOLT_A = 16.0
-MOTOR_BOLT_B = 19.0
+# TWO patterns are drilled, and the reason is a real mismatch found while
+# writing the thrust-test procedure rather than a hedge:
+#
+#   * 2212-class outrunners use a 16 x 19 mm CROSS of M3 holes -- the
+#     pattern item 6 specified.
+#   * The motor this project has actually chosen, the iFlight XING X2814,
+#     uses a 19 x 19 mm SQUARE. It does not fit a 16 x 19 cross.
+#
+# Drilling both is what commercial frames in this class do, it costs
+# nothing on a 32 mm pad, and without it the frame would not accept the
+# project's own motor.
+MOTOR_BOLT_A = 16.0      # cross, short axis
+MOTOR_BOLT_B = 19.0      # cross, long axis
+MOTOR_BOLT_SQ = 19.0     # square, XING X2814 and most 28xx
 MOTOR_HOLE_D = 3.2
 MOTOR_SHAFT_BORE = 9.0   # clearance for the shaft/bell boss
-MOTOR_PAD_D = 32.0       # pad diameter at the arm tip
+MOTOR_PAD_D = 36.0       # pad diameter at the arm tip. 32 mm was the first
+                         # value and the geometry check rejected it: the
+                         # 19x19 square's corner holes sit at r = 13.44, and
+                         # 32 mm left under 1 mm of material outside the hole
+                         # edge -- a bolt pull-through waiting to happen in
+                         # PETG. 36 mm gives ~3 mm.
 
 # --- Arms -----------------------------------------------------------
 ARM_W = 16.0             # matches the JeeFly LX350 class comparable
@@ -301,6 +316,11 @@ def build_arm():
     holes.append(hole(r1 - MOTOR_BOLT_A / 2.0, 0, MOTOR_HOLE_D, ARM_T))
     holes.append(hole(r1, MOTOR_BOLT_B / 2.0, MOTOR_HOLE_D, ARM_T))
     holes.append(hole(r1, -MOTOR_BOLT_B / 2.0, MOTOR_HOLE_D, ARM_T))
+    # 19 x 19 square -- the chosen X2814's pattern
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            holes.append(hole(r1 + sx * MOTOR_BOLT_SQ / 2.0,
+                              sy * MOTOR_BOLT_SQ / 2.0, MOTOR_HOLE_D, ARM_T))
     holes.append(hole(r1, 0, MOTOR_SHAFT_BORE, ARM_T))
     # sandwich bolts
     holes.append(hole(ARM_BOLT_R1, 0, ARM_HOLE_D, ARM_T))
@@ -351,9 +371,16 @@ check("arm thickness meets the %s minimum" % MATERIAL,
       ARM_T >= (4.0 if MATERIAL == "PETG" else 2.0), "%.1f mm" % ARM_T)
 check("plate thickness meets the %s minimum" % MATERIAL,
       PLATE_T_BOTTOM >= (3.0 if MATERIAL == "PETG" else 1.5), "%.1f mm" % PLATE_T_BOTTOM)
-check("motor pad is wider than the 19 mm bolt spacing",
+check("motor pad clears the 16x19 cross",
       MOTOR_PAD_D > MOTOR_BOLT_B + 2 * MOTOR_HOLE_D,
       "%.1f > %.1f" % (MOTOR_PAD_D, MOTOR_BOLT_B + 2 * MOTOR_HOLE_D))
+_sq_r = math.hypot(MOTOR_BOLT_SQ / 2.0, MOTOR_BOLT_SQ / 2.0)
+check("motor pad clears the 19x19 square (the chosen X2814)",
+      MOTOR_PAD_D / 2.0 > _sq_r + MOTOR_HOLE_D,
+      "pad r %.1f > %.1f" % (MOTOR_PAD_D / 2.0, _sq_r + MOTOR_HOLE_D))
+check("the two patterns' holes do not merge into each other",
+      math.hypot(MOTOR_BOLT_SQ / 2.0 - MOTOR_BOLT_A / 2.0, MOTOR_BOLT_SQ / 2.0) > MOTOR_HOLE_D,
+      "%.2f mm apart" % math.hypot(MOTOR_BOLT_SQ / 2.0 - MOTOR_BOLT_A / 2.0, MOTOR_BOLT_SQ / 2.0))
 check("arm root starts inside the plate",
       ARM_ROOT_R < PLATE_Y / 2.0, "%.1f < %.1f" % (ARM_ROOT_R, PLATE_Y / 2.0))
 

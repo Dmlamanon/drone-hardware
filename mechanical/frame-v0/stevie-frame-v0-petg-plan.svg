@@ -7,13 +7,13 @@
 <circle cx="739.8" cy="739.8" r="221.5" fill="#2b6cb0" fill-opacity="0.13" stroke="#4a9eff" stroke-width="1.5" stroke-dasharray="5 5"/>
 <polygon points="422.5,606.6 577.5,606.6 635.6,548.4 635.6,451.6 577.5,393.4 422.5,393.4 364.4,451.6 364.4,548.4" fill="#d9c89a" fill-opacity="0.22" stroke="#d9c89a" stroke-width="2.5"/>
 <polygon points="549.3,472.6 750.7,271.2 728.8,249.3 527.4,450.7" fill="#d9c89a" fill-opacity="0.35" stroke="#d9c89a" stroke-width="2"/>
-<circle cx="739.8" cy="260.2" r="31.0" fill="#d9c89a" fill-opacity="0.5" stroke="#d9c89a" stroke-width="2"/>
+<circle cx="739.8" cy="260.2" r="34.9" fill="#d9c89a" fill-opacity="0.5" stroke="#d9c89a" stroke-width="2"/>
 <polygon points="472.6,450.7 271.2,249.3 249.3,271.2 450.7,472.6" fill="#d9c89a" fill-opacity="0.35" stroke="#d9c89a" stroke-width="2"/>
-<circle cx="260.2" cy="260.2" r="31.0" fill="#d9c89a" fill-opacity="0.5" stroke="#d9c89a" stroke-width="2"/>
+<circle cx="260.2" cy="260.2" r="34.9" fill="#d9c89a" fill-opacity="0.5" stroke="#d9c89a" stroke-width="2"/>
 <polygon points="450.7,527.4 249.3,728.8 271.2,750.7 472.6,549.3" fill="#d9c89a" fill-opacity="0.35" stroke="#d9c89a" stroke-width="2"/>
-<circle cx="260.2" cy="739.8" r="31.0" fill="#d9c89a" fill-opacity="0.5" stroke="#d9c89a" stroke-width="2"/>
+<circle cx="260.2" cy="739.8" r="34.9" fill="#d9c89a" fill-opacity="0.5" stroke="#d9c89a" stroke-width="2"/>
 <polygon points="527.4,549.3 728.8,750.7 750.7,728.8 549.3,527.4" fill="#d9c89a" fill-opacity="0.35" stroke="#d9c89a" stroke-width="2"/>
-<circle cx="739.8" cy="739.8" r="31.0" fill="#d9c89a" fill-opacity="0.5" stroke="#d9c89a" stroke-width="2"/>
+<circle cx="739.8" cy="739.8" r="34.9" fill="#d9c89a" fill-opacity="0.5" stroke="#d9c89a" stroke-width="2"/>
 <rect x="369.2" y="454.5" width="261.6" height="91.1" fill="none" stroke="#e07a5f" stroke-width="2" stroke-dasharray="6 4"/>
 <line x1="481.7" y1="260.2" x2="518.3" y2="260.2" stroke="#e07a5f" stroke-width="3"/>
 </g>
@@ -22,5 +22,5 @@
 <text x="500.0" y="246.2" font-family="Menlo,Consolas,monospace" font-size="16" fill="#e07a5f" text-anchor="middle" font-weight="400">tip gap 18.9 mm (8.3%)</text>
 <text x="500.0" y="506.0" font-family="Menlo,Consolas,monospace" font-size="13" fill="#e07a5f" text-anchor="middle" font-weight="400">battery 133&#215;45</text>
 <text x="30.0" y="960.0" font-family="Menlo,Consolas,monospace" font-size="14" fill="#8b8781" text-anchor="start" font-weight="400">plate 140&#215;110&#215;3.0  arm 16&#215;4.0  motor 16&#215;19 M3  FC 30.5</text>
-<text x="970.0" y="960.0" font-family="Menlo,Consolas,monospace" font-size="14" fill="#8b8781" text-anchor="end" font-weight="400">structure 138 g</text>
+<text x="970.0" y="960.0" font-family="Menlo,Consolas,monospace" font-size="14" fill="#8b8781" text-anchor="end" font-weight="400">structure 141 g</text>
 </svg>

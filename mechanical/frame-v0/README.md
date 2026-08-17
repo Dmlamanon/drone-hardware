@@ -48,10 +48,10 @@ bottom and a top plate.
 | Wheelbase (motor-motor diagonal) | **350 mm** | locked class name, `inertia-estimate-350class-REAL-2026-08-16` |
 | Props | 9 in = **228.6 mm** | same |
 | FC mount | **30.5 × 30.5 mm**, M3 | the universal pattern |
-| Motor mount | **16 × 19 mm cross**, M3 | 2212-class standard, both spacings drilled — [components101](https://components101.com/motors/2212-brushless-motor), [Altitude Hobbies Suppo 2212](https://www.altitudehobbies.com/products/suppo-2212-13-1000kv-brushless-motor-park-400-equiv) |
+| Motor mount | **16 × 19 cross AND 19 × 19 square**, M3 | see below — 2212-class is the cross ([components101](https://components101.com/motors/2212-brushless-motor), [Altitude Hobbies Suppo 2212](https://www.altitudehobbies.com/products/suppo-2212-13-1000kv-brushless-motor-park-400-equiv)); the square is the chosen X2814 ([iFlight XING X2814](https://pyrodrone.com/products/iflight-xing-x2814-fpv-nextgen-1100kv)) |
 | Battery bay | **133 × 45 × 33.5 mm** + 2 mm tol | Tattu G-Tech 5200 mAh 4S 35C — [GensTattu](https://genstattu.com/tattu-5200mah-14-8v-35c-4s1p-lipo-battery-pack-with-xt60-plug.html), 436.5 g, matches the mass the AUW budget already assumes |
 | Centre plate | 140 × 110 mm octagon | sized so the 133 mm pack fits along the long axis |
-| Arm | 16 × 163 mm | 16 mm matches the JeeFly LX350 class comparable |
+| Arm | 16 × 165 mm | 16 mm matches the JeeFly LX350 class comparable |
 
 ### Material independence is the *shape* constraint, not a note
 
@@ -69,14 +69,32 @@ Thickness is the only difference between the two builds:
 | Bottom plate | 3.0 mm | 2.0 mm | 3 mm min wall on load paths / 1.5 mm plate min |
 | Top plate | 3.0 mm | 1.5 mm | same |
 | Arm | 4.0 mm | 2.0 mm | 4 mm at arm roots / 2 mm CF arms |
-| **Structure mass** | **138.5 g** | **94.8 g** | bulk density 1.27 / 1.55 g·cm⁻³ |
+| **Structure mass** | **141.5 g** | **96.6 g** | bulk density 1.27 / 1.55 g·cm⁻³ |
 
 Sections are sized to the **weaker** material and the stronger one is
 checked to fit the same envelope, which is what that document asks for.
 
-**Do not read 138 g as beating the 469 g frame line in the AUW budget.**
+**Do not read 141 g as beating the 469 g frame line in the AUW budget.**
 That is structure only — no landing gear, no standoffs, no fasteners, no
 canopy, no battery tray. Those are real mass and v0 does not model them.
+
+### The motor pattern carries TWO hole sets, and why
+
+Item 6 specified a 2212-class pattern, which is a **16 × 19 mm cross**.
+That is what went in first. Then, while writing the thrust-test procedure
+against the parts list, the motor this project has actually chosen turned
+out to be the **iFlight XING X2814**, whose pattern is a **19 × 19 mm
+square**. A square does not fit a cross. The frame as first built would
+not have accepted the project's own motor.
+
+Both are now drilled — eight M3 holes on one pad, which is what
+commercial frames in this class do and costs nothing but pad diameter.
+
+The pad diameter was 32 mm and the geometry check **rejected it**: the
+square's corner holes sit at r = 13.44 mm, leaving under 1 mm of material
+outside the hole edge, which is a bolt pull-through waiting to happen in
+PETG. 36 mm gives about 3 mm. The check is in the script, so a future
+change to either pattern re-tests this automatically.
 
 ### Why the arms bolt on rather than being part of the body
 
