@@ -49,7 +49,17 @@ it does not block via work.
 
 ### Which pads can be fixed today — and what a script could actually reach
 
-**Two of the six were placed this batch. Unconnected went 15 → 13.**
+**Two of the six were placed this batch.** They are worth 2 unconnected
+items — but they are NOT what moved this batch's count.
+
+> [!warning] This document credited one 15 → 13 to two different causes
+> An earlier version said the 15 → 13 happened here, and the callout
+> below said it came from the buzzer routing. Both cannot be true of the
+> same two items. Measured by running DRC on the board as stored at each
+> commit: **`6013565` (item 1, mounting pattern) = 15 unconnected;
+> `9442793` (item 2, buzzer routing) = 13.** So the drop is item 2's, and
+> these two fanout vias predate this batch entirely. Corrected in both
+> places.
 
 An earlier version of this section said "six of fourteen pads have plane
 copper underneath, so they can take a fanout via today." That was true of
@@ -171,11 +181,21 @@ correct, but they are not interchangeable functionally.
 The two jobs are **largely independent**. Do them in whichever order
 suits, with one caveat:
 
-1. **The scriptable via work is done** — two placed, unconnected 15 → 13.
-   Nothing further can be sited without moving existing copper.
+1. **The scriptable via work is done** — two vias placed (in an earlier
+   batch; see the correction above), and nothing further can be sited
+   without moving existing copper. This batch's 15 → 13 came from item
+   2's buzzer routing, not from these.
 2. **Job A (inner layers) comes next**, and it is now the gating item.
    It extends the pours, which is precisely what the remaining eleven
-   pads need, and it fixes J3's four through-hole shield pads for free.
+   pads need — and for U1.1, U1.64 and U1.48 it is the ONLY thing that
+   helps, since no candidate site near those three is inside the plane at
+   all.
+
+   ~~and it fixes J3's four through-hole shield pads for free.~~
+   **FALSE, tested 2026-08-17.** The zones have been refilled correctly
+   and all four J3 shield pads are still unconnected. This claim was
+   carried for two batches before anyone checked it; it is struck here
+   rather than deleted so the same guess does not get made a third time.
 3. **Then finish job B in the UI**, re-checking DRC first — several of
    the remaining edges should disappear once the pours are whole.
 
