@@ -1,668 +1,30 @@
 {
   "board": "D:\\claude-obsidian\\engineering\\drone-hardware\\bench_board\\bench_board.kicad_pcb",
-  "timestamp": "2026-08-16T16:19:10",
-  "total_violations": 158,
+  "timestamp": "2026-08-17T14:35:45",
+  "total_violations": 100,
   "violation_counts": {
-    "hole_clearance": 2,
-    "clearance": 60,
-    "copper_edge_clearance": 6,
-    "track_width": 62,
-    "silk_overlap": 11,
-    "silk_over_copper": 17
+    "shorting_items": 1,
+    "copper_edge_clearance": 3,
+    "solder_mask_bridge": 2,
+    "via_dangling": 17,
+    "isolated_copper": 41,
+    "lib_footprint_mismatch": 4,
+    "silk_overlap": 14,
+    "silk_over_copper": 18
   },
   "severity_counts": {
-    "error": 130,
-    "warning": 28,
+    "error": 6,
+    "warning": 94,
     "info": 0
   },
   "violations": [
     {
-      "type": "hole_clearance",
+      "type": "shorting_items",
       "severity": "error",
-      "message": "Hole clearance violation (board setup constraints hole clearance 0.2500 mm; actual 0.2259 mm)",
+      "message": "Items shorting two nets (nets NRST and BUZZER_SW)",
       "location": {
-        "x": 69.6049,
-        "y": 27.2,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "hole_clearance",
-      "severity": "error",
-      "message": "Hole clearance violation (board setup constraints hole clearance 0.2500 mm; actual 0.2250 mm)",
-      "location": {
-        "x": 70.29,
-        "y": 27.2,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)",
-      "location": {
-        "x": 70.29,
-        "y": 27.2,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)",
-      "location": {
-        "x": 70.29,
-        "y": 27.2,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)",
-      "location": {
-        "x": 70.29,
-        "y": 27.2,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)",
-      "location": {
-        "x": 70.29,
-        "y": 27.2,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)",
-      "location": {
-        "x": 70.99,
-        "y": 27.6,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)",
-      "location": {
-        "x": 70.99,
-        "y": 27.6,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)",
-      "location": {
-        "x": 70.99,
-        "y": 27.6,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)",
-      "location": {
-        "x": 70.99,
-        "y": 27.6,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)",
-      "location": {
-        "x": 70.99,
-        "y": 28.4,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)",
-      "location": {
-        "x": 70.99,
-        "y": 28.4,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)",
-      "location": {
-        "x": 70.99,
-        "y": 28.4,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)",
-      "location": {
-        "x": 70.99,
-        "y": 28.4,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)",
-      "location": {
-        "x": 70.99,
-        "y": 28.4,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)",
-      "location": {
-        "x": 70.99,
-        "y": 28.4,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)",
-      "location": {
-        "x": 70.99,
-        "y": 28.4,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)",
-      "location": {
-        "x": 70.99,
-        "y": 28.4,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)",
-      "location": {
-        "x": 70.99,
-        "y": 29.2,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)",
-      "location": {
-        "x": 70.99,
-        "y": 29.2,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)",
-      "location": {
-        "x": 70.99,
-        "y": 29.2,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)",
-      "location": {
-        "x": 70.99,
-        "y": 29.2,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)",
-      "location": {
-        "x": 70.29,
-        "y": 29.6,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)",
-      "location": {
-        "x": 70.29,
-        "y": 29.6,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)",
-      "location": {
-        "x": 70.29,
-        "y": 29.6,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)",
-      "location": {
-        "x": 70.29,
-        "y": 29.6,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)",
-      "location": {
-        "x": 70.29,
-        "y": 29.6,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)",
-      "location": {
-        "x": 70.29,
-        "y": 29.6,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)",
-      "location": {
-        "x": 70.29,
-        "y": 29.6,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)",
-      "location": {
-        "x": 70.29,
-        "y": 29.6,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)",
-      "location": {
-        "x": 70.29,
-        "y": 29.6,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)",
-      "location": {
-        "x": 70.29,
-        "y": 29.6,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)",
-      "location": {
-        "x": 70.29,
-        "y": 29.6,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)",
-      "location": {
-        "x": 70.29,
-        "y": 29.6,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)",
-      "location": {
-        "x": 70.99,
-        "y": 30.8,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)",
-      "location": {
-        "x": 70.99,
-        "y": 30.8,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)",
-      "location": {
-        "x": 70.99,
-        "y": 30.8,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)",
-      "location": {
-        "x": 70.99,
-        "y": 30.8,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)",
-      "location": {
-        "x": 70.99,
-        "y": 30.8,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)",
-      "location": {
-        "x": 70.99,
-        "y": 30.8,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)",
-      "location": {
-        "x": 70.99,
-        "y": 30.8,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)",
-      "location": {
-        "x": 70.99,
-        "y": 30.8,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)",
-      "location": {
-        "x": 70.99,
-        "y": 30.8,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)",
-      "location": {
-        "x": 70.99,
-        "y": 30.8,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)",
-      "location": {
-        "x": 70.99,
-        "y": 30.8,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)",
-      "location": {
-        "x": 70.99,
-        "y": 30.8,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)",
-      "location": {
-        "x": 70.29,
-        "y": 31.2,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)",
-      "location": {
-        "x": 70.29,
-        "y": 31.2,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)",
-      "location": {
-        "x": 70.29,
-        "y": 31.2,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)",
-      "location": {
-        "x": 70.29,
-        "y": 31.2,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)",
-      "location": {
-        "x": 70.29,
-        "y": 31.2,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)",
-      "location": {
-        "x": 70.29,
-        "y": 31.2,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)",
-      "location": {
-        "x": 70.29,
-        "y": 31.2,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)",
-      "location": {
-        "x": 70.29,
-        "y": 31.2,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)",
-      "location": {
-        "x": 70.99,
-        "y": 32.4,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)",
-      "location": {
-        "x": 70.99,
-        "y": 32.4,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)",
-      "location": {
-        "x": 70.99,
-        "y": 32.4,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)",
-      "location": {
-        "x": 70.99,
-        "y": 32.4,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)",
-      "location": {
-        "x": 70.99,
-        "y": 32.4,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)",
-      "location": {
-        "x": 70.99,
-        "y": 32.4,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)",
-      "location": {
-        "x": 70.99,
-        "y": 32.4,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "clearance",
-      "severity": "error",
-      "message": "Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)",
-      "location": {
-        "x": 70.99,
-        "y": 32.4,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "copper_edge_clearance",
-      "severity": "error",
-      "message": "Board edge clearance violation (board setup constraints edge clearance 0.5000 mm; actual 0.2259 mm)",
-      "location": {
-        "x": 69.64,
-        "y": 26.4,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "copper_edge_clearance",
-      "severity": "error",
-      "message": "Board edge clearance violation (board setup constraints edge clearance 0.5000 mm; actual 0.3615 mm)",
-      "location": {
-        "x": 69.64,
-        "y": 26.4,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "copper_edge_clearance",
-      "severity": "error",
-      "message": "Board edge clearance violation (board setup constraints edge clearance 0.5000 mm; actual 0.2250 mm)",
-      "location": {
-        "x": 69.64,
-        "y": 26.4,
+        "x": 62.0,
+        "y": 54.62,
         "unit": "mm"
       }
     },
@@ -697,622 +59,642 @@
       }
     },
     {
-      "type": "track_width",
+      "type": "solder_mask_bridge",
       "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "message": "Front solder mask aperture bridges items with different nets",
       "location": {
-        "x": 66.4867,
-        "y": 23.3992,
+        "x": 62.0,
+        "y": 54.62,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
+      "type": "solder_mask_bridge",
       "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "message": "Front solder mask aperture bridges items with different nets",
       "location": {
-        "x": 67.3281,
-        "y": 23.3992,
+        "x": 62.0,
+        "y": 54.62,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "via_dangling",
+      "severity": "warning",
+      "message": "Via is not connected or connected on only one layer",
       "location": {
-        "x": 68.9305,
-        "y": 29.7995,
+        "x": 44.3702,
+        "y": 42.2805,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "via_dangling",
+      "severity": "warning",
+      "message": "Via is not connected or connected on only one layer",
       "location": {
-        "x": 66.4778,
-        "y": 29.7995,
+        "x": 13.2738,
+        "y": 6.1033,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "via_dangling",
+      "severity": "warning",
+      "message": "Via is not connected or connected on only one layer",
       "location": {
-        "x": 63.7236,
-        "y": 29.7995,
+        "x": 42.3927,
+        "y": 36.757,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "via_dangling",
+      "severity": "warning",
+      "message": "Via is not connected or connected on only one layer",
       "location": {
-        "x": 40.7233,
-        "y": 28.2017,
+        "x": 17.2058,
+        "y": 9.1762,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "via_dangling",
+      "severity": "warning",
+      "message": "Via is not connected or connected on only one layer",
       "location": {
-        "x": 40.675,
-        "y": 28.25,
+        "x": 24.8724,
+        "y": 46.8817,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "via_dangling",
+      "severity": "warning",
+      "message": "Via is not connected or connected on only one layer",
       "location": {
-        "x": 29.2755,
-        "y": 28.2005,
+        "x": 20.9163,
+        "y": 8.9663,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "via_dangling",
+      "severity": "warning",
+      "message": "Via is not connected or connected on only one layer",
       "location": {
-        "x": 28.0273,
-        "y": 28.2005,
+        "x": 34.5895,
+        "y": 41.4664,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "via_dangling",
+      "severity": "warning",
+      "message": "Via is not connected or connected on only one layer",
       "location": {
-        "x": 30.2705,
-        "y": 28.7005,
+        "x": 7.9142,
+        "y": 12.612,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "via_dangling",
+      "severity": "warning",
+      "message": "Via is not connected or connected on only one layer",
       "location": {
-        "x": 29.3745,
-        "y": 28.7005,
+        "x": 50.8267,
+        "y": 20.384,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "via_dangling",
+      "severity": "warning",
+      "message": "Via is not connected or connected on only one layer",
       "location": {
-        "x": 69.5054,
-        "y": 27.2995,
+        "x": 22.178,
+        "y": 30.423,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "via_dangling",
+      "severity": "warning",
+      "message": "Via is not connected or connected on only one layer",
       "location": {
-        "x": 69.0295,
-        "y": 32.7005,
+        "x": 15.5546,
+        "y": 47.9869,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "via_dangling",
+      "severity": "warning",
+      "message": "Via is not connected or connected on only one layer",
       "location": {
-        "x": 70.29,
-        "y": 32.7248,
+        "x": 19.825,
+        "y": 19.641,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "via_dangling",
+      "severity": "warning",
+      "message": "Via is not connected or connected on only one layer",
       "location": {
-        "x": 69.5767,
-        "y": 32.7248,
+        "x": 53.8065,
+        "y": 37.5538,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "via_dangling",
+      "severity": "warning",
+      "message": "Via is not connected or connected on only one layer",
       "location": {
-        "x": 44.7839,
-        "y": 38.9685,
+        "x": 62.527,
+        "y": 24.1492,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "via_dangling",
+      "severity": "warning",
+      "message": "Via is not connected or connected on only one layer",
       "location": {
-        "x": 27.5863,
-        "y": 31.7005,
+        "x": 45.7528,
+        "y": 29.452,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "via_dangling",
+      "severity": "warning",
+      "message": "Via is not connected or connected on only one layer",
       "location": {
-        "x": 44.4422,
-        "y": 38.6268,
+        "x": 24.9431,
+        "y": 40.861,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "via_dangling",
+      "severity": "warning",
+      "message": "Via is not connected or connected on only one layer",
       "location": {
-        "x": 69.0295,
-        "y": 27.2995,
+        "x": 40.7408,
+        "y": 43.5927,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "isolated_copper",
+      "severity": "warning",
+      "message": "Isolated copper fill",
       "location": {
-        "x": 69.4624,
-        "y": 32.7005,
+        "x": 2.0,
+        "y": 2.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "isolated_copper",
+      "severity": "warning",
+      "message": "Isolated copper fill",
       "location": {
-        "x": 29.2755,
-        "y": 31.7005,
+        "x": 2.0,
+        "y": 2.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "isolated_copper",
+      "severity": "warning",
+      "message": "Isolated copper fill",
       "location": {
-        "x": 41.9899,
-        "y": 26.2995,
+        "x": 2.0,
+        "y": 2.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "isolated_copper",
+      "severity": "warning",
+      "message": "Isolated copper fill",
       "location": {
-        "x": 30.3835,
-        "y": 32.2005,
+        "x": 2.0,
+        "y": 2.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "isolated_copper",
+      "severity": "warning",
+      "message": "Isolated copper fill",
       "location": {
-        "x": 29.3745,
-        "y": 32.2005,
+        "x": 2.0,
+        "y": 2.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "isolated_copper",
+      "severity": "warning",
+      "message": "Isolated copper fill",
       "location": {
-        "x": 40.7245,
-        "y": 26.2995,
+        "x": 2.0,
+        "y": 2.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "isolated_copper",
+      "severity": "warning",
+      "message": "Isolated copper fill",
       "location": {
-        "x": 29.3745,
-        "y": 29.2005,
+        "x": 2.0,
+        "y": 2.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "isolated_copper",
+      "severity": "warning",
+      "message": "Isolated copper fill",
       "location": {
-        "x": 48.503,
-        "y": 39.2168,
+        "x": 2.0,
+        "y": 2.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "isolated_copper",
+      "severity": "warning",
+      "message": "Isolated copper fill",
       "location": {
-        "x": 30.6266,
-        "y": 29.2005,
+        "x": 2.0,
+        "y": 2.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "isolated_copper",
+      "severity": "warning",
+      "message": "Isolated copper fill",
       "location": {
-        "x": 47.5613,
-        "y": 39.2168,
+        "x": 2.0,
+        "y": 2.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "isolated_copper",
+      "severity": "warning",
+      "message": "Isolated copper fill",
       "location": {
-        "x": 30.3841,
-        "y": 32.7995,
+        "x": 2.0,
+        "y": 2.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "isolated_copper",
+      "severity": "warning",
+      "message": "Isolated copper fill",
       "location": {
-        "x": 29.3745,
-        "y": 32.7995,
+        "x": 2.0,
+        "y": 2.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "isolated_copper",
+      "severity": "warning",
+      "message": "Isolated copper fill",
       "location": {
-        "x": 13.9636,
-        "y": 45.6008,
+        "x": 2.0,
+        "y": 2.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "isolated_copper",
+      "severity": "warning",
+      "message": "Isolated copper fill",
       "location": {
-        "x": 15.4867,
-        "y": 44.6508,
+        "x": 2.0,
+        "y": 2.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "isolated_copper",
+      "severity": "warning",
+      "message": "Isolated copper fill",
       "location": {
-        "x": 12.5133,
-        "y": 45.6008,
+        "x": 2.0,
+        "y": 2.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "isolated_copper",
+      "severity": "warning",
+      "message": "Isolated copper fill",
       "location": {
-        "x": 6.0,
-        "y": 45.6008,
+        "x": 2.0,
+        "y": 2.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "isolated_copper",
+      "severity": "warning",
+      "message": "Isolated copper fill",
       "location": {
-        "x": 13.2117,
-        "y": 45.6008,
+        "x": 2.0,
+        "y": 2.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "isolated_copper",
+      "severity": "warning",
+      "message": "Isolated copper fill",
       "location": {
-        "x": 16.8139,
-        "y": 44.6508,
+        "x": 2.0,
+        "y": 2.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "isolated_copper",
+      "severity": "warning",
+      "message": "Isolated copper fill",
       "location": {
-        "x": 68.98,
-        "y": 30.75,
+        "x": 2.0,
+        "y": 2.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "isolated_copper",
+      "severity": "warning",
+      "message": "Isolated copper fill",
       "location": {
-        "x": 68.9286,
-        "y": 30.8014,
+        "x": 2.0,
+        "y": 2.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "isolated_copper",
+      "severity": "warning",
+      "message": "Isolated copper fill",
       "location": {
-        "x": 69.0295,
-        "y": 28.7995,
+        "x": 2.0,
+        "y": 2.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "isolated_copper",
+      "severity": "warning",
+      "message": "Isolated copper fill",
       "location": {
-        "x": 69.0295,
-        "y": 31.2005,
+        "x": 2.0,
+        "y": 2.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "isolated_copper",
+      "severity": "warning",
+      "message": "Isolated copper fill",
       "location": {
-        "x": 70.29,
-        "y": 28.7995,
+        "x": 2.0,
+        "y": 2.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "isolated_copper",
+      "severity": "warning",
+      "message": "Isolated copper fill",
       "location": {
-        "x": 70.29,
-        "y": 31.2005,
+        "x": 2.0,
+        "y": 2.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "isolated_copper",
+      "severity": "warning",
+      "message": "Isolated copper fill",
       "location": {
-        "x": 67.3116,
-        "y": 24.3492,
+        "x": 2.0,
+        "y": 2.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "isolated_copper",
+      "severity": "warning",
+      "message": "Isolated copper fill",
       "location": {
-        "x": 66.4867,
-        "y": 24.3492,
+        "x": 2.0,
+        "y": 2.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "isolated_copper",
+      "severity": "warning",
+      "message": "Isolated copper fill",
       "location": {
-        "x": 69.442,
-        "y": 30.2995,
+        "x": 2.0,
+        "y": 2.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "isolated_copper",
+      "severity": "warning",
+      "message": "Isolated copper fill",
       "location": {
-        "x": 69.0295,
-        "y": 30.2995,
+        "x": 2.0,
+        "y": 2.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "isolated_copper",
+      "severity": "warning",
+      "message": "Isolated copper fill",
       "location": {
-        "x": 37.1778,
-        "y": 26.75,
+        "x": 2.0,
+        "y": 2.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "isolated_copper",
+      "severity": "warning",
+      "message": "Isolated copper fill",
       "location": {
-        "x": 40.675,
-        "y": 26.75,
+        "x": 2.0,
+        "y": 2.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "isolated_copper",
+      "severity": "warning",
+      "message": "Isolated copper fill",
       "location": {
-        "x": 40.6271,
-        "y": 28.7979,
+        "x": 2.0,
+        "y": 2.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "isolated_copper",
+      "severity": "warning",
+      "message": "Isolated copper fill",
       "location": {
-        "x": 40.675,
-        "y": 28.75,
+        "x": 2.0,
+        "y": 2.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "isolated_copper",
+      "severity": "warning",
+      "message": "Isolated copper fill",
       "location": {
-        "x": 27.5981,
-        "y": 32.2194,
+        "x": 2.0,
+        "y": 2.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "isolated_copper",
+      "severity": "warning",
+      "message": "Isolated copper fill",
       "location": {
-        "x": 27.5391,
-        "y": 32.2194,
+        "x": 2.0,
+        "y": 2.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "isolated_copper",
+      "severity": "warning",
+      "message": "Isolated copper fill",
       "location": {
-        "x": 28.1754,
-        "y": 32.9291,
+        "x": 2.0,
+        "y": 2.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "isolated_copper",
+      "severity": "warning",
+      "message": "Isolated copper fill",
       "location": {
-        "x": 28.234,
-        "y": 32.8705,
+        "x": 2.0,
+        "y": 2.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1000 mm)",
+      "type": "isolated_copper",
+      "severity": "warning",
+      "message": "Isolated copper fill",
       "location": {
-        "x": 13.8537,
-        "y": 44.4506,
+        "x": 2.0,
+        "y": 2.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1000 mm)",
+      "type": "isolated_copper",
+      "severity": "warning",
+      "message": "Isolated copper fill",
       "location": {
-        "x": 13.7074,
-        "y": 44.4506,
+        "x": 2.0,
+        "y": 2.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1200 mm)",
+      "type": "isolated_copper",
+      "severity": "warning",
+      "message": "Isolated copper fill",
       "location": {
-        "x": 13.545,
-        "y": 44.613,
+        "x": 2.0,
+        "y": 2.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "isolated_copper",
+      "severity": "warning",
+      "message": "Isolated copper fill",
       "location": {
-        "x": 40.6255,
-        "y": 27.2995,
+        "x": 2.0,
+        "y": 2.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "isolated_copper",
+      "severity": "warning",
+      "message": "Isolated copper fill",
       "location": {
-        "x": 38.399,
-        "y": 27.2995,
+        "x": 2.0,
+        "y": 2.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "lib_footprint_mismatch",
+      "severity": "warning",
+      "message": "Footprint 'MountingHole_3.2mm_M3' does not match copy in library 'MountingHole'",
       "location": {
-        "x": 41.6133,
-        "y": 27.7005,
+        "x": 4.5,
+        "y": 19.0,
         "unit": "mm"
       }
     },
     {
-      "type": "track_width",
-      "severity": "error",
-      "message": "Track width (board setup constraints min width 0.2000 mm; actual 0.1500 mm)",
+      "type": "lib_footprint_mismatch",
+      "severity": "warning",
+      "message": "Footprint 'MountingHole_3.2mm_M3' does not match copy in library 'MountingHole'",
       "location": {
-        "x": 40.7245,
-        "y": 27.7005,
+        "x": 4.5,
+        "y": 55.5,
+        "unit": "mm"
+      }
+    },
+    {
+      "type": "lib_footprint_mismatch",
+      "severity": "warning",
+      "message": "Footprint 'MountingHole_3.2mm_M3' does not match copy in library 'MountingHole'",
+      "location": {
+        "x": 75.5,
+        "y": 16.0,
+        "unit": "mm"
+      }
+    },
+    {
+      "type": "lib_footprint_mismatch",
+      "severity": "warning",
+      "message": "Footprint 'MountingHole_3.2mm_M3' does not match copy in library 'MountingHole'",
+      "location": {
+        "x": 75.5,
+        "y": 41.0,
         "unit": "mm"
       }
     },
@@ -1321,28 +703,8 @@
       "severity": "warning",
       "message": "Silkscreen clearance",
       "location": {
-        "x": 48.503,
-        "y": 38.563,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "silk_overlap",
-      "severity": "warning",
-      "message": "Silkscreen clearance",
-      "location": {
-        "x": 44.859,
-        "y": 40.286,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "silk_overlap",
-      "severity": "warning",
-      "message": "Silkscreen clearance",
-      "location": {
-        "x": 45.971164,
-        "y": 34.401,
+        "x": 48.5,
+        "y": 44.33,
         "unit": "mm"
       }
     },
@@ -1361,6 +723,26 @@
       "severity": "warning",
       "message": "Silkscreen clearance",
       "location": {
+        "x": 45.971164,
+        "y": 34.401,
+        "unit": "mm"
+      }
+    },
+    {
+      "type": "silk_overlap",
+      "severity": "warning",
+      "message": "Silkscreen clearance",
+      "location": {
+        "x": 48.503,
+        "y": 38.563,
+        "unit": "mm"
+      }
+    },
+    {
+      "type": "silk_overlap",
+      "severity": "warning",
+      "message": "Silkscreen clearance",
+      "location": {
         "x": 44.830164,
         "y": 38.096,
         "unit": "mm"
@@ -1371,8 +753,48 @@
       "severity": "warning",
       "message": "Silkscreen clearance",
       "location": {
-        "x": 26.0,
-        "y": 31.55,
+        "x": 53.5,
+        "y": 28.67,
+        "unit": "mm"
+      }
+    },
+    {
+      "type": "silk_overlap",
+      "severity": "warning",
+      "message": "Silkscreen clearance",
+      "location": {
+        "x": 44.859,
+        "y": 40.286,
+        "unit": "mm"
+      }
+    },
+    {
+      "type": "silk_overlap",
+      "severity": "warning",
+      "message": "Silkscreen clearance",
+      "location": {
+        "x": 25.967,
+        "y": 27.281,
+        "unit": "mm"
+      }
+    },
+    {
+      "type": "silk_overlap",
+      "severity": "warning",
+      "message": "Silkscreen clearance",
+      "location": {
+        "x": 26.36,
+        "y": 32.14,
+        "unit": "mm"
+      }
+    },
+    {
+      "type": "silk_overlap",
+      "severity": "warning",
+      "message": "Silkscreen clearance",
+      "location": {
+        "x": 37.61942,
+        "y": 40.329,
         "unit": "mm"
       }
     },
@@ -1391,26 +813,6 @@
       "severity": "warning",
       "message": "Silkscreen clearance",
       "location": {
-        "x": 25.967,
-        "y": 27.281,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "silk_overlap",
-      "severity": "warning",
-      "message": "Silkscreen clearance",
-      "location": {
-        "x": 53.5,
-        "y": 28.67,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "silk_overlap",
-      "severity": "warning",
-      "message": "Silkscreen clearance",
-      "location": {
         "x": 46.255,
         "y": 31.707,
         "unit": "mm"
@@ -1421,8 +823,18 @@
       "severity": "warning",
       "message": "Silkscreen clearance",
       "location": {
-        "x": 37.61942,
-        "y": 40.329,
+        "x": 14.0,
+        "y": 41.6,
+        "unit": "mm"
+      }
+    },
+    {
+      "type": "silk_overlap",
+      "severity": "warning",
+      "message": "Silkscreen clearance",
+      "location": {
+        "x": 23.6,
+        "y": 31.2,
         "unit": "mm"
       }
     },
@@ -1431,8 +843,8 @@
       "severity": "warning",
       "message": "Silkscreen clipped by solder mask",
       "location": {
-        "x": 48.503,
-        "y": 38.563,
+        "x": 48.5,
+        "y": 44.33,
         "unit": "mm"
       }
     },
@@ -1441,8 +853,8 @@
       "severity": "warning",
       "message": "Silkscreen clipped by solder mask",
       "location": {
-        "x": 48.503,
-        "y": 38.563,
+        "x": 44.938,
+        "y": 36.576,
         "unit": "mm"
       }
     },
@@ -1451,18 +863,8 @@
       "severity": "warning",
       "message": "Silkscreen clipped by solder mask",
       "location": {
-        "x": 44.859,
-        "y": 40.286,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "silk_over_copper",
-      "severity": "warning",
-      "message": "Silkscreen clipped by solder mask",
-      "location": {
-        "x": 44.859,
-        "y": 40.286,
+        "x": 44.938,
+        "y": 36.576,
         "unit": "mm"
       }
     },
@@ -1481,8 +883,18 @@
       "severity": "warning",
       "message": "Silkscreen clipped by solder mask",
       "location": {
-        "x": 44.938,
-        "y": 36.576,
+        "x": 48.503,
+        "y": 38.563,
+        "unit": "mm"
+      }
+    },
+    {
+      "type": "silk_over_copper",
+      "severity": "warning",
+      "message": "Silkscreen clipped by solder mask",
+      "location": {
+        "x": 48.503,
+        "y": 38.563,
         "unit": "mm"
       }
     },
@@ -1493,56 +905,6 @@
       "location": {
         "x": 44.935,
         "y": 38.413,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "silk_over_copper",
-      "severity": "warning",
-      "message": "Silkscreen clipped by solder mask",
-      "location": {
-        "x": 44.935,
-        "y": 38.413,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "silk_over_copper",
-      "severity": "warning",
-      "message": "Silkscreen clipped by solder mask",
-      "location": {
-        "x": 44.938,
-        "y": 36.576,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "silk_over_copper",
-      "severity": "warning",
-      "message": "Silkscreen clipped by solder mask",
-      "location": {
-        "x": 44.971,
-        "y": 42.1,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "silk_over_copper",
-      "severity": "warning",
-      "message": "Silkscreen clipped by solder mask",
-      "location": {
-        "x": 44.971,
-        "y": 42.1,
-        "unit": "mm"
-      }
-    },
-    {
-      "type": "silk_over_copper",
-      "severity": "warning",
-      "message": "Silkscreen clipped by solder mask",
-      "location": {
-        "x": 25.967,
-        "y": 27.281,
         "unit": "mm"
       }
     },
@@ -1561,6 +923,46 @@
       "severity": "warning",
       "message": "Silkscreen clipped by solder mask",
       "location": {
+        "x": 44.859,
+        "y": 40.286,
+        "unit": "mm"
+      }
+    },
+    {
+      "type": "silk_over_copper",
+      "severity": "warning",
+      "message": "Silkscreen clipped by solder mask",
+      "location": {
+        "x": 44.859,
+        "y": 40.286,
+        "unit": "mm"
+      }
+    },
+    {
+      "type": "silk_over_copper",
+      "severity": "warning",
+      "message": "Silkscreen clipped by solder mask",
+      "location": {
+        "x": 44.971,
+        "y": 42.1,
+        "unit": "mm"
+      }
+    },
+    {
+      "type": "silk_over_copper",
+      "severity": "warning",
+      "message": "Silkscreen clipped by solder mask",
+      "location": {
+        "x": 44.971,
+        "y": 42.1,
+        "unit": "mm"
+      }
+    },
+    {
+      "type": "silk_over_copper",
+      "severity": "warning",
+      "message": "Silkscreen clipped by solder mask",
+      "location": {
         "x": 25.967,
         "y": 27.281,
         "unit": "mm"
@@ -1571,8 +973,18 @@
       "severity": "warning",
       "message": "Silkscreen clipped by solder mask",
       "location": {
-        "x": 46.079,
-        "y": 32.881,
+        "x": 25.967,
+        "y": 27.281,
+        "unit": "mm"
+      }
+    },
+    {
+      "type": "silk_over_copper",
+      "severity": "warning",
+      "message": "Silkscreen clipped by solder mask",
+      "location": {
+        "x": 33.179,
+        "y": 39.984,
         "unit": "mm"
       }
     },
@@ -1591,8 +1003,18 @@
       "severity": "warning",
       "message": "Silkscreen clipped by solder mask",
       "location": {
-        "x": 33.179,
-        "y": 39.984,
+        "x": 44.935,
+        "y": 38.413,
+        "unit": "mm"
+      }
+    },
+    {
+      "type": "silk_over_copper",
+      "severity": "warning",
+      "message": "Silkscreen clipped by solder mask",
+      "location": {
+        "x": 46.079,
+        "y": 32.881,
         "unit": "mm"
       }
     }
