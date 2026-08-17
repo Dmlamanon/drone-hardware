@@ -80,7 +80,10 @@ batch.
 
 ## 3. U4 (MPU-6000) — why the obvious saving is not available
 
-At **~$10.42** the IMU is roughly two-thirds of per-board component cost.
+At **~$10.42** the IMU is **47 %** of per-board component cost ($22.20 —
+see the budget doc, which computes the same figure). An earlier version
+of this line said "two-thirds", which did not match the budget written
+in the same batch; 47 % is the arithmetic.
 The obvious move is the MPU-6050 at a fraction of the price. **It is not
 a drop-in**, for two concrete reasons:
 
@@ -89,14 +92,23 @@ a drop-in**, for two concrete reasons:
    (`engineering/drone-firmware/src/mpu6000.c`) talks over **SPI1**, and
    the board routes it that way. Swapping the part means rewriting the
    driver and re-routing the sensor.
-2. **The pinout differs.** The MPU-6050 has a separate `VLOGIC` supply
-   pin where the MPU-6000 has a single `VDD`. The footprints are not
-   interchangeable as wired.
+2. **The pinout differs on the pins that matter — but not the way an
+   earlier version of this document said.** It claimed the 6050 has a
+   separate `VLOGIC` where the 6000 has a single `VDD`; that is wrong.
+   Both are QFN-24 4×4, share one datasheet, and both have a separate
+   I/O supply on pin 8 — InvenSense simply calls it `VDDIO` on the 6000
+   and `VLOGIC` on the 6050. The real differences are pin 9 (AD0/SDO vs
+   AD0), pin 22 (`/CS` vs NC) and pins 23/24 (SCLK/SDI vs SCL/SDA) —
+   i.e. exactly the SPI pins. Reason 1 is correct and sufficient on its
+   own.
 
-There is also a performance reason the original choice was right:
-**I²C cannot sustain an 8 kHz gyro update rate**, which is exactly why
-flight controllers use the SPI-capable MPU-6000 rather than the cheaper
-6050.
+A performance argument is often made here — that I²C cannot sustain an
+8 kHz gyro update — and **it does not apply to this vehicle**. STEVIE's
+loop runs at **2 kHz** (`MAIN_LOOP_TICK_US = 500`), and a 6-byte read
+over 400 kHz I²C takes roughly 225 µs, giving about a 4.4 kHz ceiling.
+That is comfortably above what this firmware asks for. The argument is a
+real one for 8 kHz racing firmware and it should not be used to defend
+this BOM line.
 
 **If cost matters more than the existing driver**, the honest options are
 SPI-capable and still cheaper — the MPU-6500 or ICM-42688 class of part.
@@ -110,7 +122,12 @@ it is presented here as a costed choice rather than made unilaterally.
   is thin.
 - **One setup fee removed** (Y1), as a side effect of fixing a real
   footprint defect.
-- **No other Extended line can be substituted safely.** Five are the
-  specific functional part; four set a voltage or a loop response.
+- **No other Extended line has a *confirmed* Basic substitute.** Note
+  the careful wording: R1/R12/C23/L1/L2 are constrained by their VALUE,
+  not by being a specific manufacturer's part — any Basic-library 0402
+  1% part at the same value is a drop-in. What is unknown is whether
+  such an MPN exists in the Basic library, and this audit cannot tell,
+  because its snapshot is 692 entries and admittedly incomplete. That is
+  a gap in the data, not a proven blocker.
 - **The largest single cost, U4, is a design decision with a driver
   attached**, not a sourcing choice.

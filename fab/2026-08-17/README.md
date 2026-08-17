@@ -10,9 +10,13 @@ tags: [drone, hardware, pcb, fab]
 ## Status: **NOT READY TO ORDER**
 
 This is a complete set of fabrication outputs, and it is **not**
-orderable. **Two blockers remain of the four** — and they turn out to be
-the same underlying problem. Stated first because the rest of this
-document describes a package that otherwise looks finished.
+orderable. **Two blockers remain of the four.** Stated first because the
+rest of this document describes a package that otherwise looks finished.
+
+An earlier version of this document claimed the two were the same
+problem, on evidence that turned out to be an artifact of my own test
+probe. They are **largely independent**, and part of blocker 1 can be
+fixed today — see below.
 
 **Regenerated 2026-08-17 (second batch)** after C23 was reconnected, Y1
 and C1 were re-footprinted, the mounting holes were moved off nine
@@ -43,50 +47,63 @@ anywhere.
 
 ## Blockers
 
-### 1 + 2. The inner layers and the unconnected pins — ONE problem
+### 1. Fifteen unconnected items — the board would not work
 
-**15 unconnected items**, mostly **U1's 3V3 supply pins (1, 13, 19, 32,
-48, 64)**. An STM32 with unconnected VDD pins does not run.
+**15 unconnected items**, spanning **14 distinct pads** plus J3 (several
+pads appear in more than one ratsnest edge, which is why item and pad
+counts differ). Most are **U1's supply pins** — pad 1 is VBAT, pad 13 is
+VDDA, and pads 19/32/48/64 are the four VDD. An STM32 whose supply pins
+are unconnected does not run.
 
-**214 signal segments routed through the inner layers** — 118 on In1.Cu
-(the GND pour) and 96 on In2.Cu (the 3V3 pour) — including `SW_NODE`
-(the highest dV/dt node on the board), `VBAT_4S`, `HSE_IN`/`HSE_OUT` and
-the regulator feedback nets.
+> [!warning] An earlier version of this section was wrong and is corrected here
+> It claimed these pins were **blocked behind** fixing the inner layers,
+> citing a fanout via that "landed on a 5.5 × 0.8 mm isolated island of
+> 3V3 copper". **That was an artifact of my own probe.** The via was
+> placed at (27.90, 26.25), which is inside the **In1.Cu GND** pour and
+> **outside** the In2.Cu 3V3 pour — a 3V3 via dropped into the middle of
+> the ground plane. The zone filler built a small 3V3 puddle around the
+> via itself, and I read that puddle as a shattered plane. With the via
+> removed, **In2.Cu is a single filled polygon.** An independent review
+> caught it.
 
-**These are not two tasks. They are one, and the evidence is direct.**
+**What the board actually shows**, measured directly:
 
-A fanout via was placed at **(27.90, 26.25)** on net `3V3` with a stub to
-U1 pad 1, and the zones were refilled. DRC **still** reported the pad as
-unconnected. Extracting the actual filled copper from the board file
-shows why:
-
-| Zone layer | Filled polygons | Extent |
+| Layer | Filled polygons | Coverage of the pour area |
 |---|---|---|
-| In1.Cu (GND) | 2 | main pour 2,2–78,58 **+ a 1.4 × 1.2 mm island** |
-| In2.Cu (3V3) | 2 | main pour 2,2–78,58 **+ a 5.5 × 0.8 mm island** |
+| In1.Cu (GND) | 2 — main pour + a 1.36 × 1.17 mm sliver | 76.7 % |
+| In2.Cu (3V3) | **1** — main pour only | 73.0 % |
 
-The via landed inside the **5.5 × 0.8 mm island** — a sliver cut off from
-the main pour — and connects to nothing. Sampling the pours confirms the
-cause: **(40, 30), the middle of the board directly under the MCU, is not
-covered by filled copper on either inner layer.**
+The pours are **connected, with large voids** — not fragmented. And
+**six of the fourteen pads have plane copper directly underneath right
+now** (U1.13, U1.19, U1.32 on 3V3; U1.18, U4.11, U4.18 on GND), so they
+can take a fanout via today with no inner-layer work at all.
 
-**You cannot via down to a plane that is not there.** Fix the planes
-first; most of the pins may then fix themselves. The experimental via was
-removed rather than left as dead copper.
+The other eight sit over a void and want blocker 2 done first.
 
-**Why this was not fixed automatically.** Freerouting v2.3.0 logs
+### 2. Signal traces through both inner "planes"
+
+**214 signal segments** — 118 on In1.Cu, 96 on In2.Cu — including
+**`SW_NODE`**, the highest dV/dt node on the board, plus `VBAT_4S`,
+`HSE_IN`/`HSE_OUT` and the regulator feedback nets.
+
+This is worth fixing **on its own merits**, not because it blocks
+blocker 1: slicing a reference plane with 118 traces forces return
+current to detour around the slots, which is the standard mechanism for
+EMI and ground bounce, and burying the switching node inside the 3V3
+pour is the specific case to fix first. It also closes the voids, which
+is what makes the remaining eight pads straightforward.
+
+**Why it was not fixed automatically.** Freerouting v2.3.0 logs
 `Layer 'In1.Cu' has been automatically configured as a dedicated power
 plane` and routes signals on it anyway. A DSN hand-edited to declare both
-inner layers `(type power)` — the correct Specctra mechanism — made
-Freerouting **hang for 16 minutes** with completely flat memory before
-being killed.
+layers `(type power)` — the correct Specctra mechanism — made Freerouting
+**hang for 16 minutes** with flat memory before being killed.
 
-**The fix is manual and is fully specified** in
-`docs/manual-fanout-guide-2026-08-17.md`: the ordering, a custom DRC
-keepout rule to stop signals re-entering the planes, the per-net list of
-what must not touch an inner layer, and the verification commands. B.Cu
-carries only 19 segments, so there is a nearly empty layer to move the
-traffic onto. **1–2 hours.**
+**Both jobs are specified in full** in
+`docs/manual-fanout-guide-2026-08-17.md`, including which pads are
+already fixable, the custom DRC keepout rule, and the per-net priority
+list. B.Cu carries only 19 segments, so there is a nearly empty layer to
+move the traffic onto. **1–2 hours.**
 
 ---
 
@@ -107,7 +124,7 @@ C23 fix).
 **(75.5, 16)**, **(4.5, 55.5)** and **(75.5, 41)**.
 
 They were added in the previous batch on the standard 30.5 × 30.5 mm
-flight-controller pattern — **and that pattern put them on top of nine
+flight-controller pattern — **and that pattern put them on top of twelve
 components** (D1, J2, R12, R13, C2, J4, L1, R1, U2, C6, J6, R3). The
 positions above were found by scanning every component courtyard for
 clear space, and the board now reports **zero courtyard overlaps**.
