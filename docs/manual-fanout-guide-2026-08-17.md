@@ -454,13 +454,59 @@ measured off this board rather than estimated:
 | channel a via would need | 0.500 + 2 x 0.200 clearance = **0.900 mm** |
 
 So a fanout via **cannot sit between pins**. It has to sit *outside* the
-pin row, and the stub reaching it has to cross whatever is already routed
-there -- which, on the supply pins, is the fanout of the neighbouring
-signal pins.
+pin row.
 
 Measured, at 0.50 mm via / 0.30 mm drill / 0.20 mm stub / 0.20 mm
 clearance, searching every 0.05 mm out to 3 mm: **no site satisfies all
 four constraints for any of the eleven pads.**
+
+#### But the escape channel is NOT the main reason, and that matters
+
+An earlier version of this section stopped at the table above and told
+you to widen the channel. `scripts/why_no_fanout.py` counts, for every
+candidate site, which constraint rejects it — each evaluated
+**independently**, because first-failure-wins only reports whichever
+check the code happens to run first. Per pad, out of ~9,800—10,600
+candidate sites:
+
+| pad | sites clear of copper | sites inside the pour | rejections that are the VIA BODY | ...the STUB |
+|---|---|---|---|---|
+| U1.1 | 0 | **0** | 8560 (87 %) | 1243 (13 %) |
+| U1.13 | 0 | 5795 | 9151 (93 %) | 654 (7 %) |
+| U1.19 | 0 | 5090 | 9419 (96 %) | 389 (4 %) |
+| U1.64 | 0 | **0** | 7928 (81 %) | 1878 (19 %) |
+| U1.48 | 0 | **0** | 9665 (99 %) | 143 (1 %) |
+| U1.12 | 0 | 2416 | 9424 (96 %) | 381 (4 %) |
+| U1.18 | 0 | 4202 | 8874 (90 %) | 934 (10 %) |
+| U1.63 | 0 | 1964 | 8168 (83 %) | 1638 (17 %) |
+| U4.13 | 0 | 619 | 8885 (84 %) | 1695 (16 %) |
+| U4.11 | 0 | 8755 | 8829 (83 %) | 1751 (17 %) |
+| U4.1 | 0 | 1629 | 8294 (78 %) | 2286 (22 %) |
+
+Read the last two columns first. **The via body, not the stub, is what
+fails 78—99 % of the time.** The channel-between-two-pins story explains
+1—22 % of it. The real situation is that the whole neighbourhood out to
+3 mm is saturated: there is nowhere within reach to put a 0.5 mm via at
+all, whatever route the stub takes.
+
+Read the third column second. **For U1.1, U1.64 and U1.48 the `/3V3`
+plane does not reach anywhere in the search area** — zero sites are
+inside the pour. Those three need the pour extended as well as copper
+moved; clearing traces alone will not finish them.
+
+> [!note] Why this number is trustworthy now and was not before
+> Checking this found two more defects in the checker. It modelled every
+> pad as a disc of radius `hypot(w, h)/2` — for U1's 1.55 x 0.30 mm pad
+> that is a 0.789 mm disc against a true 0.15 mm half-height, inflating
+> every pad by 0.639 mm. Fixing that alone produced **29 legal sites for
+> U4.11**; one was placed and DRC immediately found a new clearance
+> violation, because the stub was checked against tracks and pads but
+> **not against vias**. With both fixed, U4.11 is back to zero.
+>
+> So zero was always the right answer — but it had been right by
+> accident, from a checker over-strict in one place and blind in another.
+> That is the third time in this batch one omission of this exact shape
+> has appeared.
 
 ### The three ways a human can actually fix them, in order of effort
 
@@ -475,10 +521,18 @@ four constraints for any of the eleven pads.**
    pour does not reach them even after a correct refill, so they need the
    same treatment as the rest: move copper, or extend the pour boundary in
    the editor.
-2. **Move the neighbouring traces.** For each supply pin, drag the one or
-   two signal traces that own the escape channel a fraction of a
-   millimetre and the via fits. This is the judgement call — which trace
-   yields — and it is a few minutes each in the interactive router.
+2. **Rearrange the neighbourhood — not one trace.** An earlier version
+   of this step said "drag the one or two signal traces that own the
+   escape channel a fraction of a millimetre and the via fits."
+   **The census above says that is wrong**, and following it would burn a
+   session: 78—99 % of candidate sites fail on the via body, not the
+   stub, so the area out to 3 mm is saturated rather than pinched at one
+   point. Expect to re-route a region around each part, or to give the
+   via somewhere further out to land.
+
+   **And for U1.1, U1.64 and U1.48, extend the `/3V3` pour first.** Zero
+   candidate sites near those three are inside the plane at all, so no
+   amount of trace-dragging can finish them.
 3. **Via-in-pad**, if you would rather not move anything. It is the
    standard answer at this pitch and it is a fab option (filled and
    capped vias), not a layout change. It costs money per board rather
