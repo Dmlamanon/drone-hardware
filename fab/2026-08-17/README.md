@@ -10,86 +10,83 @@ tags: [drone, hardware, pcb, fab]
 ## Status: **NOT READY TO ORDER**
 
 This is a complete set of fabrication outputs, and it is **not**
-orderable. **Four blockers**, stated first because the rest of this
+orderable. **Two blockers remain of the four** — and they turn out to be
+the same underlying problem. Stated first because the rest of this
 document describes a package that otherwise looks finished.
+
+**Regenerated 2026-08-17 (second batch)** after C23 was reconnected, Y1
+and C1 were re-footprinted, the mounting holes were moved off nine
+components, and the net names were normalised. All outputs in this folder
+come from that board, not the earlier one.
 
 Ordering is David's call and David's alone. Nothing here has been sent
 anywhere.
 
-> [!warning] Much of this section was rewritten after an independent review
-> The first version of this document claimed two blockers, called the
-> inner layers "solid planes", said all 199 net conflicts were the same
-> harmless kind, and presented a 267 → 43 DRC drop as pure improvement.
-> A review found all four claims wrong. The corrections are inline
-> below and each says what it replaced, rather than being silently
-> edited.
+> [!success] Two blockers cleared since the previous version
+> - **C23 is connected.** Its net genuinely did not exist: the buck's
+>   compensation network is `COMP_NODE → R11 → ? → C23 → GND` and the
+>   middle junction had no wire. Added; ERC still 0/0; C23 no longer
+>   appears anywhere in the parity report.
+> - **U2 is in stock.** The claim that it might not be came from a
+>   search-result snippet rather than the part page. Fetching the page
+>   directly: **245 units, $1.07 at qty 1, $0.86 at 10+.** The
+>   bottleneck was not real.
+
+> [!warning] Much of this document was rewritten after an independent review
+> An earlier version called the inner layers "solid planes", said all
+> 199 net conflicts were the same harmless kind, and presented a
+> 267 → 43 DRC drop as pure improvement. A review found those wrong. The
+> corrections are inline and each says what it replaced, rather than
+> being silently edited.
 
 ---
 
 ## Blockers
 
-### 1. Eighteen unconnected items — the board would not work
+### 1 + 2. The inner layers and the unconnected pins — ONE problem
 
-DRC reports 18 unconnected items. They are not cosmetic. Most are
-**U1's 3V3 supply pins (1, 13, 19, 32, 48, 64)** and a set of GND pads
-that have no via dropping to the inner planes.
+**15 unconnected items**, mostly **U1's 3V3 supply pins (1, 13, 19, 32,
+48, 64)**. An STM32 with unconnected VDD pins does not run.
 
-The inner layers carry large GND and 3V3 pours, so a surface pad on
-either net generally reaches its net only through a via. Freerouting's
-fanout stage left 17 pins unrouted, and those pins therefore float. **An
-STM32 with unconnected VDD pins does not run.**
+**214 signal segments routed through the inner layers** — 118 on In1.Cu
+(the GND pour) and 96 on In2.Cu (the 3V3 pour) — including `SW_NODE`
+(the highest dV/dt node on the board), `VBAT_4S`, `HSE_IN`/`HSE_OUT` and
+the regulator feedback nets.
 
-(Two of the unconnected items are **PTH** pads on J3, whose barrels pass
-through the inner layers regardless — those are not fanout misses and
-have a different cause. One more is **`Pad 7 [VBAT_4S]` of U2**, the
-buck's own power input, which is a distinct item on the highest-current
-net rather than a 3V3/GND fanout miss.)
+**These are not two tasks. They are one, and the evidence is direct.**
 
-Two scripted attempts to close these are recorded as failures rather
-than quietly dropped:
+A fanout via was placed at **(27.90, 26.25)** on net `3V3` with a stub to
+U1 pad 1, and the zones were refilled. DRC **still** reported the pad as
+unconnected. Extracting the actual filled copper from the board file
+shows why:
 
-| Attempt | Method | Result |
+| Zone layer | Filled polygons | Extent |
 |---|---|---|
-| 1 | Via placed at a blind radial offset from each pad | 43 → **235** violations, 58 shorts |
-| 2 | Same, plus clearance checks against other nets' pads/tracks/vias | 43 → **387** violations, 89 shorts |
+| In1.Cu (GND) | 2 | main pour 2,2–78,58 **+ a 1.4 × 1.2 mm island** |
+| In2.Cu (3V3) | 2 | main pour 2,2–78,58 **+ a 5.5 × 0.8 mm island** |
 
-Both were reverted. The second failed because the geometric model
-ignored zone fills and drill-to-drill spacing, which KiCad checks and
-the script did not.
+The via landed inside the **5.5 × 0.8 mm island** — a sliver cut off from
+the main pour — and connects to nothing. Sampling the pours confirms the
+cause: **(40, 30), the middle of the board directly under the MCU, is not
+covered by filled copper on either inner layer.**
 
-**Conclusion: this needs manual routing in the KiCad UI against live
-DRC.** It is a short job for a human with the board open — add fanout
-vias on the MCU's supply pins and the remaining GND pads — and it is
-not a job for scripted file surgery. Do not order until DRC reports
-zero unconnected items.
+**You cannot via down to a plane that is not there.** Fix the planes
+first; most of the pins may then fix themselves. The experimental via was
+removed rather than left as dead copper.
 
-### 2. U2 stock is unconfirmed
+**Why this was not fixed automatically.** Freerouting v2.3.0 logs
+`Layer 'In1.Cu' has been automatically configured as a dedicated power
+plane` and routes signals on it anyway. A DSN hand-edited to declare both
+inner layers `(type power)` — the correct Specctra mechanism — made
+Freerouting **hang for 16 minutes** with completely flat memory before
+being killed.
 
-The main 3.3V buck, **TPS54336ADDA (LCSC C1355769)**, showed as *out of
-stock at LCSC* in a search result during sourcing. That was not
-confirmed against a live stock figure, because the JLCPCB part pages
-render their stock and library-type fields via JavaScript and the
-fetched HTML does not contain them.
-
-It has no drop-in alternate on this footprint. **Verify availability
-before ordering anything else**, since a substitution changes the
-footprint, the feedback divider, and therefore the board.
-
-### 3. Signal traces run through both inner "planes"
-
-97 segments on In1.Cu and 90 on In2.Cu, including `SW_NODE`, `VBAT_4S`,
-the crystal and the regulator feedback nets. The GND reference is sliced
-by 97 slots. Detail and consequences in the section below. Same class of
-work as blocker 1: KiCad UI, restrict the inner layers, re-route onto
-F.Cu/B.Cu.
-
-### 4. C23's net is missing from the board
-
-`Pad missing net given by schematic (Net-(C23-Pad1))`, twice. C23 is the
-TPS54336's **compensation capacitor**, so the buck's control loop is not
-connected. A netless pad is one the router will not route and the zone
-will not thermal-relieve. Filed for most of this batch under a heading
-that said it affected nothing.
+**The fix is manual and is fully specified** in
+`docs/manual-fanout-guide-2026-08-17.md`: the ordering, a custom DRC
+keepout rule to stop signals re-entering the planes, the per-net list of
+what must not touch an inner layer, and the verification commands. B.Cu
+carries only 19 segments, so there is a nearly empty layer to move the
+traffic onto. **1–2 hours.**
 
 ---
 
@@ -102,75 +99,74 @@ that said it affected nothing.
 | `cpl_bottom.csv` | Header only — nothing is mounted on the back |
 | `bom_jlcpcb.csv` | 37 BOM lines with sourcing notes |
 
-Board: **80 × 60 mm, 4 layers**, 55 components, 509 track segments,
-90 vias.
+Board: **80 × 60 mm, 4 layers**, 55 components, 543 track segments,
+94 vias, all **52 nets** routed (was 51 — `COMP_RC` is new, and is the
+C23 fix).
 
-### The inner layers are NOT clean planes — blocker 3
+**Mounting holes**: 4 × M3 (3.2 mm NPTH, 6 mm pad) at **(4.5, 19)**,
+**(75.5, 16)**, **(4.5, 55.5)** and **(75.5, 41)**.
 
-An earlier version of this document, and the batch commits, claimed the
-inner layers were "solid planes (In1.Cu = GND, In2.Cu = 3V3), which
-Freerouting detected and treated as such." **That is false**, and an
-independent review caught it. Freerouting's log does say it configured
-both as dedicated power planes, but it then routed signals through them
-anyway:
+They were added in the previous batch on the standard 30.5 × 30.5 mm
+flight-controller pattern — **and that pattern put them on top of nine
+components** (D1, J2, R12, R13, C2, J4, L1, R1, U2, C6, J6, R3). The
+positions above were found by scanning every component courtyard for
+clear space, and the board now reports **zero courtyard overlaps**.
 
-| Layer | Segments | Distinct nets |
-|---|---|---|
-| F.Cu | 291 | — |
-| **In1.Cu** (GND pour) | **97** | **24** |
-| **In2.Cu** (3V3 pour) | **90** | **24** |
-| B.Cu | 31 | — |
+The 30.5 × 30.5 pattern does not fit this board's layout. That pattern
+belongs on a flight board designed around it; this is an 80 × 60 mm bench
+board whose components were placed first. If the standard pattern is
+required later, the components move, not the holes.
 
-Nets routed *through* the pours include **`SW_NODE`** — the highest
-dV/dt node on the board — plus `BOOST_SW`, `VBAT_4S` (on *both* inner
-layers), `HSE_OUT` (the crystal), the regulator feedback and
-compensation nets `VFB` / `VFB_5V` / `COMP_NODE`, `USB_DM` / `USB_DP`,
-`NRST`, and M1–M4.
-
-**Consequence, and it is real:** the GND reference under every F.Cu
-signal is sliced by 97 traces. Return current has to detour around the
-slots, which is the standard mechanism for EMI and ground bounce — and a
-solid reference was the entire reason the pour was added. Burying
-`SW_NODE` inside the 3V3 pour is the specific case worth fixing first.
-
-This is precisely what item 5's manual review pass ("ground plane
-integrity under MCU, no signal traces splitting the plane") existed to
-catch, and that pass was skipped. **It is a third blocker, of the same
-kind as the first: work to be done in the KiCad UI, restricting the
-inner layers to their pours and re-routing signals onto F.Cu/B.Cu.**
-
-**Mounting holes**: 4 × M3 (3.2 mm NPTH, 6 mm pad) on the standard
-**30.5 × 30.5 mm** flight-controller pattern, centred on the board at
-(24.75, 14.75), (55.25, 14.75), (24.75, 45.25), (55.25, 45.25). The
-board had **none at all** before this batch — it could not have been
-bolted to anything. They were added, the board re-routed around them
-(still all 51 nets), and they are deliberately excluded from
-`cpl_top.csv`, which lists 55 placeable parts and no mechanical holes.
+The holes are excluded from `cpl_top.csv` — `kicad-cli` emits them, which
+would tell an assembler to place four holes. The file lists exactly the
+55 placeable parts.
 
 ## DRC state — verbatim
 
 ```
-Found 52 violations
-Found 18 unconnected items
-Found 262 schematic parity issues
+Found 46 violations
+Found 15 unconnected items
+Found 88 schematic parity issues
 ```
+
+Previous batch ended at 52 / 18 / 262. **No design rules were relaxed to
+achieve this** — the only rule-file change was updating the netclass
+patterns to match the renamed nets, and that change made DRC *stricter*
+again after the rename had briefly disabled the Power class.
+
+The parity figure fell furthest because **199 of those issues were a
+single uniform naming difference** — the board stored bare net names
+(`GND`) where KiCad's netlister uses the sheet-path form (`/GND`) —
+across 52 nets, with no genuine mismatch hiding among them. Normalised.
+**The 25 remaining `net_conflict` entries are all KiCad auto-nets for
+deliberately unconnected MCU pins** (`unconnected-(U1-PC13-Pad2)` and
+similar), which are correct and should stay.
 
 Breakdown:
 
 ```
-violations: 52
-   silk_over_copper                   23
+violations: 46
+   silk_over_copper                   17
    silk_overlap                       13
    clearance                           8
    lib_footprint_mismatch              4
    copper_edge_clearance               2
    starved_thermal                     2
-unconnected_items: 18
-schematic_parity: 262
-   net_conflict                      199
+unconnected_items: 15
+schematic_parity: 88
    footprint_symbol_field_mismatch    55
+   net_conflict                       25
    missing_footprint                   4
    extra_footprint                     4
+```
+
+Layer usage, which is the number blocker 1+2 is about:
+
+```
+     19 (layer "B.Cu")      <- nearly empty; this is where the traffic should go
+    310 (layer "F.Cu")
+    118 (layer "In1.Cu")    <- must become 0
+     96 (layer "In2.Cu")    <- must become 0
 ```
 
 Adding the mounting holes cost 6 silkscreen warnings, the 4
@@ -190,10 +186,11 @@ any DRC count.
 
 This is **not** a clean DRC and is not presented as one.
 
-### The 267 → 52 comparison is NOT like-for-like — the rules changed
+### Historical note: the PREVIOUS batch DID relax rules (this one did not)
 
-The board at the start of this session reported 267 / 10 / 264. That
-number and this one were **measured under different rulebooks**, and an
+The board at the start of the PREVIOUS batch reported 267 / 10 / 264.
+That number and the 52 it fell to were **measured under different
+rulebooks**, and an
 earlier version of this document presented the drop as if it were all
 improvement. It was not. The design rules changed as follows, and none
 of it was disclosed in any commit message:
