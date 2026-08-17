@@ -31,6 +31,8 @@ M3_R = (1.5, 1.75)  # plausible radius range for an M3 clearance hole in the fra
 
 fails = []
 
+SCRIPT = os.path.join(HERE, "..", "mechanical", "frame-v0", "frame_v0.py")
+
 
 def check(desc, cond, detail=""):
     print("%s %-58s %s" % ("ok:  " if cond else "FAIL:", desc, detail))
@@ -74,6 +76,19 @@ for i, st in enumerate(fps):
     drill = re.search(r"\(drill ([-\d.]+)\)", b)
     board_holes.append((float(a.group(1)), float(a.group(2)),
                         float(drill.group(1)) if drill else 0.0, r.group(1)))
+
+# STALENESS GUARD. This check reads the exported DXF rather than
+# frame_v0.py's FC_MOUNT constant, deliberately -- the constant is what the
+# frame intends, the DXF is what a cutter would actually make. But that
+# only means something if the DXF is CURRENT. A DXF older than the script
+# that generates it would let this check pass against an artifact nobody
+# would build.
+if os.path.exists(SCRIPT) and os.path.exists(DXF):
+    dxf_age, src_age = os.path.getmtime(DXF), os.path.getmtime(SCRIPT)
+    check("the frame DXF is newer than the script that generates it",
+          dxf_age >= src_age,
+          "DXF %s script" % ("newer than" if dxf_age >= src_age
+                             else "is STALE by %.0f s vs" % (src_age - dxf_age)))
 
 print("board: %s" % os.path.normpath(BOARD))
 for x, y, d, ref in sorted(board_holes, key=lambda h: (h[1], h[0])):
