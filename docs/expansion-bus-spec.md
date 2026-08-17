@@ -45,10 +45,11 @@ a bare header, per David's decision to drop that option.
 | 7 | SPI_MISO | PB14 (SPI2_MISO, AF5) | |
 | 8 | SPI_CS1 | PC0 (GPIO, software CS) | e.g. optical flow |
 | 9 | SPI_CS2 | PC1 (GPIO, software CS) | e.g. baro, if run in SPI mode instead of I2C |
-| 10 | UART_TX (spare) | PC10 (USART3_TX, AF7) | GPS or companion link |
-| 11 | UART_RX (spare) | PC11 (USART3_RX, AF7) | |
-| 12 | IRQ1 | PC2 (GPIO/EXTI) | General-purpose interrupt (e.g. ToF data-ready) |
-| 13 | IRQ2 | PC3 (GPIO/EXTI) | General-purpose interrupt (e.g. flow sensor data-ready) |
+| 10 | UART_RX (spare) | PC11 (USART3_RX, AF7) | **CHANGED 2026-08-17:** was UART_TX on PC10. PC10 is now the telemetry port (see `rx-power-and-telemetry-port.md`), so USART3 is split by direction: TX out to telemetry, RX in from a forward lidar. Both want 115200. The bus is therefore **RX-only** and cannot carry a bidirectional companion link — see `collision-avoidance-provisioning.md`. |
+| 11 | IRQ1 | PC2 (GPIO/EXTI) | Renumbered 2026-08-17 (e.g. VL53L1X data-ready) |
+| 12 | IRQ2 | PC3 (GPIO/EXTI) | Renumbered 2026-08-17. Genuinely spare — the TF-Luna free-runs over UART and has no interrupt output |
+| 13 | **5V** | — | **NEW 2026-08-17.** Fed from the MT3608 boost added for the receiver. Required because the TF-Luna needs 5V +-0.1V and the bus was 3.3V-only. Budget and the deliberate deviation from "RX alone" are in `collision-avoidance-provisioning.md` |
+| 14 | GND | — | **NEW 2026-08-17.** Second return for signal integrity on a 14-way ribbon |
 
 12 signal/power pins total (3.3V, GND, I2C×2, SPI×4, UART×2, IRQ×2) — the
 "I2C, SPI+2CS, spare UART, 3.3V, GND, 2 interrupt GPIOs" set called for in
