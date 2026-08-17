@@ -21,9 +21,9 @@ anywhere.
 
 ## Blockers
 
-### 1. Nineteen unconnected items — the board would not work
+### 1. Eighteen unconnected items — the board would not work
 
-DRC reports 19 unconnected items. They are not cosmetic. Most are
+DRC reports 18 unconnected items. They are not cosmetic. Most are
 **U1's 3V3 supply pins (1, 13, 19, 32, 48, 64)** and a set of GND pads
 that have no via dropping to the inner planes.
 
@@ -73,33 +73,58 @@ footprint, the feedback divider, and therefore the board.
 | `cpl_bottom.csv` | Header only — nothing is mounted on the back |
 | `bom_jlcpcb.csv` | 38 BOM lines with sourcing notes |
 
-Board: **80 × 60 mm, 4 layers**, 55 components, 498 tracks, 89 vias.
+Board: **80 × 60 mm, 4 layers**, 55 components, 509 tracks, 90 vias.
 Inner layers are both planes (GND and 3V3), which Freerouting detected
 and treated as such.
+
+**Mounting holes**: 4 × M3 (3.2 mm NPTH, 6 mm pad) on the standard
+**30.5 × 30.5 mm** flight-controller pattern, centred on the board at
+(24.75, 14.75), (55.25, 14.75), (24.75, 45.25), (55.25, 45.25). The
+board had **none at all** before this batch — it could not have been
+bolted to anything. They were added, the board re-routed around them
+(still all 51 nets), and they are deliberately excluded from
+`cpl_top.csv`, which lists 55 placeable parts and no mechanical holes.
 
 ## DRC state — verbatim
 
 ```
-Found 43 violations
-Found 19 unconnected items
-Found 258 schematic parity issues
+Found 52 violations
+Found 18 unconnected items
+Found 262 schematic parity issues
 ```
 
 Breakdown:
 
 ```
-violations: 43
-   silk_over_copper                   17
+violations: 52
+   silk_over_copper                   23
    silk_overlap                       13
    clearance                           8
-   starved_thermal                     3
+   lib_footprint_mismatch              4
    copper_edge_clearance               2
-unconnected_items: 19
-schematic_parity: 258
+   starved_thermal                     2
+unconnected_items: 18
+schematic_parity: 262
    net_conflict                      199
    footprint_symbol_field_mismatch    55
    missing_footprint                   4
+   extra_footprint                     4
 ```
+
+Adding the mounting holes cost 6 silkscreen warnings, the 4
+`lib_footprint_mismatch` entries and the 4 `extra_footprint` parity
+notes, and removed one unconnected item and one starved thermal. That
+trade is worth taking: a board with no mounting holes is not usable at
+any DRC count.
+
+- **lib_footprint_mismatch (4)** — the four mounting holes. The library
+  footprint `MountingHole:MountingHole_3.2mm_M3` exists, but the
+  geometry generated into the board does not byte-match the library
+  copy. The hole that gets fabricated is the one in the board file, and
+  it is correct (3.2 mm NPTH, 6 mm annulus).
+- **extra_footprint (4)** — the same four holes, present on the PCB and
+  absent from the schematic. That is correct for mechanical parts and
+  is how mounting holes normally appear.
 
 This is **not** a clean DRC and is not presented as one. For contrast,
 the same board at the start of this session reported 267 / 10 / 264,
@@ -108,7 +133,7 @@ with five genuine shorts. What changed is in
 
 ### How to read what remains
 
-- **silk_over_copper (17) + silk_overlap (13)** — silkscreen text over
+- **silk_over_copper (23) + silk_overlap (13)** — silkscreen text over
   pads and other text. Cosmetic; JLCPCB clips silk off pads
   automatically. Worth tidying, does not affect function.
 - **clearance (8)** — all eight are *inside J3's own footprint*, between
@@ -118,9 +143,9 @@ with five genuine shorts. What changed is in
   0.298 mm from the edge against a 0.3 mm rule. J3 is an edge connector,
   so this is inherent to placing it at the edge; both figures still
   exceed JLCPCB's 0.2 mm floor.
-- **starved_thermal (3)** — three PTH GND pads (J3, J4, J5) get one
-  thermal spoke instead of two. Slightly harder to hand-solder; not an
-  electrical fault.
+- **starved_thermal (2)** — two PTH GND pads get one thermal spoke
+  instead of two. Slightly harder to hand-solder; not an electrical
+  fault.
 - **net_conflict (199)** — every one is the same shape: `Pad net (GND)
   doesn't match net given by schematic (/GND)`. The board stores bare
   net names, the schematic stores root-sheet-prefixed ones. It affects

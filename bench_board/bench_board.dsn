@@ -67,6 +67,12 @@
     (component Connector_PinHeader_2.54mm:PinHeader_1x14_P2.54mm_Vertical
       (place J9 43000 -7000 front 90 (PN EXPANSION_BUS))
     )
+    (component MountingHole:MountingHole_3.2mm
+      (place MH1 24750 -14750 front 0 (PN MountingHole_3.2mm))
+      (place MH3 24750 -45250 front 0 (PN MountingHole_3.2mm))
+      (place MH2 55250 -14750 front 0 (PN MountingHole_3.2mm))
+      (place MH4 55250 -45250 front 0 (PN MountingHole_3.2mm))
+    )
     (component "Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm"
       (place Y1 25400 -34000 front 0 (PN 8MHz))
     )
@@ -204,6 +210,12 @@
       (pin Round[A]Pad_1700.000000_um 12 0 -27940)
       (pin Round[A]Pad_1700.000000_um 13 0 -30480)
       (pin Round[A]Pad_1700.000000_um 14 0 -33020)
+    )
+    (image MountingHole:MountingHole_3.2mm
+      (keepout "" (circle F.Cu 3700))
+      (keepout "" (circle In1.Cu 3700))
+      (keepout "" (circle In2.Cu 3700))
+      (keepout "" (circle B.Cu 3700))
     )
     (image "Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm"
       (outline (polygon signal 0  2095 -1745  -2095 -1745  -2095 1745  2095 1745))
