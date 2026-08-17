@@ -183,3 +183,28 @@ gains more than two polygons.
 
 **The MCP `refill_zones` is still banned.** Nothing here rehabilitates it;
 it shattered the planes on this same board and the ban stands.
+
+### Why polygon count alone is not the proof — and what is
+
+A reasonable objection to the table above: **a plane can be badly
+fragmented while keeping the same filled-polygon count.** One polygon with
+a huge void through the middle, joined by a thread of copper, counts as
+one. So the count is necessary and not sufficient, and this is the exact
+shape of error this project has made before.
+
+Three independent measurements were taken, and the conclusion rests on
+all three:
+
+1. **Polygon count** — 2 and 1, matching the git-stored copper.
+2. **Coverage area** — 3291.2 → 3296.6 mm² and 3089.6 → 3092.2 mm². A
+   plane hollowed out by a void would lose area; these gained a little,
+   which is the new antipads.
+3. **`isolated_copper` from DRC — zero.** This is the one that actually
+   speaks to connectivity: KiCad reports a fill island that connects to
+   nothing on its net. The MCP's shattered fill produced **41** of these.
+   The pcbnew fill produces **none**, and `via_dangling` is also **0**.
+
+Point 3 is the load-bearing one. If a future refill keeps the count and
+the area but splits a plane, `isolated_copper` is what will say so —
+`scripts/refill_zones.py` checks the count, and **DRC has to be run
+afterwards regardless.**
