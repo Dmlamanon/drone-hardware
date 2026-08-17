@@ -193,6 +193,108 @@ pins:
 | `/COMP_NODE`, `/COMP_RC` | In2.Cu 2 seg | Loop compensation |
 | `/SS_NODE` | In1.Cu 2 seg | Soft-start timing |
 
+### Partial progress made 2026-08-17 (batch 3) — and what it cost
+
+A per-net attempt was made on the six EMI-critical nets, deleting their
+routing entirely and letting Freerouting re-route **only those nets**
+against the rest of the board as fixed pre-routed wiring. It works —
+Freerouting reported "78 already connected" and touched only the deleted
+nets — and it helped, partially:
+
+| Net | Inner segments before | After | F.Cu now |
+|---|---:|---:|---:|
+| **/HSE_OUT** | 5 | **0 — CLEAN** | 12 |
+| /HSE_IN | 5 | 4 | 8 |
+| /SW_NODE | 4 | 4 | 4 |
+| /VBAT_4S | 9 | 5 | 9 |
+| /VFB | 3 | 3 | 5 |
+| /VFB_5V | 2 | 2 | 4 |
+| **total** | **28** | **18 (−36 %)** | |
+
+DRC unchanged at 46 / 13 / 88 — no regression, no rules touched.
+
+**Why it did not go further, and what that says about the fix.** Before
+the Freerouting attempt, a direct reroute of `/SW_NODE` was tried by
+hand: deleting its four In2.Cu segments disconnects U2 pad 3 (the switch
+pin) from the L1/C3 chain, and **no direct or single-bend path exists on
+either F.Cu or B.Cu** at 0.2 mm clearance. The buck area is congested —
+U2, L1, C1 (now a 1210), C2, R1, R11, C23, C24 all crowd it.
+
+**That points at placement, not routing.** In a buck converter the switch
+node should be a short, fat, direct connection from the regulator's SW
+pin to the inductor. Here it takes a long dogleg through
+(17.85, 38.999) and still needs inner-layer hops. **The real fix is to
+move L1 adjacent to U2**, which is a placement change and out of scope
+for a rerouting pass. Worth doing before this board is taken seriously
+as a power design.
+
+### The other 186 segments — counted, and deliberately left
+
+37 non-target nets still use the inner layers (114 on In1.Cu, 90 on
+In2.Cu, of which 18 are the target nets above). They are **left in
+place**, per the cost-benefit judgement the task allows:
+
+- They are ordinary signals — `/CRSF_RX` (19), `/M1` (8), `/SPI1_MOSI`
+  (8), `/USB_DM` (7), the EXP_* bus. Slicing a reference plane with them
+  is untidy and does raise EMI, but none carries the dV/dt of `SW_NODE`
+  or the impedance sensitivity of the feedback nets.
+- Clearing all of them needs the same interactive-router session as job
+  A, and doing it piecemeal by script has now been shown to plateau.
+- **B.Cu carries only 19 segments.** There is an almost entirely free
+  layer to move this traffic onto, which is why the job is tractable for
+  a human and why it is worth doing in one pass rather than in fragments.
+
+### Partial progress made 2026-08-17 (batch 3) — and what it cost
+
+A per-net attempt was made on the six EMI-critical nets, deleting their
+routing entirely and letting Freerouting re-route **only those nets**
+against the rest of the board as fixed pre-routed wiring. It works —
+Freerouting reported "78 already connected" and touched only the deleted
+nets — and it helped, partially:
+
+| Net | Inner segments before | After | F.Cu now |
+|---|---:|---:|---:|
+| **/HSE_OUT** | 5 | **0 — CLEAN** | 12 |
+| /HSE_IN | 5 | 4 | 8 |
+| /SW_NODE | 4 | 4 | 4 |
+| /VBAT_4S | 9 | 5 | 9 |
+| /VFB | 3 | 3 | 5 |
+| /VFB_5V | 2 | 2 | 4 |
+| **total** | **28** | **18 (−36 %)** | |
+
+DRC unchanged at 46 / 13 / 88 — no regression, no rules touched.
+
+**Why it did not go further, and what that says about the fix.** Before
+the Freerouting attempt, a direct reroute of `/SW_NODE` was tried by
+hand: deleting its four In2.Cu segments disconnects U2 pad 3 (the switch
+pin) from the L1/C3 chain, and **no direct or single-bend path exists on
+either F.Cu or B.Cu** at 0.2 mm clearance. The buck area is congested —
+U2, L1, C1 (now a 1210), C2, R1, R11, C23, C24 all crowd it.
+
+**That points at placement, not routing.** In a buck converter the switch
+node should be a short, fat, direct connection from the regulator's SW
+pin to the inductor. Here it takes a long dogleg through
+(17.85, 38.999) and still needs inner-layer hops. **The real fix is to
+move L1 adjacent to U2**, which is a placement change and out of scope
+for a rerouting pass. Worth doing before this board is taken seriously
+as a power design.
+
+### The other 186 segments — counted, and deliberately left
+
+37 non-target nets still use the inner layers (114 on In1.Cu, 90 on
+In2.Cu, of which 18 are the target nets above). They are **left in
+place**, per the cost-benefit judgement the task allows:
+
+- They are ordinary signals — `/CRSF_RX` (19), `/M1` (8), `/SPI1_MOSI`
+  (8), `/USB_DM` (7), the EXP_* bus. Slicing a reference plane with them
+  is untidy and does raise EMI, but none carries the dV/dt of `SW_NODE`
+  or the impedance sensitivity of the feedback nets.
+- Clearing all of them needs the same interactive-router session as job
+  A, and doing it piecemeal by script has now been shown to plateau.
+- **B.Cu carries only 19 segments.** There is an almost entirely free
+  layer to move this traffic onto, which is why the job is tractable for
+  a human and why it is worth doing in one pass rather than in fragments.
+
 ### Verifying job A
 
 ```bash
