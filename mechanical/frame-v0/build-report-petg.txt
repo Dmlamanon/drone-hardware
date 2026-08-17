@@ -40,7 +40,7 @@ PROP CLEARANCE: 8.26 % -- ACCEPTED 2026-08-17, not a failure.
   Precedent: the DJI Phantom 3 ships 9.4 in props on this same 350 mm
   class. Its adjacent spacing is the same 247.49 mm, so its tip gap is
   247.49 - 238.76 = 8.73 mm = 3.7 % of prop diameter -- less than HALF
-  this frame's 8.3 %%, on a flight-proven airframe built at scale.
+  this frame's 8.3 %, on a flight-proven airframe built at scale.
   The >=10 % figure is a noise-and-efficiency guideline, not a limit.
 
   arm thickness meets the PETG minimum                 OK   4.0 mm

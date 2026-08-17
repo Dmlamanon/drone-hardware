@@ -6,3 +6,7 @@ _autosave-*
 *.lck
 *.bck
 fp-info-cache
+
+# Python bytecode -- build artifacts, and they churn on every script run
+__pycache__/
+*.pyc

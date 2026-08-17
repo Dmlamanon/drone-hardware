@@ -523,8 +523,18 @@ say("")
 say("PROP CLEARANCE: %.2f %% -- ACCEPTED 2026-08-17, not a failure." % TIP_GAP_PCT)
 say("  Precedent: the DJI Phantom 3 ships 9.4 in props on this same 350 mm")
 say("  class. Its adjacent spacing is the same 247.49 mm, so its tip gap is")
-say("  247.49 - 238.76 = 8.73 mm = 3.7 % of prop diameter -- less than HALF")
-say("  this frame's 8.3 %%, on a flight-proven airframe built at scale.")
+# Derive the comparison rather than writing it out. A hardcoded "8.3 %"
+# next to a computed 8.26 % is a number waiting to drift, and "less than
+# HALF" is an ARITHMETIC claim -- if the frame changes it must either
+# stay true or stop being said.
+_P3_GAP_MM  = 247.49 - 238.76          # Phantom 3 tip gap, same 350 mm class
+_P3_GAP_PCT = _P3_GAP_MM / 238.76 * 100.0
+_ratio      = TIP_GAP_PCT / _P3_GAP_PCT if _P3_GAP_PCT else 0.0
+say("  247.49 - 238.76 = %.2f mm = %.1f %% of prop diameter -- %s"
+    % (_P3_GAP_MM, _P3_GAP_PCT,
+       "less than HALF" if _ratio >= 2.0 else "%.1fx less than" % _ratio))
+say("  this frame's %.1f %%, on a flight-proven airframe built at scale."
+    % TIP_GAP_PCT)
 say("  The >=10 % figure is a noise-and-efficiency guideline, not a limit.")
 say("")
 check("arm thickness meets the %s minimum" % MATERIAL,
