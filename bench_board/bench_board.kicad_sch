@@ -7205,7 +7205,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10uF 35V"
+		(property "Value" "10uF 50V X7R 1210"
 			(at 449.58 55.88 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7216,7 +7216,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+		(property "Footprint" "Capacitor_SMD:C_1210_3225Metric"
 			(at 450.545 45.72 0)
 			(hide yes)
 			(show_name no)
@@ -7249,7 +7249,7 @@
 				)
 			)
 		)
-		(property "Voltage" "35V"
+		(property "Voltage" "50V"
 			(at 449.58 49.53 0)
 			(effects
 				(font
@@ -7258,6 +7258,18 @@
 				(hide no)
 			)
 		)
+    (property "Dielectric" "X7R" (at 449.58 49.53 0)
+      (effects (font (size 1.27 1.27)) (hide yes))
+    )
+    (property "Manufacturer" "Murata" (at 449.58 49.53 0)
+      (effects (font (size 1.27 1.27)) (hide yes))
+    )
+    (property "MPN" "GRM32ER71H106KA12L" (at 449.58 49.53 0)
+      (effects (font (size 1.27 1.27)) (hide yes))
+    )
+    (property "Notes" "VBAT_4S input bulk, 16.8V max. SPEC IS CAPACITANCE AT BIAS, NOT NAMEPLATE: an MLCC's value collapses under DC bias regardless of its voltage rating, so '10uF' alone is meaningless here. Was 0805 25V, which at 16.8V retains only a small fraction. Moved to 1210/50V X7R on 2026-08-17 because bias derating is driven by case size and dielectric, not by the rating. MUST VERIFY the derated value on Murata SimSurfing (or the vendor's own C-vs-Vdc curve) before ordering and confirm it meets the TPS54336A input-capacitance requirement; do not accept a substitute chosen on nameplate value alone." (at 449.58 49.53 0)
+      (effects (font (size 1.27 1.27)) (hide yes))
+    )
 		(pin "1"
 			(uuid "44dd8f95-82ef-43de-b289-f994a2434def")
 		)
@@ -9004,7 +9016,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm"
+		(property "Footprint" "Crystal:Crystal_SMD_5032-2Pin_5.0x3.2mm"
 			(at 449.58 199.39 0)
 			(hide yes)
 			(show_name no)
@@ -9037,6 +9049,18 @@
 				)
 			)
 		)
+    (property "LCSC" "C115962" (at 449.58 199.39 0)
+      (effects (font (size 1.27 1.27)) (hide yes))
+    )
+    (property "JLCPCB_PN" "C115962" (at 449.58 199.39 0)
+      (effects (font (size 1.27 1.27)) (hide yes))
+    )
+    (property "Manufacturer" "TXC" (at 449.58 199.39 0)
+      (effects (font (size 1.27 1.27)) (hide yes))
+    )
+    (property "Notes" "8MHz +/-10ppm, SMD-5032-2P. Switched from a 3225-4Pin footprint 2026-08-17: the symbol is a 2-pin crystal, so the 4-pin footprint left pads 3/4 permanently unmatched, and the only Basic-library 8MHz part is this 2-pin 5032. Verify the part number against a live JLCPCB page before ordering -- it came from a community snapshot of the Basic library, not an authoritative source." (at 449.58 199.39 0)
+      (effects (font (size 1.27 1.27)) (hide yes))
+    )
 		(pin "1"
 			(uuid "6ee7617b-d60f-4549-9e43-7f2bd28ac713")
 		)
@@ -13577,6 +13601,38 @@
 			(justify left bottom)
 		)
 		(uuid "1c2b0ac8-cac8-468d-8923-27cfe981da65")
+	)
+	(wire
+		(pts
+			(xy 372.11 58.42) (xy 372.11 60.959999999999994)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1b53302a-9290-4dd4-94d1-0be98750d689")
+	)
+	(junction
+		(at 372.11 58.42)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "3ea4378d-09e6-4bba-886e-63a714b67745")
+	)
+	(junction
+		(at 372.11 60.96)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "b106d3e2-b767-4ae8-b97e-b1d38d1cd669")
+	)
+	(label "COMP_RC"
+		(at 372.11 60.959999999999994 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "5a286eeb-e3ce-46b7-b276-99faf0f0b844")
 	)
 	(sheet_instances
 		(path "/"
