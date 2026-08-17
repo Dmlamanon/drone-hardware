@@ -454,11 +454,17 @@ four constraints for any of the eleven pads.**
 
 ### The three ways a human can actually fix them, in order of effort
 
-1. **J3's four shield pads (A1, A12, B1, B12) are free.** They are not
-   fanout misses — B1 and B12 are through-hole and their barrels already
-   cross both inner layers. They report unconnected because the GND pour
-   does not reach them, and **refilling the zones connects them**. Do
-   item 3 first and re-check before touching J3 at all.
+1. ~~**J3's four shield pads (A1, A12, B1, B12) are free** — refilling
+   the zones connects them.~~ **TESTED 2026-08-17 AND FALSE.** The zones
+   have now been refilled with KiCad's own filler and **all four are still
+   unconnected**. This claim had been carried forward from an earlier
+   batch and never checked; it is checked now, and it was wrong.
+
+   They still are not ordinary fanout misses — B1 and B12 are
+   through-hole and their barrels do cross both inner layers — but the GND
+   pour does not reach them even after a correct refill, so they need the
+   same treatment as the rest: move copper, or extend the pour boundary in
+   the editor.
 2. **Move the neighbouring traces.** For each supply pin, drag the one or
    two signal traces that own the escape channel a fraction of a
    millimetre and the via fits. This is the judgement call — which trace

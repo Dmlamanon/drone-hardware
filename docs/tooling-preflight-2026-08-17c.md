@@ -150,3 +150,36 @@ left:
 **Standing rule for this project: any script that runs unattended imports
 `kicad_safe` first.** A blocking dialog in a batch is not a nuisance, it
 is an unbounded hang.
+
+---
+
+## Zone fill: the pcbnew route WORKS, and the MCP route still must not be used
+
+Item 3 asked whether headless `pcbnew`'s `ZONE_FILLER` fragments the
+planes the way the MCP's refill did. **It does not.**
+
+Measured the same way on both sides — filled-polygon count read out of the
+board file, which is the discipline that was missing when a "281
+violations" baseline turned out to be a probe artifact:
+
+| pour | git-stored | MCP refill (last batch) | **pcbnew ZONE_FILLER** |
+|---|---|---|---|
+| `/GND` on In1.Cu | 2 polygons | **19** | **2** |
+| `/3V3` on In2.Cu | 1 polygon | **22** | **1** |
+
+Coverage is unchanged too: 3291.2 → 3296.6 mm² on In1.Cu and
+3089.6 → 3092.2 mm² on In2.Cu, the small increase being the new antipads
+around the moved mounting holes and the new vias. So the fill is not just
+un-fragmented, it is the *same plane*.
+
+**And it fixed more than it was asked to.** DRC went **64 → 54**, which is
+below the batch's starting baseline: every zone-related `clearance` and
+`hole_clearance` violation cleared, including six that predate this batch.
+
+`scripts/refill_zones.py` does the fill and prints the fragment count
+before and after, so the question "did this shatter the planes" is
+answered with a number rather than a hope. It exits non-zero if any pour
+gains more than two polygons.
+
+**The MCP `refill_zones` is still banned.** Nothing here rehabilitates it;
+it shattered the planes on this same board and the ban stands.
