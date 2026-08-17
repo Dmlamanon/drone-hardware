@@ -1,0 +1,66 @@
+* TPS54336ADDA - AC loop-gain / phase-margin verification
+* Item 3 of the 2026-08-16 "close findings" batch: last batch's transient
+* sim (tps54336_buck_verify.cir) confirmed closed-loop *regulation* but
+* explicitly did not check AC phase margin. This does.
+*
+* Method: standard single-injection loop-gain measurement. The feedback
+* divider midpoint (low output impedance, ~R1||R2 = 7.6k) is broken from
+* the VSENSE pin (near-infinite input impedance on a gm error amp) with a
+* series AC=1/DC=0 source. Because the divider is a purely passive linear
+* network whose output depends only on VOUT (not on whatever is on the
+* far side of the break), signal flow around the broken loop is
+* unidirectional: VSENSE_INJ (stimulus) -> [EA + modulator + LC] -> VOUT
+* -> [R1/R2 divider] -> VSENSE_FB (response, "all the way around").
+* T(s) = V(VSENSE_FB)/V(VSENSE_INJ). Crossover frequency (|T|=0dB) is
+* robust to which side is called numerator/denominator; so is phase
+* margin, since PM = 180 - |phase(T)| is symmetric under T -> 1/T
+* (|phase(1/T)| = |-phase(T)| = |phase(T)|). Getting the injection
+* direction backward could not silently produce a wrong-but-plausible
+* PM for this reason - only a sign-flipped (still-correct-magnitude)
+* phase reading, caught by the |.| in the PM formula below.
+
+.func if(a,b,c) '(a) ? (b) : (c)'
+.include "TPS54336_AVG_ngspice.lib"
+
+.param VINVAL=14.8
+
+Vin VIN 0 DC {VINVAL}
+
+* Regulator average model: pins VIN VSENSE GND PH COMP
+Xreg VIN VSENSE_INJ 0 PH COMP TPS54336_AVG PARAMS: L=10u
+
+* Real output filter (external to the average model, matches physical board)
+L1 PH VOUT_L 10u
+Resr VOUT_L VOUT 5m
+C2 VOUT 0 22u
+
+* Feedback divider - real values from the schematic rework
+R1 VOUT VSENSE_FB 31.6k
+R2 VSENSE_FB 0 10.0k
+
+* Loop-gain injection break: DC=0 so the operating point (and therefore
+* the average-model duty cycle / regulation point) is completely
+* undisturbed; AC=1 is the small-signal stimulus for the .ac sweep only.
+Vinj VSENSE_FB VSENSE_INJ DC 0 AC 1
+
+* Compensation network under test - the same Rcomp/Ccomp last batch's
+* transient sim found stable (2k / 7.5nF, zero placed near the L/C
+* double-pole per that file's own header note). Verifying THIS network
+* with real AC data, not assuming the transient result implies AC margin.
+Rcomp COMP COMP_MID 2k
+Ccomp COMP_MID 0 7.5n
+
+.ac dec 50 1 1Meg
+
+.control
+run
+set filetype=ascii
+wrdata loop_gain_{VINVAL}v.txt vdb(vsense_fb) vp(vsense_fb) vdb(vsense_inj) vp(vsense_inj)
+
+let gain_db = vdb(vsense_fb) - vdb(vsense_inj)
+let phase_deg = vp(vsense_fb) - vp(vsense_inj)
+wrdata loop_gain_derived_{VINVAL}v.txt gain_db phase_deg
+
+quit
+.endc
+.end

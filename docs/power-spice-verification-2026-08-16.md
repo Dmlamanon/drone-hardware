@@ -148,20 +148,90 @@ separate from and not contradicted by the closed-loop behavior verified
 here — both are true simultaneously: thin absolute-max margin, but
 correct regulation within that margin.
 
-**What this does NOT close:** (a) compensation network is a reasonable
-custom choice, not TI-verified — a real `.ac` loop-gain/phase-margin run
-would firm this up; (b) thermal — RDS(on) figures (128mΩ HS / 84mΩ LS,
-synchronous — this part needs no catch diode, unlike the documented
-`TPS54331DR`, a real simplification in its favor) give a trivial
-conduction-loss estimate (~95mW at 1A, nominal Vin) but switching losses
-still aren't captured, same caveat as the 4S doc's own §6; (c) `C1`
-(input cap) voltage rating — the 4S doc's "≥25V" note has **zero margin**
-at a true 25.2V 6S peak; if 6S is genuinely intended, that needs revising
-to ≥35V (next standard rating up), not left as-is; (d) the
+**What this does NOT close:** (a) thermal — RDS(on) figures (128mΩ HS /
+84mΩ LS, synchronous — this part needs no catch diode, unlike the
+documented `TPS54331DR`, a real simplification in its favor) give a
+trivial conduction-loss estimate (~95mW at 1A, nominal Vin) but switching
+losses still aren't captured, same caveat as the 4S doc's own §6; (b)
+`C1` (input cap) voltage rating — the 4S doc's "≥25V" note has **zero
+margin** at a true 25.2V 6S peak — being fixed directly in the schematic
+this batch (see the vault log for the item-2 write-up); (c) the
 part-choice discrepancy itself (`TPS54331DR` documented vs.
-`TPS54336ADDA` actually placed) is still open — this doc verifies the
-schematic's real part, it doesn't resolve which one should be there
-going forward.
+`TPS54336ADDA` actually placed) — being resolved this batch (schematic
+gets committed as `TPS54336ADDA`, this doc, item 1's WIP review). §6
+below closes the compensation-network item flagged here as open.
+
+## 6. AC loop-gain / phase-margin — real simulation, real caveats
+
+The gap this section closes: §5(a) above (superseded, see note) — and
+item 3's own ask, since finding `COMP_NODE`/`SS_NODE` as single-pin
+(unconnected) nets while reviewing the WIP schematic for item 1 made
+plain that **no compensation network physically exists on the board at
+all yet** — the Rcomp/Ccomp values §2 used were a simulation-only
+convenience, not something on the schematic. This section verifies those
+values with real AC data before they get committed to the schematic in
+item 1/2's resolution.
+
+**Method:** `sim/tps54336_loop_gain.cir` (and `..._6s.cir` for the 25.2V
+point) — standard single-injection loop-gain measurement, breaking the
+loop between the feedback-divider midpoint (`VSENSE_FB`, low output
+impedance, R1‖R2≈7.6k) and the model's `VSENSE` pin (near-infinite gm-amp
+input impedance — satisfies the standard low-impedance-injection
+assumption) with a `DC=0 AC=1` series source. `T(s) = V(VSENSE_FB)/V(VSENSE_INJ)`.
+Crossover frequency and phase margin (`PM = 180 − |phase(T)|`) are both
+provably robust to which side of the break is called numerator vs.
+denominator (swapping negates the phase and flips gain sign, but
+`|phase|` and the 0dB-crossing frequency are unchanged either way) — so a
+direction mistake here could not silently produce a wrong-but-plausible
+result, only a self-evidently-broken one.
+
+**Result, both range ends tested:**
+
+| Vin | Crossover freq | Phase at crossover | Phase margin |
+|---|---|---|---|
+| 14.8V (4S nominal) | ≈44–46kHz | ≈0.7–0.8° | **≈179°** |
+| 25.2V (6S peak) | ≈42–44kHz | ≈0.7–0.7° | **≈179°** |
+
+Crossover barely shifts between 4S and 6S — consistent with current-mode
+control's well-known low line-voltage sensitivity in the control-to-output
+transfer function (a real property of this topology, not a modeling
+artifact). No instability, no low/marginal phase margin, at either point.
+
+**Why this number needs a loud caveat, not a victory lap:** ≈179° PM is
+not a plausible real-hardware result — real compensated switching
+regulators are typically designed for 45–60° PM, not near-180°. Traced
+this to a real, findable cause rather than shrugging at a suspicious
+number: the model's current-mode sampling-effect double-pole (normally
+placed near `Fsw/2` = 170kHz, meant to add real phase loss as frequency
+approaches it) is implemented via the `Emode`/`XC1` varicap block in
+`TPS54336_AVG_ngspice.lib` — **the same degenerate `IF()` already found
+in §2/last batch** (both branches evaluate to the identical
+`4/(L·(2π·Fsw)²)`), independently re-confirmed here from the AC side
+rather than just the transient side. With that pole's dynamics not
+correctly modeled, the sampling-effect phase loss that a real IC would
+show approaching crossover is simply absent from this simulation. This
+doesn't mean Rcomp=2kΩ/Ccomp=7.5nF is wrong — the pole-cancellation logic
+behind it (TI's own datasheet §8.2.4.2, equations 27–29: place the
+compensator zero one decade below crossover to cancel the modulator
+pole) is sound, real, and independently checked against the actual TI
+datasheet PDF this batch (`ti.com/lit/ds/symlink/tps54336a.pdf`, fetched
+directly via `curl`+`pdftotext` — the prior blocker on reading TI PDFs
+was `pdftoppm`/poppler being absent for the `Read` tool's image-render
+path; `pdftotext` alone, already on this machine, was never tried before
+and works fine for text-only extraction). It means: **the crossover
+frequency (~44kHz) and the "no instability" finding are trustworthy; the
+specific ≈179° number is not** — a real design should assume something
+meaningfully lower, and the honest next step name from the task brief
+applies directly: **bench measurement with a network analyzer (or a
+frequency-response injection transformer + oscilloscope) at Stage 4
+bring-up** is what would actually confirm real phase margin, not a
+better SPICE model that doesn't exist for this part in a form this
+machine can run.
+
+## Files (updated)
+
+- `sim/tps54336_loop_gain.cir`, `sim/tps54336_loop_gain_6s.cir` — AC
+  loop-gain netlists, §6.
 
 ## Files
 
