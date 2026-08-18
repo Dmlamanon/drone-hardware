@@ -8,7 +8,7 @@ tags: [stevie, checks, audit]
 # Checker falsifiability audit — 2026-08-17 (B4)
 
 **Every automated check in this project was deliberately broken once, to
-confirm it notices.** Eleven cases, all of them falsifiable.
+confirm it notices.** Fourteen cases, all of them falsifiable.
 
 Run it yourself:
 
@@ -57,8 +57,33 @@ deliberate defect, then the file is restored.
 | 9 | `hello` reports real versions | hardcode 99 in the response | pass | **fail** | falsifiable |
 | 10 | a version drift is caught | `TELEMETRY_VERSION` 6 → 99 | pass | **fail** | falsifiable |
 | 11 | a params write reaches the PID | stub out the config request | pass | **fail** | falsifiable |
+| 12 | assembly interference | grow the ESC into the receiver | pass | **fail** | falsifiable |
+| 13 | assembly re-checks the bolt pattern | board drill 3.2 -> 2.0 mm | pass | **fail** | falsifiable |
+| 14 | a FreeCAD check that never RAN is a failure | inject a syntax error | pass | **fail** | falsifiable |
 
-**11 of 11.** Nothing had to be deleted.
+**14 of 14.** Nothing had to be deleted.
+
+> [!danger] Case 14 is the one that mattered most
+> **`freecadcmd` exits 0 when the script it is given fails to parse.**
+> Verified on FreeCAD 1.1.3, and found by a real typo in `assembly_v0.py`
+> that reported `exit=0` for three runs in a row while the script had
+> never executed a single line -- the exports on disk were from an
+> earlier run and looked current.
+>
+> That meant **every geometry check in this project -- `frame_v0.py`'s
+> seventeen and `assembly_v0.py`'s seven -- would have reported success by
+> simply being broken.** Twenty-four checks defeated by a typo.
+>
+> `scripts/run_freecad_check.py` takes the verdict from the artifact
+> instead: delete the build report, run the script, require the report to
+> exist and to end with the script's own `RESULT:` line. Every FreeCAD
+> case in this audit now goes through it.
+>
+> Its first version compared timestamps with a one-second margin for
+> filesystem granularity -- and that margin let a report written moments
+> earlier count as fresh, so it passed a script with a syntax error in
+> it. Deleting the file first removes the race: if the report exists
+> afterwards, this run wrote it.
 
 ## What the audit found while auditing
 
@@ -83,6 +108,29 @@ deliberate defect, then the file is restored.
 > DXF was left behind and every later case that read it failed. An audit
 > that does not clean up after itself reports other people's checks as
 > broken — the same failure class, inside the tool built to hunt it.
+
+## The audit twice stopped auditing, silently
+
+Both are worth recording, because an audit that quietly stops is the same
+failure class it exists to hunt.
+
+**Three cases went "skipped (no target)" and the run still exited 0.**
+Extracting `frame_params.py` moved `LEG_W`, `BATT_L` and `SHEET_PARTS`
+out of `frame_v0.py`, so three mutation targets no longer existed. The
+audit printed SKIP and passed. A vanished mutation target means the case
+tests nothing, so **a stale case now counts as a failure**, not a skip.
+
+**Then five baselines failed at once** because the post-mutation
+regeneration hook read `endswith("frame_v0.py")` -- and the frame cases
+now mutate `frame_params.py`. A mutant's DXF was left on disk and every
+later case that reads it failed its clean baseline. The audit reported
+five broken checks; one hook was too narrow.
+
+Extracting the shared module also opened a gap in a real check:
+`check_fc_pattern.py`'s staleness guard watched `frame_v0.py` only, so
+after the extraction it had stopped watching the file that actually
+decides the hole pitch. Editing `FC_MOUNT` and forgetting to re-export
+would have passed. It watches every source now, against the newest.
 
 ## The CPL check did not exist as an artifact
 

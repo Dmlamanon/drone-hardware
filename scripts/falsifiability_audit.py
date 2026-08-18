@@ -42,6 +42,30 @@ FREECAD = os.path.expanduser(
     r"~\AppData\Local\Programs\FreeCAD 1.1\bin\freecadcmd.exe")
 
 
+RUNCHK = os.path.join(HERE, "run_freecad_check.py")
+
+# EVERY FreeCAD CHECK GOES THROUGH THE WRAPPER, never through freecadcmd
+# directly. freecadcmd exits 0 for a script that fails to parse, so an
+# audit trusting that exit code would report a check as fine when it had
+# stopped running entirely -- and would call a mutation "caught" when all
+# it did was break the file.
+FRAME_RPT = os.path.join(HW, "mechanical", "frame-v0", "build-report-petg.txt")
+ASM_RPT = os.path.join(HW, "mechanical", "assembly-v0",
+                       "build-report-assembly.txt")
+
+
+def frame_cmd():
+    return [[sys.executable, RUNCHK,
+             os.path.join(HW, "mechanical", "frame-v0", "frame_v0.py"),
+             FRAME_RPT]]
+
+
+def asm_cmd():
+    return [[sys.executable, RUNCHK,
+             os.path.join(HW, "mechanical", "assembly-v0", "assembly_v0.py"),
+             ASM_RPT]]
+
+
 class Case:
     """One check, plus one defect that ought to break it."""
 
@@ -96,32 +120,56 @@ def run(cmd, cwd, timeout):
 CASES = [
     Case("frame-leg",
          "the frame's leg-thickness check measures the LEG",
-         os.path.join(HW, "mechanical", "frame-v0", "frame_v0.py"),
+         os.path.join(HW, "mechanical", "frame-v0", "frame_params.py"),
          "LEG_W = 14.0", "LEG_W = 0.5",
-         [FREECAD, "frame_v0.py"],
-         os.path.join(HW, "mechanical", "frame-v0"),
+         frame_cmd(), HW,
          "a leg thinner than any material rule allows. The previous "
          "version of this check read ARM_T and printed OK 4.0 mm."),
 
     Case("frame-batt",
          "the frame's ground-clearance check can fail",
-         os.path.join(HW, "mechanical", "frame-v0", "frame_v0.py"),
+         os.path.join(HW, "mechanical", "frame-v0", "frame_params.py"),
          "BATT_L, BATT_W, BATT_H = 133.0, 45.0, 33.5",
          "BATT_L, BATT_W, BATT_H = 133.0, 45.0, 200.0",
-         [FREECAD, "frame_v0.py"],
-         os.path.join(HW, "mechanical", "frame-v0"),
+         frame_cmd(), HW,
          "a 200 mm pack. LEG_H used to be DERIVED from the pack, so this "
          "passed with 214 mm legs and 18.0 mm of margin."),
 
     Case("frame-dxf",
          "the flats DXF carries sheet parts only",
-         os.path.join(HW, "mechanical", "frame-v0", "frame_v0.py"),
+         os.path.join(HW, "mechanical", "frame-v0", "frame_params.py"),
          'SHEET_PARTS   = ("bottom_plate", "top_plate", "arm_1")',
          'SHEET_PARTS   = ("bottom_plate", "top_plate", "arm_1", "leg_1")',
-         [FREECAD, "frame_v0.py"],
-         os.path.join(HW, "mechanical", "frame-v0"),
+         frame_cmd(), HW,
          "the 14 mm leg back in the carbon cutting file -- the batch-4 "
          "blocker, which shipped."),
+
+    Case("assembly-fit",
+         "the assembly's interference check catches a collision",
+         os.path.join(HW, "mechanical", "assembly-v0", "assembly_v0.py"),
+         "size=(30.0, 30.0, 8.0), mass=13.5,",
+         "size=(30.0, 90.0, 8.0), mass=13.5,",
+         asm_cmd(), HW,
+         "an ESC grown until it occupies the receiver's space. Numbers do "
+         "not collide; solids do, and this is the check that notices."),
+
+    Case("assembly-bolts",
+         "the assembly re-verifies that the board bolts to the frame",
+         os.path.join(HW, "bench_board", "bench_board.kicad_pcb"),
+         "(drill 3.2)", "(drill 2.0)",
+         asm_cmd(), HW,
+         "a board whose holes an M3 does not fit. The assembly CALLS "
+         "check_fc_pattern.py rather than re-deriving it, so this also "
+         "proves that call is wired up and not silently swallowed."),
+
+    Case("freecad-exit",
+         "a FreeCAD check that does not RUN is reported as a failure",
+         os.path.join(HW, "mechanical", "assembly-v0", "assembly_v0.py"),
+         "import math", "import math" + chr(10) + "this is not python(((",
+         asm_cmd(), HW,
+         "a syntax error. freecadcmd exits 0 for a file it cannot parse, "
+         "so without run_freecad_check.py every geometry check in this "
+         "project would pass by simply being broken."),
 
     Case("fc-drill",
          "the mounting pattern check requires a hole an M3 fits",
@@ -253,9 +301,17 @@ def main():
             else:
                 data = original.decode("utf-8", errors="surrogateescape")
                 if c.old not in data:
-                    print("    SKIP: mutation target not found in %s\n"
-                          % os.path.basename(c.path))
-                    results.append((c, base, None))
+                    # NOT a skip. A mutation target that has vanished
+                    # means the case no longer tests anything -- and three
+                    # of these went quietly "skipped" the moment a
+                    # refactor moved some constants into another file,
+                    # while the audit still exited 0. An audit that can
+                    # silently stop auditing is the same failure it exists
+                    # to catch, so a stale case counts as a failure.
+                    print("    STALE CASE: %r is no longer in %s -- this "
+                          "check is UNAUDITED."
+                          % (c.old, os.path.basename(c.path)))
+                    results.append((c, base, 0))
                     continue
                 io.open(c.path, "w", encoding="utf-8", newline="").write(
                     data.replace(c.old, c.new, 1))
@@ -278,7 +334,13 @@ def main():
             # that did not clean up after itself reported other checks as
             # broken. Exactly the failure class this file hunts, in the
             # file that hunts it.
-            if c.path.endswith("frame_v0.py"):
+            # ANY source under frame-v0/, not just the entry point. This
+            # read `endswith("frame_v0.py")` until the constants moved into
+            # frame_params.py -- after which a frame mutation left a stale
+            # DXF behind and five LATER cases failed their clean baseline.
+            # The audit reported five broken checks; one hook was narrow.
+            if os.path.normpath(os.path.dirname(c.path)).endswith(
+                    os.path.join("mechanical", "frame-v0")):
                 run([FREECAD, "frame_v0.py"],
                     os.path.join(HW, "mechanical", "frame-v0"), 900)
 

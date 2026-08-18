@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="974" height="974" viewBox="-486.9 -486.9 973.8 973.8">
+<rect x="-486.9" y="-486.9" width="973.8" height="973.8" fill="#101418"/>
+<circle cx="198.0" cy="-198.0" r="182.9" fill="none" stroke="#3d6ea5" stroke-width="1.5" stroke-dasharray="6 4"/>
+<circle cx="-198.0" cy="-198.0" r="182.9" fill="none" stroke="#3d6ea5" stroke-width="1.5" stroke-dasharray="6 4"/>
+<circle cx="-198.0" cy="198.0" r="182.9" fill="none" stroke="#3d6ea5" stroke-width="1.5" stroke-dasharray="6 4"/>
+<circle cx="198.0" cy="198.0" r="182.9" fill="none" stroke="#3d6ea5" stroke-width="1.5" stroke-dasharray="6 4"/>
+<rect x="-112.0" y="-88.0" width="224.0" height="176.0" fill="#2a3138" stroke="#7f8c99"/>
+<rect x="-106.4" y="-36.0" width="212.8" height="72.0" fill="#b5651d" fill-opacity="0.75" stroke="#e8eef4" stroke-width="0.6"/>
+<rect x="-24.0" y="-24.0" width="48.0" height="48.0" fill="#8b2e5f" fill-opacity="0.75" stroke="#e8eef4" stroke-width="0.6"/>
+<rect x="-64.0" y="-48.0" width="128.0" height="96.0" fill="#2e8b57" fill-opacity="0.75" stroke="#e8eef4" stroke-width="0.6"/>
+<rect x="170.0" y="-226.0" width="56.0" height="56.0" fill="#555f6a" fill-opacity="0.75" stroke="#e8eef4" stroke-width="0.6"/>
+<rect x="-226.0" y="-226.0" width="56.0" height="56.0" fill="#555f6a" fill-opacity="0.75" stroke="#e8eef4" stroke-width="0.6"/>
+<rect x="-226.0" y="170.0" width="56.0" height="56.0" fill="#555f6a" fill-opacity="0.75" stroke="#e8eef4" stroke-width="0.6"/>
+<rect x="170.0" y="170.0" width="56.0" height="56.0" fill="#555f6a" fill-opacity="0.75" stroke="#e8eef4" stroke-width="0.6"/>
+<rect x="-17.6" y="62.4" width="35.2" height="19.2" fill="#c0a02c" fill-opacity="0.75" stroke="#e8eef4" stroke-width="0.6"/>
+<rect x="-8.0" y="83.2" width="16.0" height="16.0" fill="#c0392b" fill-opacity="0.75" stroke="#e8eef4" stroke-width="0.6"/>
+<rect x="80.0" y="-78.4" width="19.2" height="19.2" fill="#7d3c98" fill-opacity="0.75" stroke="#e8eef4" stroke-width="0.6"/>
+<rect x="-104.0" y="-9.6" width="41.6" height="19.2" fill="#16a085" fill-opacity="0.75" stroke="#e8eef4" stroke-width="0.6"/>
+<circle cx="0.2" cy="0.4" r="4" fill="none" stroke="#ff4d4d" stroke-width="2"/>
+<text x="-474.9" y="-464.9" fill="#e8eef4" font-family="sans-serif" font-size="13">STEVIE assembly v0 -- AUW 1130 g, CG marked</text>
+</svg>

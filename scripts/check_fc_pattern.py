@@ -33,7 +33,16 @@ DRILL_TOL = 0.15    # mm; board drill vs frame hole
 
 fails = []
 
-SCRIPT = os.path.join(HERE, "..", "mechanical", "frame-v0", "frame_v0.py")
+# EVERY source the DXF is generated FROM, not just the entry point.
+#
+# This was one path, frame_v0.py. Then the geometry constants moved into
+# frame_params.py, and the guard silently stopped watching the file that
+# actually decides the hole pitch: editing FC_MOUNT and forgetting to
+# re-export would have passed. A staleness guard that watches the wrong
+# file is worse than none, because it advertises freshness it never
+# checked.
+SCRIPTS = [os.path.join(HERE, "..", "mechanical", "frame-v0", f)
+           for f in ("frame_v0.py", "frame_params.py")]
 
 
 def check(desc, cond, detail=""):
@@ -85,12 +94,16 @@ for i, st in enumerate(fps):
 # only means something if the DXF is CURRENT. A DXF older than the script
 # that generates it would let this check pass against an artifact nobody
 # would build.
-if os.path.exists(SCRIPT) and os.path.exists(DXF):
-    dxf_age, src_age = os.path.getmtime(DXF), os.path.getmtime(SCRIPT)
-    check("the frame DXF is newer than the script that generates it",
+present = [p for p in SCRIPTS if os.path.exists(p)]
+if present and os.path.exists(DXF):
+    dxf_age = os.path.getmtime(DXF)
+    newest = max(present, key=os.path.getmtime)
+    src_age = os.path.getmtime(newest)
+    check("the frame DXF is newer than every source that generates it",
           dxf_age >= src_age,
-          "DXF %s script" % ("newer than" if dxf_age >= src_age
-                             else "is STALE by %.0f s vs" % (src_age - dxf_age)))
+          "DXF %s %s" % ("newer than" if dxf_age >= src_age
+                         else "is STALE by %.0f s vs" % (src_age - dxf_age),
+                         os.path.basename(newest)))
 
 print("board: %s" % os.path.normpath(BOARD))
 for x, y, d, ref in sorted(board_holes, key=lambda h: (h[1], h[0])):
