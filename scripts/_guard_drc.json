@@ -1,7 +1,7 @@
 {
     "$schema": "https://schemas.kicad.org/drc.v1.json",
     "coordinate_units": "mm",
-    "date": "2026-08-17T23:04:46",
+    "date": "2026-08-17T23:15:25",
     "ignored_checks": [
         {
             "description": "Footprint has no courtyard defined",
@@ -1474,12 +1474,12 @@
                     "uuid": "499006bc-1150-453a-89e1-e5acea89b865"
                 },
                 {
-                    "description": "Track [/3V3] on F.Cu, length 1.4016 mm",
+                    "description": "Pad 1 [/3V3] of C13 on F.Cu",
                     "pos": {
                         "x": 36.985,
                         "y": 39.819
                     },
-                    "uuid": "4c499e16-2529-4afe-8d99-9419dca84038"
+                    "uuid": "2939895a-131e-428e-b0fe-a064c90f3167"
                 }
             ],
             "severity": "error",
@@ -1581,20 +1581,43 @@
             "description": "Missing connection between items",
             "items": [
                 {
-                    "description": "Pad 18 [/GND] of U1 on F.Cu",
-                    "pos": {
-                        "x": 31.75,
-                        "y": 35.675
-                    },
-                    "uuid": "1fed2f42-e135-4384-8e26-400b5b2c6d24"
-                },
-                {
                     "description": "Pad 2 [/GND] of C17 on F.Cu",
                     "pos": {
                         "x": 33.599,
                         "y": 39.216
                     },
                     "uuid": "f8051fc2-0eef-4a66-9390-ae16658a59b7"
+                },
+                {
+                    "description": "Pad 18 [/GND] of U1 on F.Cu",
+                    "pos": {
+                        "x": 31.75,
+                        "y": 35.675
+                    },
+                    "uuid": "1fed2f42-e135-4384-8e26-400b5b2c6d24"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 1 [/GND] of U4 on F.Cu",
+                    "pos": {
+                        "x": 46.05,
+                        "y": 20.75
+                    },
+                    "uuid": "6c956f3e-baf5-470c-a00a-e59af72c7bfc"
+                },
+                {
+                    "description": "Track [/GND] on F.Cu, length 0.9500 mm",
+                    "pos": {
+                        "x": 49.95,
+                        "y": 20.75
+                    },
+                    "uuid": "0f727b4c-79f0-497d-a77c-6c3d5333e8de"
                 }
             ],
             "severity": "error",
@@ -1627,28 +1650,13 @@
             "description": "Missing connection between items",
             "items": [
                 {
-                    "description": "Track [/GND] on F.Cu, length 0.9500 mm",
+                    "description": "PTH pad B1 [/GND] of J3",
                     "pos": {
-                        "x": 49.95,
-                        "y": 20.75
+                        "x": 70.29,
+                        "y": 27.2
                     },
-                    "uuid": "0f727b4c-79f0-497d-a77c-6c3d5333e8de"
+                    "uuid": "37378e63-a5c7-4848-a2e9-a293bed16de2"
                 },
-                {
-                    "description": "Pad 1 [/GND] of U4 on F.Cu",
-                    "pos": {
-                        "x": 46.05,
-                        "y": 20.75
-                    },
-                    "uuid": "6c956f3e-baf5-470c-a00a-e59af72c7bfc"
-                }
-            ],
-            "severity": "error",
-            "type": "unconnected_items"
-        },
-        {
-            "description": "Missing connection between items",
-            "items": [
                 {
                     "description": "Pad A12 [/GND] of J3 on F.Cu",
                     "pos": {
@@ -1656,37 +1664,6 @@
                         "y": 27.25
                     },
                     "uuid": "926c8280-cba4-4210-8e80-4c395d28788b"
-                },
-                {
-                    "description": "PTH pad B1 [/GND] of J3",
-                    "pos": {
-                        "x": 70.29,
-                        "y": 27.2
-                    },
-                    "uuid": "37378e63-a5c7-4848-a2e9-a293bed16de2"
-                }
-            ],
-            "severity": "error",
-            "type": "unconnected_items"
-        },
-        {
-            "description": "Missing connection between items",
-            "items": [
-                {
-                    "description": "PTH pad B12 [/GND] of J3",
-                    "pos": {
-                        "x": 70.29,
-                        "y": 32.8
-                    },
-                    "uuid": "4af7780e-70b6-4e7f-8cd7-e2706181b0de"
-                },
-                {
-                    "description": "Pad A1 [/GND] of J3 on F.Cu",
-                    "pos": {
-                        "x": 68.98,
-                        "y": 32.75
-                    },
-                    "uuid": "a2626624-e75a-430c-81a4-ec80a84278ea"
                 }
             ],
             "severity": "error",
@@ -1695,29 +1672,6 @@
     ],
     "violations": [
         {
-            "description": "Items shorting two nets (nets /USB_DP and /USB_DM)",
-            "items": [
-                {
-                    "description": "Track [/USB_DP] on F.Cu, length 7.3025 mm",
-                    "pos": {
-                        "x": 61.3125,
-                        "y": 27.5
-                    },
-                    "uuid": "0ff521c1-6e56-4805-a866-2dcd8a04df96"
-                },
-                {
-                    "description": "Track [/USB_DM] on F.Cu, length 0.8226 mm",
-                    "pos": {
-                        "x": 54.01,
-                        "y": 29.5
-                    },
-                    "uuid": "1195f7fc-9d3a-4e24-83f9-08fff32312b1"
-                }
-            ],
-            "severity": "error",
-            "type": "shorting_items"
-        },
-        {
             "description": "Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)",
             "items": [
                 {
@@ -1813,20 +1767,20 @@
             "description": "Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)",
             "items": [
                 {
-                    "description": "PTH pad B11 [<no net>] of J3",
-                    "pos": {
-                        "x": 70.99,
-                        "y": 32.4
-                    },
-                    "uuid": "02fdfbcd-cb0c-4227-8a47-ef683d39c7a4"
-                },
-                {
                     "description": "PTH pad B12 [/GND] of J3",
                     "pos": {
                         "x": 70.29,
                         "y": 32.8
                     },
                     "uuid": "4af7780e-70b6-4e7f-8cd7-e2706181b0de"
+                },
+                {
+                    "description": "PTH pad B11 [<no net>] of J3",
+                    "pos": {
+                        "x": 70.99,
+                        "y": 32.4
+                    },
+                    "uuid": "02fdfbcd-cb0c-4227-8a47-ef683d39c7a4"
                 }
             ],
             "severity": "error",
@@ -1836,20 +1790,20 @@
             "description": "Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)",
             "items": [
                 {
-                    "description": "PTH pad B11 [<no net>] of J3",
-                    "pos": {
-                        "x": 70.99,
-                        "y": 32.4
-                    },
-                    "uuid": "02fdfbcd-cb0c-4227-8a47-ef683d39c7a4"
-                },
-                {
                     "description": "PTH pad B12 [/GND] of J3",
                     "pos": {
                         "x": 70.29,
                         "y": 32.8
                     },
                     "uuid": "4af7780e-70b6-4e7f-8cd7-e2706181b0de"
+                },
+                {
+                    "description": "PTH pad B11 [<no net>] of J3",
+                    "pos": {
+                        "x": 70.99,
+                        "y": 32.4
+                    },
+                    "uuid": "02fdfbcd-cb0c-4227-8a47-ef683d39c7a4"
                 }
             ],
             "severity": "error",
@@ -1859,20 +1813,20 @@
             "description": "Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)",
             "items": [
                 {
-                    "description": "PTH pad B11 [<no net>] of J3",
-                    "pos": {
-                        "x": 70.99,
-                        "y": 32.4
-                    },
-                    "uuid": "02fdfbcd-cb0c-4227-8a47-ef683d39c7a4"
-                },
-                {
                     "description": "PTH pad B12 [/GND] of J3",
                     "pos": {
                         "x": 70.29,
                         "y": 32.8
                     },
                     "uuid": "4af7780e-70b6-4e7f-8cd7-e2706181b0de"
+                },
+                {
+                    "description": "PTH pad B11 [<no net>] of J3",
+                    "pos": {
+                        "x": 70.99,
+                        "y": 32.4
+                    },
+                    "uuid": "02fdfbcd-cb0c-4227-8a47-ef683d39c7a4"
                 }
             ],
             "severity": "error",
@@ -1882,20 +1836,20 @@
             "description": "Clearance violation ( clearance 0.2000 mm; actual 0.1562 mm)",
             "items": [
                 {
-                    "description": "PTH pad B11 [<no net>] of J3",
-                    "pos": {
-                        "x": 70.99,
-                        "y": 32.4
-                    },
-                    "uuid": "02fdfbcd-cb0c-4227-8a47-ef683d39c7a4"
-                },
-                {
                     "description": "PTH pad B12 [/GND] of J3",
                     "pos": {
                         "x": 70.29,
                         "y": 32.8
                     },
                     "uuid": "4af7780e-70b6-4e7f-8cd7-e2706181b0de"
+                },
+                {
+                    "description": "PTH pad B11 [<no net>] of J3",
+                    "pos": {
+                        "x": 70.99,
+                        "y": 32.4
+                    },
+                    "uuid": "02fdfbcd-cb0c-4227-8a47-ef683d39c7a4"
                 }
             ],
             "severity": "error",
@@ -1971,29 +1925,6 @@
             "type": "copper_edge_clearance"
         },
         {
-            "description": "Thermal relief connection to zone incomplete (layer In2.Cu; zone min spoke count 2; actual 1)",
-            "items": [
-                {
-                    "description": "Zone [/3V3] on In2.Cu, priority 0",
-                    "pos": {
-                        "x": 2.0,
-                        "y": 2.0
-                    },
-                    "uuid": "72b84d52-8865-4e54-9e4b-151c2f382c4c"
-                },
-                {
-                    "description": "PTH pad 1 [/3V3] of J9",
-                    "pos": {
-                        "x": 43.0,
-                        "y": 7.0
-                    },
-                    "uuid": "f1c18a3a-fcf2-4170-a450-c6cbf0c8d2c9"
-                }
-            ],
-            "severity": "error",
-            "type": "starved_thermal"
-        },
-        {
             "description": "Thermal relief connection to zone incomplete (layer In1.Cu; zone min spoke count 2; actual 1)",
             "items": [
                 {
@@ -2017,119 +1948,27 @@
             "type": "starved_thermal"
         },
         {
-            "description": "Front solder mask aperture bridges items with different nets",
+            "description": "Thermal relief connection to zone incomplete (layer In2.Cu; zone min spoke count 2; actual 1)",
             "items": [
                 {
-                    "description": "Track [/USB_DM] on F.Cu, length 0.8226 mm",
+                    "description": "Zone [/3V3] on In2.Cu, priority 0",
                     "pos": {
-                        "x": 54.01,
-                        "y": 29.5
+                        "x": 2.0,
+                        "y": 2.0
                     },
-                    "uuid": "1195f7fc-9d3a-4e24-83f9-08fff32312b1"
+                    "uuid": "72b84d52-8865-4e54-9e4b-151c2f382c4c"
                 },
                 {
-                    "description": "Pad 2 [/USB_DM_MCU] of R5 on F.Cu",
+                    "description": "PTH pad 1 [/3V3] of J9",
                     "pos": {
-                        "x": 52.99,
-                        "y": 29.5
+                        "x": 43.0,
+                        "y": 7.0
                     },
-                    "uuid": "736bc918-e3a1-4994-be18-884704cc81d3"
+                    "uuid": "f1c18a3a-fcf2-4170-a450-c6cbf0c8d2c9"
                 }
             ],
             "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Front solder mask aperture bridges items with different nets",
-            "items": [
-                {
-                    "description": "Track [/USB_DM] on F.Cu, length 0.8226 mm",
-                    "pos": {
-                        "x": 54.01,
-                        "y": 29.5
-                    },
-                    "uuid": "1195f7fc-9d3a-4e24-83f9-08fff32312b1"
-                },
-                {
-                    "description": "Pad 1 [/CC2] of R8 on F.Cu",
-                    "pos": {
-                        "x": 56.5,
-                        "y": 31.99
-                    },
-                    "uuid": "2d768f2a-1eb1-4e56-a6f9-87cf0062d797"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Front solder mask aperture bridges items with different nets",
-            "items": [
-                {
-                    "description": "Track [/USB_DM] on F.Cu, length 0.8226 mm",
-                    "pos": {
-                        "x": 54.01,
-                        "y": 29.5
-                    },
-                    "uuid": "1195f7fc-9d3a-4e24-83f9-08fff32312b1"
-                },
-                {
-                    "description": "Pad 2 [/GND] of R8 on F.Cu",
-                    "pos": {
-                        "x": 56.5,
-                        "y": 33.01
-                    },
-                    "uuid": "7ed262fc-585a-4906-8e1b-558266548d2c"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Front solder mask aperture bridges items with different nets",
-            "items": [
-                {
-                    "description": "Track [/USB_DM] on F.Cu, length 0.8226 mm",
-                    "pos": {
-                        "x": 54.01,
-                        "y": 29.5
-                    },
-                    "uuid": "1195f7fc-9d3a-4e24-83f9-08fff32312b1"
-                },
-                {
-                    "description": "Pad 1 [/USB_DP] of R6 on F.Cu",
-                    "pos": {
-                        "x": 54.01,
-                        "y": 27.5
-                    },
-                    "uuid": "2d72812a-bafa-4363-bb09-7eb77514e04d"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Front solder mask aperture bridges items with different nets",
-            "items": [
-                {
-                    "description": "Track [/USB_DM] on F.Cu, length 0.8226 mm",
-                    "pos": {
-                        "x": 54.01,
-                        "y": 29.5
-                    },
-                    "uuid": "1195f7fc-9d3a-4e24-83f9-08fff32312b1"
-                },
-                {
-                    "description": "Pad 2 [/USB_DP_MCU] of R6 on F.Cu",
-                    "pos": {
-                        "x": 52.99,
-                        "y": 27.5
-                    },
-                    "uuid": "cd02363c-23e4-4469-88e4-6eee4dc042ef"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
+            "type": "starved_thermal"
         },
         {
             "description": "Silkscreen clipped by board edge",

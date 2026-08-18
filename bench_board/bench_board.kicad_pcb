@@ -13498,6 +13498,14 @@
 		(uuid "c9fa3e07-ed1a-4b26-9579-7905442363c4")
 	)
 	(segment
+		(start 68.98 32.75)
+		(end 70.29 32.8)
+		(width 0.2)
+		(layer "F.Cu")
+		(net "/GND")
+		(uuid "01bbdc80-1a8d-4eed-8970-5902c88b2ed5")
+	)
+	(segment
 		(start 53.8065 37.5538)
 		(end 55.6776 35.6827)
 		(width 0.6)
