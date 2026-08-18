@@ -1,0 +1,16 @@
+C23 substitution study -- TPS54336A loop gain, harness tps54336_loop_gain.cir (see header for phase-units note)
+
+corner                                        crossover   phase margin
+4S nominal 14.8V / 7.5nF (as-designed)          43.7 kHz       43.2 deg
+4S nominal 14.8V / 6.8nF (E12 below)            43.9 kHz       41.8 deg
+4S nominal 14.8V / 8.2nF (E12 above)            43.6 kHz       44.4 deg
+6S peak    25.2V / 7.5nF (as-designed)          42.7 kHz       41.1 deg
+6S peak    25.2V / 6.8nF (E12 below)            42.9 kHz       39.6 deg
+6S peak    25.2V / 8.2nF (E12 above)            42.6 kHz       42.3 deg
+
+6.8n vs design at 14.8V: crossover +0.5% (43.7 -> 43.9 kHz), phase margin -1.4 deg (43.2 -> 41.8)
+8.2n vs design at 14.8V: crossover -0.3% (43.7 -> 43.6 kHz), phase margin +1.2 deg (43.2 -> 44.4)
+6.8n vs design at 25.2V: crossover +0.5% (42.7 -> 42.9 kHz), phase margin -1.5 deg (41.1 -> 39.6)
+8.2n vs design at 25.2V: crossover -0.4% (42.7 -> 42.6 kHz), phase margin +1.2 deg (41.1 -> 42.3)
+
+VERDICT: 8.2nF (LCSC C107032, Yageo CC0402KRX7R9BB822, 50V X7R 0402, Extended) is chosen over 6.8nF (C93654): it RAISES phase margin at both range ends (+1.2/+1.2 deg) where 6.8nF lowers it (-1.4/-1.5 deg), with crossover essentially unchanged. Both are Extended parts, so the per-order fee is identical either way. JLCPCB stocks no 7.5nF MLCC in any package (searched 7.5nF / 7500pF / 752 codes).

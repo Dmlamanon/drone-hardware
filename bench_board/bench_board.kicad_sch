@@ -12673,7 +12673,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "7.5nF"
+		(property "Value" "8.2nF"
 			(at 372.745 62.23 0)
 			(show_name no)
 			(do_not_autoplace no)
