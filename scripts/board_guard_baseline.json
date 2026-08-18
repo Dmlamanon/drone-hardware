@@ -1,8 +1,8 @@
 {
   "violations": 53,
-  "unconnected": 10,
+  "unconnected": 9,
   "parity": 93,
-  "board_sha256": "7abab53edae045f337eee44b9513eac7efaa2dedb33c8019dac547e5f88afdc6",
-  "recorded": "2026-08-18T03:50:19.944441+00:00",
+  "board_sha256": "99d06dce5bdea381928e0324b9b3717d3a3346e6a7ca7cd885dbfe450375809d",
+  "recorded": "2026-08-18T03:51:32.333116+00:00",
   "invocation": "pcb drc --severity-all --schematic-parity --format json"
 }
