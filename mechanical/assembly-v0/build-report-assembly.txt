@@ -1,0 +1,63 @@
+board: loaded bench_board.step, 80.0 x 60.0 x 11.5 mm -- this drives the clearances, not the 1.6 mm envelope
+======================================================================
+STEVIE full assembly v0
+======================================================================
+
+NOTHING HERE HAS BEEN WEIGHED OR MEASURED. Every mass below is a
+retail listing or an estimate; the provenance column says which.
+MEASURED does not appear, because it would not be true.
+
+interference checks:
+ok:   no two components interfere                          54 pair(s) tested
+ok:   the FC clears the ESC stack                          17.0 mm between them
+ok:   prop discs do not overlap each other                 18.89 mm tip gap (8.26 % of dia) -- ACCEPTED 2026-08-17
+ok:   prop disc plane is clear of the electronics stack    props at z=37.0, stack top at z=63.5 (props are OUTBOARD, r>=61)
+ok:   the antenna keep-out is inside the prop-free centre  centre is clear to r=60.7 mm
+ok:   the board bolts to this frame (check_fc_pattern.py)  exit 0 via python.EXE
+ok:   landing gear still clears the slung battery          53.5 mm clearance vs 35.5 mm drop
+
+mass rollup:
+  frame (plates+arms, PETG)   165.1 g   OWN-MODEL
+  battery                  436.5 g   RETAIL-LISTING
+  esc                       13.5 g   RETAIL-LISTING
+  fc                        12.0 g   OWN-MODEL (bench_board.step)
+  motor_1                   88.3 g   RETAIL-LISTING
+  motor_2                   88.3 g   RETAIL-LISTING
+  motor_3                   88.3 g   RETAIL-LISTING
+  motor_4                   88.3 g   RETAIL-LISTING
+  rx                         5.0 g   ESTIMATE
+  antenna_keepout            3.0 g   ESTIMATE
+  buzzer                     2.5 g   ESTIMATE
+  props (x4)                50.0 g   RETAIL-LISTING
+  fasteners                 48.0 g   ESTIMATE
+  wiring                    35.0 g   ESTIMATE
+  standoffs                  6.0 g   RETAIL-LISTING
+  --------------------    1129.8 g
+  AUW                     1129.8 g
+
+centre of gravity: (0.12, -0.26, 1.14) mm relative to the bottom plate's top face
+
+inertia about the CG (point-mass model, kg*m^2):
+  Ixx 0.00583   Iyy 0.00581   Izz 0.01085
+
+against the derivation chain (docs/fable-reeval-2026-08-16.md):
+  AUW  1129.8 g here vs 1390.0 g there  -> -18.7 %
+  Ixx  0.00583 here vs 0.00541 there      -> +7.7 %
+  Izz  0.01085 here vs 0.01060 there      -> +2.3 %
+
+  The chain's AUW multiplies a bare frame mass by an INVENTED 1.4x
+  (re-eval R3) and adds a 30 g INVENTED misc term (R9). This number
+  is built from where the parts actually are instead.
+
+  Within 25 % of the chain on both axes; nothing to flag.
+
+  Neither number is measured. Both are built from listings and
+  estimates, and the point-mass inertia omits each component's own
+  spread about its centre, which makes it a LOWER bound.
+
+STEP  -> NOT WRITTEN: FreeCAD exception thrown (Writing of STEP failed)
+STL   -> D:\claude-obsidian\engineering\drone-hardware\mechanical\assembly-v0\stevie-assembly-v0.stl
+SVG   -> D:\claude-obsidian\engineering\drone-hardware\mechanical\assembly-v0\assembly-v0-plan-2026-08-17.svg
+DOC   -> D:\claude-obsidian\engineering\drone-hardware\docs\assembly-mass-cg-2026-08-17.md
+
+RESULT: 1 CHECK(S) FAILED

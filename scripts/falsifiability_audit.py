@@ -81,6 +81,53 @@ class Case:
         self.timeout = timeout
 
 
+# ARTIFACT SNAPSHOT.
+#
+# Restoring mutated SOURCES is not enough. The frame and assembly cases
+# re-run their generators, and FreeCAD stamps a fresh timestamp into every
+# STEP -- so a clean repo came out of each audit run with two modified
+# 124,000-line files whose only difference was a date. The wrapper also
+# DELETES a build report and cannot recreate it if the run it was testing
+# was the deliberately-broken one.
+#
+# Both train the same bad habit: `git checkout` a large diff after every
+# audit, which is indistinguishable from discarding a real regeneration.
+# So the audit snapshots every artifact it could disturb and puts them
+# back byte-for-byte.
+GENERATED_DIRS = [
+    os.path.join(HW, "mechanical", "frame-v0"),
+    os.path.join(HW, "mechanical", "assembly-v0"),
+    os.path.join(HW, "docs"),
+]
+GENERATED_EXT = (".step", ".stl", ".dxf", ".svg", ".txt", ".md")
+
+
+def snapshot_artifacts():
+    snap = {}
+    for d in GENERATED_DIRS:
+        if not os.path.isdir(d):
+            continue
+        for f in os.listdir(d):
+            if f.lower().endswith(GENERATED_EXT):
+                fp = os.path.join(d, f)
+                if os.path.isfile(fp):
+                    snap[fp] = io.open(fp, "rb").read()
+    return snap
+
+
+def restore_artifacts(snap):
+    """Put every snapshotted artifact back, and report what moved."""
+    changed, recreated = [], []
+    for fp, data in snap.items():
+        if not os.path.exists(fp):
+            io.open(fp, "wb").write(data)
+            recreated.append(os.path.basename(fp))
+        elif io.open(fp, "rb").read() != data:
+            io.open(fp, "wb").write(data)
+            changed.append(os.path.basename(fp))
+    return changed, recreated
+
+
 def run(cmd, cwd, timeout):
     """Exit code is the verdict.
 
@@ -274,6 +321,13 @@ def main():
     print("Each check is run clean, then with one deliberate defect.")
     print("A check that passes BOTH times is not a check.\n")
 
+    # Snapshot BEFORE anything runs, so the baseline runs cannot pollute
+    # it either -- a clean baseline still regenerates exports.
+    artifacts = snapshot_artifacts()
+    print("  (snapshotted %d generated artifact(s) for restoration)
+"
+          % len(artifacts))
+
     results = []
     restore_failed = []
     for c in cases:
@@ -350,6 +404,15 @@ def main():
         print("    clean exit %s / mutated exit %s -> %s\n"
               % (base, mut, verdict))
         results.append((c, base, mut))
+
+    changed, recreated = restore_artifacts(artifacts)
+    if changed or recreated:
+        print("  restored %d artifact(s) the audit disturbed%s"
+              % (len(changed) + len(recreated),
+                 (", recreated %d deleted" % len(recreated)) if recreated else ""))
+        for f in sorted(set(changed + recreated)):
+            print("    %s" % f)
+        print("")
 
     if restore_failed:
         print("*** RESTORE FAILED: %s" % ", ".join(restore_failed))

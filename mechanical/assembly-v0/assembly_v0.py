@@ -548,12 +548,40 @@ try:
     say("STEP  -> %s" % out("stevie-assembly-v0.step"))
 except Exception as exc:                                   # noqa: BLE001
     say("STEP  -> NOT WRITTEN: %s" % exc)
+    # AN EXPORT THAT FAILED IS A FAILED RUN.
+    #
+    # This used to only PRINT. The checks still said
+    # "passed", the script still exited 0, and
+    # run_freecad_check.py -- built specifically to stop
+    # stale artifacts being certified as fresh --
+    # accepted it, because it only looked at the RESULT
+    # line. Make the STEP read-only and the whole chain
+    # reported success over a file from an earlier run.
+    #
+    # The artifact IS the deliverable here: a fab or print
+    # step consumes it. A run that did not produce it has
+    # not passed.
+    fails.append("export STEP")
 
 try:
     Mesh.export(objs, out("stevie-assembly-v0.stl"))
     say("STL   -> %s" % out("stevie-assembly-v0.stl"))
 except Exception as exc:                                   # noqa: BLE001
-    say("STL   -> NOT WRITTEN: %s" % exc)
+    say("STL  -> NOT WRITTEN: %s" % exc)
+    # AN EXPORT THAT FAILED IS A FAILED RUN.
+    #
+    # This used to only PRINT. The checks still said
+    # "passed", the script still exited 0, and
+    # run_freecad_check.py -- built specifically to stop
+    # stale artifacts being certified as fresh --
+    # accepted it, because it only looked at the RESULT
+    # line. Make the STEP read-only and the whole chain
+    # reported success over a file from an earlier run.
+    #
+    # The artifact IS the deliverable here: a fab or print
+    # step consumes it. A run that did not produce it has
+    # not passed.
+    fails.append("export STL")
 
 # Plan-view SVG, same reasoning as frame_v0's: headless FreeCAD has no
 # viewport, and the thing worth looking at is the footprint overlap.
@@ -597,7 +625,21 @@ try:
         fh.write("\n".join(svg))
     say("SVG   -> %s" % io_path)
 except Exception as exc:                                   # noqa: BLE001
-    say("SVG   -> NOT WRITTEN: %s" % exc)
+    say("SVG  -> NOT WRITTEN: %s" % exc)
+    # AN EXPORT THAT FAILED IS A FAILED RUN.
+    #
+    # This used to only PRINT. The checks still said
+    # "passed", the script still exited 0, and
+    # run_freecad_check.py -- built specifically to stop
+    # stale artifacts being certified as fresh --
+    # accepted it, because it only looked at the RESULT
+    # line. Make the STEP read-only and the whole chain
+    # reported success over a file from an earlier run.
+    #
+    # The artifact IS the deliverable here: a fab or print
+    # step consumes it. A run that did not produce it has
+    # not passed.
+    fails.append("export SVG")
 
 # ----------------------------------------------------------------------
 # THE MASS/CG DOC, generated rather than transcribed
@@ -694,7 +736,21 @@ try:
         fh.write("\n".join(d) + "\n")
     say("DOC   -> %s" % DOC)
 except Exception as exc:                                   # noqa: BLE001
-    say("DOC   -> NOT WRITTEN: %s" % exc)
+    say("DOC  -> NOT WRITTEN: %s" % exc)
+    # AN EXPORT THAT FAILED IS A FAILED RUN.
+    #
+    # This used to only PRINT. The checks still said
+    # "passed", the script still exited 0, and
+    # run_freecad_check.py -- built specifically to stop
+    # stale artifacts being certified as fresh --
+    # accepted it, because it only looked at the RESULT
+    # line. Make the STEP read-only and the whole chain
+    # reported success over a file from an earlier run.
+    #
+    # The artifact IS the deliverable here: a fab or print
+    # step consumes it. A run that did not produce it has
+    # not passed.
+    fails.append("export DOC")
 
 say("")
 if fails:

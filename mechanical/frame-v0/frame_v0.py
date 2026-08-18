@@ -689,7 +689,21 @@ try:
     importDXF.export(flat, dxf_path)
     say("DXF   -> %s" % dxf_path)
 except Exception as exc:                                   # noqa: BLE001
-    say("DXF   -> NOT WRITTEN: %s" % exc)
+    say("DXF  -> NOT WRITTEN: %s" % exc)
+    # AN EXPORT THAT FAILED IS A FAILED RUN.
+    #
+    # This used to only PRINT. The checks still said
+    # "passed", the script still exited 0, and
+    # run_freecad_check.py -- built specifically to stop
+    # stale artifacts being certified as fresh --
+    # accepted it, because it only looked at the RESULT
+    # line. Make the STEP read-only and the whole chain
+    # reported success over a file from an earlier run.
+    #
+    # The artifact IS the deliverable here: a fab or print
+    # step consumes it. A run that did not produce it has
+    # not passed.
+    fails.append("export DXF")
 
 say("")
 say("RESULT: %s" % ("all geometry checks passed" if ok else
