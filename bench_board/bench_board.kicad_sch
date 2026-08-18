@@ -12502,16 +12502,6 @@
 		)
 		(uuid "ab5315e8-949e-44b8-9baa-f5cfe3e0bea7")
 	)
-	(label "VBAT_4S"
-		(at 387.35 46.99 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "f94ca985-5bb2-4b4a-a89c-c6baebd7a83a")
-	)
 	(label "SS_NODE"
 		(at 387.35 52.07 0)
 		(effects
@@ -14803,6 +14793,214 @@
 			(justify left bottom)
 		)
 		(uuid "2873bbbc-9497-47be-9d89-90642b298bf5")
+	)
+	(label "EN_UVLO"
+		(at 387.35 46.99 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "f17b2942-9229-49f3-b231-8553390b2cd5")
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 381 35.56 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "accb1807-6857-4982-84f5-8513b1f71cc5")
+		(property "Reference" "R16"
+			(at 383.032 35.56 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "182k"
+			(at 381 35.56 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 379.222 35.56 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 381 35.56 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 381 35.56 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "d270d104-fee5-42ff-92cb-5040b428782f")
+		)
+		(pin "2"
+			(uuid "703a96e9-a1d2-4987-a8b8-0918e9026eb9")
+		)
+		(instances
+			(project "bench_board"
+				(path "/b1d50a66-1761-4ba7-abb7-c1970eec7e0d"
+					(reference "R16")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 381 49.53 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "b193cb8d-f940-4159-bdda-e6c2d1fee623")
+		(property "Reference" "R17"
+			(at 383.032 49.53 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "20k"
+			(at 381 49.53 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 379.222 49.53 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 381 49.53 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 381 49.53 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "806a6158-7bb5-46e4-ba76-a399fd11b004")
+		)
+		(pin "2"
+			(uuid "0d559d80-584d-42be-b7c3-eabf95d14e68")
+		)
+		(instances
+			(project "bench_board"
+				(path "/b1d50a66-1761-4ba7-abb7-c1970eec7e0d"
+					(reference "R17")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "VBAT_4S"
+		(at 381.0 31.750000000000004 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "61233bc5-68b4-4f5f-951a-c4dcf6ab99af")
+	)
+	(label "EN_UVLO"
+		(at 381.0 39.370000000000005 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "d9ba842e-27db-437d-bb5d-a8deb8c2257c")
+	)
+	(label "EN_UVLO"
+		(at 381.0 45.72 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "b4094143-7a32-44eb-b170-c415ea810c6a")
+	)
+	(label "GND"
+		(at 381.0 53.34 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "d7a10482-03a5-4712-81fb-28b902c2de2a")
 	)
 	(sheet_instances
 		(path "/"

@@ -44,3 +44,15 @@
 2026-08-18 11:32:04Z  PASS      v=53 u=2 p=93  board=7c1c4a220e0e
 2026-08-18 12:09:22Z  PASS      v=53 u=2 p=93  board=0a5187c95102
 2026-08-18 19:25:49Z  BASELINE  v=53 u=2 p=93  board=0a5187c95102
+2026-08-18 19:42:51Z  FAIL      v=68 u=2 p=95 (base 53/2/93)  board=12597c7af468  violations 53 -> 68; parity 93 -> 95
+2026-08-18 19:47:33Z  FAIL      v=59 u=2 p=95 (base 53/2/93)  board=22be344f80d0  violations 53 -> 59; parity 93 -> 95
+2026-08-18 19:49:50Z  FAIL      v=68 u=2 p=95 (base 53/2/93)  board=462dea189d9a  violations 53 -> 68; parity 93 -> 95
+2026-08-18 19:53:18Z  FAIL      v=59 u=2 p=95 (base 53/2/93)  board=a011ef5699c7  violations 53 -> 59; parity 93 -> 95
+2026-08-18 19:54:12Z  FAIL      v=53 u=2 p=96 (base 53/2/93)  board=0a5187c95102  parity 93 -> 96
+2026-08-18 19:54:15Z  FAIL      v=53 u=2 p=96 (base 53/2/93)  board=0a5187c95102  parity 93 -> 96
+2026-08-18 19:55:24Z  FAIL      v=59 u=2 p=95 (base 53/2/93)  board=a011ef5699c7  violations 53 -> 59; parity 93 -> 95
+2026-08-18 19:56:08Z  FAIL      v=53 u=5 p=96 (base 53/2/93)  board=71c3ed339ab3  unconnected 2 -> 5; parity 93 -> 96
+2026-08-18 19:56:22Z  FAIL      v=53 u=4 p=96 (base 53/2/93)  board=5cdf12c4981e  unconnected 2 -> 4; parity 93 -> 96
+2026-08-18 20:20:15Z  FAIL      v=53 u=4 p=96 (base 53/2/93)  board=b34dff2d23ba  unconnected 2 -> 4; parity 93 -> 96
+2026-08-18 20:26:07Z  FAIL      v=53 u=2 p=95 (base 53/2/93)  board=6fbc91f31e30  parity 93 -> 95
+2026-08-18 20:27:11Z  BASELINE  v=53 u=2 p=95  board=6fbc91f31e30
