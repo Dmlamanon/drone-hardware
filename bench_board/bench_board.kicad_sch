@@ -10343,7 +10343,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100nF"
+		(property "Value" "2.2nF"
 			(at 444.5 273.05 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10622,16 +10622,6 @@
 			(justify left bottom)
 		)
 		(uuid "99a70e30-06c1-4f4c-84c2-d18ddb1fefa9")
-	)
-	(label "3V3"
-		(at 444.5 274.32 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "9c18e9f2-99e5-47a1-a00d-817aefeb95cf")
 	)
 	(label "3V3"
 		(at 469.9 266.7 0)
@@ -15001,6 +14991,16 @@
 			(justify left bottom)
 		)
 		(uuid "d7a10482-03a5-4712-81fb-28b902c2de2a")
+	)
+	(label "GND"
+		(at 444.5 274.32 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "57fa9d68-2bd7-4419-ae7b-5b55e5cda8a2")
 	)
 	(sheet_instances
 		(path "/"

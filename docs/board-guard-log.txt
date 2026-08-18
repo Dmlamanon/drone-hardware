@@ -56,3 +56,5 @@
 2026-08-18 20:20:15Z  FAIL      v=53 u=4 p=96 (base 53/2/93)  board=b34dff2d23ba  unconnected 2 -> 4; parity 93 -> 96
 2026-08-18 20:26:07Z  FAIL      v=53 u=2 p=95 (base 53/2/93)  board=6fbc91f31e30  parity 93 -> 95
 2026-08-18 20:27:11Z  BASELINE  v=53 u=2 p=95  board=6fbc91f31e30
+2026-08-18 20:30:35Z  FAIL      v=54 u=2 p=95 (base 53/2/95)  board=3d2169c76deb  violations 53 -> 54
+2026-08-18 20:31:36Z  PASS      v=53 u=2 p=95  board=378a599fa9b6
