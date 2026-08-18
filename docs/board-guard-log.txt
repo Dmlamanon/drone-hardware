@@ -25,3 +25,17 @@
 2026-08-18 03:52:55Z  FAIL      v=55 u=5 p=93 (base 53/6/93)  board=d9279178810c  violations 53 -> 55
 2026-08-18 03:54:35Z  PASS+     v=53 u=5 p=93 (was 53/6/93, ratcheted)  board=8a25ab45dfd7
 2026-08-18 03:54:54Z  PASS+     v=53 u=4 p=93 (was 53/5/93, ratcheted)  board=cd7580531f69
+2026-08-18 03:55:44Z  FAIL      v=54 u=3 p=93 (base 53/4/93)  board=7025178425ed  violations 53 -> 54
+2026-08-18 03:55:44Z  REVERTED  board 7025178425ed -> HEAD  (violations 53 -> 54)
+2026-08-18 03:55:59Z  FAIL      v=54 u=3 p=93 (base 53/4/93)  board=e0ae4c0fe2a1  violations 53 -> 54
+2026-08-18 03:57:31Z  FAIL      v=55 u=3 p=93 (base 53/4/93)  board=9cbe6cc8a6ca  violations 53 -> 55
+2026-08-18 03:57:31Z  REVERTED  board 9cbe6cc8a6ca -> HEAD  (violations 53 -> 55)
+2026-08-18 03:57:46Z  FAIL      v=55 u=3 p=93 (base 53/4/93)  board=3054044e45a4  violations 53 -> 55
+2026-08-18 04:00:58Z  FAIL      v=55 u=3 p=93 (base 53/4/93)  board=f3aba6045b2a  violations 53 -> 55
+2026-08-18 04:00:58Z  REVERTED  board f3aba6045b2a -> HEAD  (violations 53 -> 55)
+2026-08-18 04:01:12Z  FAIL      v=55 u=3 p=93 (base 53/4/93)  board=f2caf16b75fe  violations 53 -> 55
+2026-08-18 04:01:52Z  FAIL      v=55 u=3 p=93 (base 53/4/93)  board=11d98a5fb9c0  violations 53 -> 55
+2026-08-18 04:01:52Z  REVERTED  board 11d98a5fb9c0 -> HEAD  (violations 53 -> 55)
+2026-08-18 04:02:06Z  FAIL      v=55 u=3 p=93 (base 53/4/93)  board=ce781938f72f  violations 53 -> 55
+2026-08-18 04:02:20Z  FAIL      v=55 u=3 p=93 (base 53/4/93)  board=dd6ffd926e79  violations 53 -> 55
+2026-08-18 04:05:35Z  PASS+     v=53 u=3 p=93 (was 53/4/93, ratcheted)  board=9e042e8df72f
