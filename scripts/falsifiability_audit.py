@@ -218,6 +218,42 @@ CASES = [
          "so without run_freecad_check.py every geometry check in this "
          "project would pass by simply being broken."),
 
+    Case("ingest-guard-name",
+         "the thrust tool refuses fake data on the FILENAME signal",
+         os.path.join(FW, "tools", "thrust-ingest", "ingest.py"),
+         'if "FAKE" in os.path.basename(self.path).upper():',
+         'if "fake" in os.path.basename(self.path).upper():',
+         [[sys.executable, os.path.join(HW, "scripts", "check_ingest_guard.py")]],
+         HW,
+         "the exact bug that shipped: a LOWERCASE needle against an "
+         "UPPERCASED haystack, so the filename half of a supposedly "
+         "two-signal guard could never fire. The commit claimed it had "
+         "been 'verified all three ways'; all three had been caught by "
+         "the marker rules."),
+
+    Case("ingest-guard-marker",
+         "the thrust tool refuses fake data on the MARKER signal",
+         os.path.join(FW, "tools", "thrust-ingest", "ingest.py"),
+         'elif marker not in ("false", "no", "0"):',
+         'elif False:',
+         [[sys.executable, os.path.join(HW, "scripts", "check_ingest_guard.py")]],
+         HW,
+         "the in-file marker ignored. Both signals get their own case "
+         "because the whole claim is that they are INDEPENDENT -- one "
+         "case could not tell a two-signal guard from a one-signal one."),
+
+    Case("torque-value",
+         "a physically impossible torque default is caught",
+         os.path.join(FW, "src", "params.h"),
+         "#define PARAMS_DEFAULT_MAX_TORQUE_RP   5.41f",
+         "#define PARAMS_DEFAULT_MAX_TORQUE_RP   0.50f",
+         [["make", "build/test_torque_clamp_param"],
+          [os.path.join("build", "test_torque_clamp_param")]],
+         FW,
+         "a 10.8x error in the primary roll/pitch authority clamp. Until "
+         "this batch the tests read the SAME macro the table reads, so "
+         "both sides moved together and all 46 binaries passed."),
+
     Case("fc-drill",
          "the mounting pattern check requires a hole an M3 fits",
          os.path.join(HW, "bench_board", "bench_board.kicad_pcb"),
@@ -258,7 +294,7 @@ CASES = [
     Case("crash-order",
          "the crash log reads oldest-first",
          os.path.join(FW, "src", "crash_ring.c"),
-         "uint32_t oldest = (r->count == r->capacity) ? r->head : 0u;",
+         "uint32_t oldest = (r->p->count == r->capacity) ? r->p->head : 0u;",
          "uint32_t oldest = 0u;",
          [["make", "build/test_crash_ring"], [os.path.join("build", "test_crash_ring")]],
          FW,
@@ -324,8 +360,7 @@ def main():
     # Snapshot BEFORE anything runs, so the baseline runs cannot pollute
     # it either -- a clean baseline still regenerates exports.
     artifacts = snapshot_artifacts()
-    print("  (snapshotted %d generated artifact(s) for restoration)
-"
+    print("  (snapshotted %d generated artifact(s) for restoration)\n"
           % len(artifacts))
 
     results = []
@@ -365,7 +400,7 @@ def main():
                     print("    STALE CASE: %r is no longer in %s -- this "
                           "check is UNAUDITED."
                           % (c.old, os.path.basename(c.path)))
-                    results.append((c, base, 0))
+                    results.append((c, base, "stale"))
                     continue
                 io.open(c.path, "w", encoding="utf-8", newline="").write(
                     data.replace(c.old, c.new, 1))
@@ -388,15 +423,29 @@ def main():
             # that did not clean up after itself reported other checks as
             # broken. Exactly the failure class this file hunts, in the
             # file that hunts it.
-            # ANY source under frame-v0/, not just the entry point. This
-            # read `endswith("frame_v0.py")` until the constants moved into
-            # frame_params.py -- after which a frame mutation left a stale
-            # DXF behind and five LATER cases failed their clean baseline.
-            # The audit reported five broken checks; one hook was narrow.
-            if os.path.normpath(os.path.dirname(c.path)).endswith(
-                    os.path.join("mechanical", "frame-v0")):
-                run([FREECAD, "frame_v0.py"],
-                    os.path.join(HW, "mechanical", "frame-v0"), 900)
+            # REGENERATE THROUGH THE WRAPPER, whose absence here violated
+            # this file's own header rule ("EVERY FreeCAD CHECK GOES
+            # THROUGH THE WRAPPER") -- a silent regeneration failure would
+            # leave a stale DXF and make later cases fail their baselines,
+            # the exact hazard the wrapper exists for. And regenerate BOTH
+            # generators when either side's inputs changed: the assembly
+            # imports frame_params, so a frame mutation invalidates the
+            # assembly's exports too. This hook previously covered
+            # frame-v0 only ("full runs only avoid this by luck of case
+            # ordering" -- the reviewer, correctly).
+            d = os.path.normpath(os.path.dirname(c.path))
+            touched_frame = d.endswith(os.path.join("mechanical", "frame-v0"))
+            touched_asm = d.endswith(os.path.join("mechanical", "assembly-v0"))
+            if touched_frame or touched_asm:
+                if touched_frame:
+                    rc = run(frame_cmd()[0], HW, 900)
+                    if rc != 0:
+                        print("    (WARNING: frame regeneration failed, "
+                              "exit %d -- later cases may be unreliable)" % rc)
+                rc = run(asm_cmd()[0], HW, 900)
+                if rc != 0:
+                    print("    (WARNING: assembly regeneration failed, "
+                          "exit %d -- later cases may be unreliable)" % rc)
 
         verdict = "FALSIFIABLE" if (base == 0 and mut != 0) else "*** CANNOT FAIL ***"
         if base != 0:
@@ -428,6 +477,8 @@ def main():
             state = "skipped (no target)"
         elif base != 0:
             state = "BASELINE FAILING"; bad.append(c)
+        elif mut == "stale":
+            state = "STALE CASE (unaudited)"; bad.append(c)
         elif mut == 0:
             state = "CANNOT FAIL"; bad.append(c)
         else:
