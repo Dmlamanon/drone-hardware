@@ -21,7 +21,7 @@ two STOP conditions.
 |---|---|
 | Schematic ERC | **0 violations** (re-run 2026-08-18 after the C23 edit) |
 | Board DRC | **53 violations / 2 unconnected / 93 parity** (verbatim, `drc.json`) |
-| CPL vs board | **PASS** — `check_cpl.py`: 61 placeable, 61 rows, same set |
+| CPL vs board | **PASS** — `python scripts/check_cpl.py bench_board/bench_board.kicad_pcb fab/2026-08-17c` (the explicit fab-dir argument matters; the script's default now points here): 61 placeable, 61 rows, same set |
 | BOM blockers | **0** — C1, C23, J3 resolved with evidence (see docs/) |
 | Guard log | every committed board state has a matching PASS entry |
 
@@ -29,13 +29,13 @@ two STOP conditions.
 
 | | 17b | 17c |
 |---|---|---|
-| Unconnected | 13 | **2** (both sub-mm bench bridges — see order sheet) |
+| Unconnected | 13 | **2** (bench wire jumpers, 3.9 mm and 7.4 mm — see order sheet) |
 | DRC violations | 54 | **53** |
 | C23 | 7.5 nF, unsourceable | **8.2 nF, C107032**, chosen by loop-gain study |
 | C1 | example part EOL, curve unread | **C126612**, Murata bias curve read at 16.8 V |
 | J3 | "verify pad compatibility" | measured: **no stocked substitute; hand-fit Amphenol** |
-| BOM rows without LCSC # | 9 | **3** (J1-family headers/buzzer, deliberately hand-work) |
-| Via-in-pad | none | **U1×5, L1×1 in-pad; 3 tangent — filled & capped mandatory** |
+| Assembly BOM rows without an LCSC # | 8 | **0** (the 10 hand-work J-rows carry none by design, both revisions) |
+| Via-in-pad | none | **U1×5, L1×1 in-pad; 2 edge-overlaps + 1 near-tangent — filled & capped mandatory** |
 
 The 93 parity issues are unchanged from 17b and all benign:
 61 metadata-field mismatches, 24 KiCad auto-nets for deliberately

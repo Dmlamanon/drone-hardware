@@ -14,3 +14,15 @@ corner                                        crossover   phase margin
 8.2n vs design at 25.2V: crossover -0.4% (42.7 -> 42.6 kHz), phase margin +1.2 deg (41.1 -> 42.3)
 
 VERDICT: 8.2nF (LCSC C107032, Yageo CC0402KRX7R9BB822, 50V X7R 0402, Extended) is chosen over 6.8nF (C93654): it RAISES phase margin at both range ends (+1.2/+1.2 deg) where 6.8nF lowers it (-1.4/-1.5 deg), with crossover essentially unchanged. Both are Extended parts, so the per-order fee is identical either way. JLCPCB stocks no 7.5nF MLCC in any package (searched 7.5nF / 7500pF / 752 codes).
+
+CORRECTION 2026-08-18 (independent review, finding 7): the sentence above
+"JLCPCB stocks no 7.5nF MLCC in any package" is wrong as stated. Two exist
+(C907758 0603, C710950 0805, both C0G 50V) -- but none in the board's 0402
+footprint, so using them requires a footprint/copper edit rather than a value
+edit. The 8.2nF choice stands on the measured phase-margin improvement and the
+avoided board edit; evidence in sim/c23_jlcpcb_7p5nF_search.txt.
+
+NOTE (same review, finding 16): absolute phase margin is 41.1-44.4 deg across
+all three values and both corners -- below the conventional 45 deg design
+target, though comfortably stable. The substitution decision is relative and
+unaffected; the absolute number is now on record rather than unremarked.

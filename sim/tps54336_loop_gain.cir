@@ -13,11 +13,18 @@
 * -> [R1/R2 divider] -> VSENSE_FB (response, "all the way around").
 * T(s) = V(VSENSE_FB)/V(VSENSE_INJ). Crossover frequency (|T|=0dB) is
 * robust to which side is called numerator/denominator; so is phase
-* margin, since PM = 180 - |phase(T)| is symmetric under T -> 1/T
-* (|phase(1/T)| = |-phase(T)| = |phase(T)|). Getting the injection
-* direction backward could not silently produce a wrong-but-plausible
-* PM for this reason - only a sign-flipped (still-correct-magnitude)
-* phase reading, caught by the |.| in the PM formula below.
+* margin under T -> 1/T (|phase(1/T)| = |phase(T)|).
+*
+* PHASE-UNITS / CONVENTION NOTE (corrected 2026-08-18, review finding):
+* an earlier version of this header gave PM = 180 - |phase(T)|. That is
+* the convention for T defined WITHOUT the loop inversion. In THIS deck
+* the inversion is inside T -- the measured DC phase of the committed
+* runs is ~pi (3.0376 rad at 1 Hz) -- so instability sits at phase 0
+* and the correct reading is PM = |phase(T)| at crossover, directly.
+* The old formula yields 136.8 deg where the true margin is 43.2 deg,
+* and it is what produced the PM ~ 179 deg artifact in the 2026-08-16
+* doc. sim/c23_substitution_study.py implements the correct convention
+* (abs(degrees(phase)) at crossover); use it, not the old formula.
 
 .func if(a,b,c) '(a) ? (b) : (c)'
 .include "TPS54336_AVG_ngspice.lib"

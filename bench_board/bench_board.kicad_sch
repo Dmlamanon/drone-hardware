@@ -7707,7 +7707,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10uF 50V X7R 1210"
+		(property "Value" "10uF 50V X7S 1210"
 			(at 449.58 55.88 0)
 			(show_name no)
 			(do_not_autoplace no)

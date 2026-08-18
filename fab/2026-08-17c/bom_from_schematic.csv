@@ -1,5 +1,5 @@
 "Reference","Value","Footprint","QUANTITY","Datasheet"
-"C1","10uF 50V X7R 1210","Capacitor_SMD:C_1210_3225Metric","1",""
+"C1","10uF 50V X7S 1210","Capacitor_SMD:C_1210_3225Metric","1",""
 "C2","22uF","Capacitor_SMD:C_0805_2012Metric","1",""
 "C3,C6-C10,C16,C19-C22","100nF","Capacitor_SMD:C_0402_1005Metric","11",""
 "C11,C12","2.2uF","Capacitor_SMD:C_0603_1608Metric","2",""

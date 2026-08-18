@@ -29,7 +29,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 BOARD = sys.argv[1] if len(sys.argv) > 1 else os.path.join(
     HERE, "..", "bench_board", "bench_board.kicad_pcb")
 FABDIR = sys.argv[2] if len(sys.argv) > 2 else os.path.join(
-    HERE, "..", "fab", "2026-08-17b")
+    HERE, "..", "fab", "2026-08-17c")
 
 fails = []
 

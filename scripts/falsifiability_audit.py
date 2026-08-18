@@ -289,7 +289,7 @@ CASES = [
 
     Case("cpl",
          "the CPL describes the board it ships with",
-         os.path.join(HW, "fab", "2026-08-17b", "cpl_top.csv"),
+         os.path.join(HW, "fab", "2026-08-17c", "cpl_top.csv"),
          None, None,       # handled specially: drop the last data row
          [sys.executable, os.path.join(HW, "scripts", "check_cpl.py")],
          HW,

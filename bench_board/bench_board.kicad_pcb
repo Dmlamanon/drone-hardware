@@ -53,8 +53,8 @@
 			(front no)
 			(back no)
 		)
-		(capping no)
-		(filling no)
+		(capping yes)
+		(filling yes)
 		(pcbplotparams
 			(layerselection 0x00000000_00000000_55555555_5755f5ff)
 			(plot_on_all_layers_selection 0x00000000_00000000_00000000_00000000)
@@ -9658,7 +9658,7 @@
 				)
 			)
 		)
-		(property "Value" "10uF 50V X7R 1210"
+		(property "Value" "10uF 50V X7S 1210"
 			(at 0 2.3 0)
 			(layer "F.Fab")
 			(uuid "69dba45e-e4cd-4095-8d05-c9bf04643498")

@@ -64,12 +64,18 @@ that is orderable).
 > affected:
 > *"Via-in-pad (filled & capped required): U1 pads 12, 13, 18, 19, 63
 > (0.3/0.15 mm vias fully inside pads); L1 pad 1 (0.6/0.4 mm via inside
-> pad); via barrels tangent to pads at U4 pad 11, C24 pad 1, C27 pad 2
-> (0.6/0.3 and 0.3/0.15)."*
+> pad); via barrels overlapping pad edges at U4 pad 11 (0.3/0.15,
+> 0.075 mm penetration) and C27 pad 2 (0.6/0.3, 0.178 mm penetration).
+> One near-tangent worth the same treatment: a 0.6/0.4 via clears C2
+> pad 1 by only 0.014 mm — inside mask-registration tolerance, so
+> please fill/cap it too."*
 >
-> These positions are measured from the board file
-> (`scripts/` geometric audit, 2026-08-18), not inferred from commit
-> messages.
+> These positions are measured from the board file (geometric audit,
+> re-derived independently by this batch's reviewer with exact
+> roundrect pad geometry, 2026-08-18), not inferred from commit
+> messages. The reviewer's re-derivation removed one false positive
+> (C24 pad 1 — its nearest via clears by 0.153 mm) and confirmed
+> nothing is missing from the list.
 
 ## Step 3 — SMT assembly options
 
@@ -88,14 +94,20 @@ that is orderable).
    TPS54336ADDA (C1355769 — 245). If either shows zero: **STOP** — there
    is no drop-in alternate on these footprints; wait for restock or
    source the chips yourself and switch to consignment.
+   Two more verify-before-paying checks from the BOM's own notes:
+   **L1/L2 (C17701247)** is a candidate David sanity-checks — the
+   saturation math is in the BOM row, and the caveat is that a full
+   1 A receiver load thins L2's headroom; and **Y1 (C115962)** came
+   from a community snapshot — confirm it against the live JLCPCB
+   part page during matching.
 5. Rows the assembler will NOT place (they show as "no part selected" —
    that is correct, click through it): **J1–J10 (all headers), J3
    (USB-C), BUZZER**. Details below.
 
 ## Step 4 — what arrives loose / what David solders
 
-JLCPCB places all 52 SMD parts (12 Extended lines ⇒ 12 × $3 setup fees
-are already in the estimate). The following are **hand work**:
+JLCPCB places all 51 SMD parts (11 Extended part numbers ⇒ 11 × $3
+setup fees are already in the estimate; L1/L2 share one part number). The following are **hand work**:
 
 **The nine through-hole headers** (2.54 mm pitch — buy any standard pin
 header stock and cut to length; ~30 min total soldering):
@@ -130,18 +142,30 @@ DRC verbatim, this exact package: **53 violations, 2 unconnected items,
 93 schematic parity issues.**
 
 - **The 2 unconnected items** are U1 pad 48 (a /3V3 supply pin) and U4
-  pad 1 (the IMU's grounded CLKIN). In both cases a same-net track stub
-  already ends **less than 1 mm from the pad** (0.71 mm and 0.95 mm
-  gaps). Five automated attempts to close them regressed the board and
-  were reverted by the guard. **The fix is a bench solder-bridge across
-  each sub-millimetre gap after the boards arrive** — two joints, five
-  minutes, done under magnification. The STM32 runs without pad 48
-  bridged (its other VDD pins carry it) but is out of datasheet spec
-  until bridged; bridge both before trusting the board.
+  pad 1 (the IMU's grounded CLKIN). Five automated attempts to close
+  them regressed the board and were reverted by the guard, so they are
+  **bench wire jumpers after the boards arrive** — measured from the
+  board file (an earlier draft of this sheet called them
+  "sub-millimetre solder bridges"; that misread the DRC's track-length
+  field and was caught by the independent review — the real distances
+  are below):
+  - **U4 pad 1 → U4 pad 18**: both /GND, both at the same height on
+    the QFN, **3.9 mm apart in a straight line**. One short bare wire
+    lying flat between the two pin lands, or tack to the /GND track
+    stub that already ends at pad 18. QFN perimeter pads are fine work
+    — magnification and a fine tip.
+  - **U1 pad 48 → C20 pad 2**: both /3V3, **7.4 mm apart**. A thin
+    insulated wire (30 AWG wire-wrap) from the LQFP pin 48 lead to the
+    3V3 terminal of decoupling cap C20. Budget 15–30 minutes for the
+    pair, not five.
+
+  The STM32 runs without pad 48 jumpered (its other VDD pins carry it)
+  but is out of datasheet spec until jumpered; do both before trusting
+  the board.
 - **The 53 violations:** 37 silkscreen cosmetics, 8 pre-existing
   clearance reports inside the J3 footprint's own pads, 4 known
-  mounting-hole library mismatches, 2 copper-edge (J3's NPTH, 0.27 mm
-  against our 0.3 mm rule — JLCPCB's own floor is 0.2 mm, so it
+  mounting-hole library mismatches, 2 copper-edge (J3's NPTH, 0.269 and
+  0.298 mm against our 0.3 mm rule — JLCPCB's own floor is 0.2 mm, so it
   fabricates fine), 2 starved thermals (J9.1, J3.B1 — solder them with
   a bigger iron tip). None are shorts, crossings, or hole errors.
 - **The 93 parity issues** are all metadata/no-net-by-design; itemized
@@ -154,7 +178,7 @@ DRC verbatim, this exact package: **53 violations, 2 unconnected items,
 | 4-layer PCB, 80×60, qty 5 | 15–25 |
 | **Epoxy filled & capped vias (the mandatory option)** | 30–60 |
 | SMT assembly setup + stencil | ~10 |
-| 12 Extended-part setup fees | 36 |
+| 11 Extended-part setup fees | 33 |
 | Parts, 5 boards (U4 MPU-6000 ≈$52 and U1 ≈$29 dominate) | ~110 |
 | Shipping (economy) | 10–20 |
 | **Total, 5 assembled boards** | **≈ $210–260** |

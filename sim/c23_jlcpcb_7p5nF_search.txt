@@ -1,0 +1,22 @@
+JLCPCB 7.5 nF MLCC availability -- evidence for the C23 substitution premise
+Ran 2026-08-18 12:08 UTC against the jlcsearch.tscircuit.com index of the JLCPCB parts catalog.
+Queries: "7.5nF capacitor", "7500pF", "7.5nF 0402", "7.5nF 0603", "752 capacitor MLCC".
+
+RESULT -- the original claim was WRONG as stated, and this file corrects it:
+
+  * 7.5 nF MLCC in 0402 (the board's C23 footprint, C_0402_1005Metric): NONE. Zero rows.
+  * 7.5 nF MLCC in any package: TWO exist, both Murata C0G 50V +-5%:
+      C907758  GRM1885C1H752JA01D  0603  stock  8,068
+      C710950  GRM2195C1H752JA01D  0805  stock 10,539
+    (All other "7.5nF" hits are varistor/MOSFET parasitic capacitances, not capacitors.)
+
+WHY THE 8.2 nF SUBSTITUTION STILL STANDS:
+Fitting either real 7.5 nF part means changing C23's footprint from 0402 to
+0603/0805 -- a board copper edit next to the regulator, re-opening routing that
+took a guard-enforced batch to close, versus a value-only edit that the
+loop-gain study measured as slightly IMPROVING phase margin at both battery
+extremes (+1.2 deg / +1.2 deg, c23_study_results.txt). The substitution is
+kept on those grounds -- not on the false "no 7.5 nF anywhere" premise.
+Recorded 2026-08-18 after the independent review flagged that the premise had
+been asserted without committed evidence (the earlier _mlcc_head.csv was empty
+and has been removed).

@@ -7,7 +7,7 @@ Comment,Designator,Footprint,LCSC Part #,JLCPCB Library,Sourcing Note
 10nF,"C14,C24",C_0402_1005Metric,C15195,Basic,50V
 4.7uF,C15,C_0805_2012Metric,C1779,Basic,25V; on 3V3.
 10pF,"C17,C18",C_0402_1005Metric,C32949,Basic,50V; crystal load caps.
-8.2nF,C23,C_0402_1005Metric,C107032,Extended,"RESOLVED 2026-08-18: value changed 7.5nF -> 8.2nF (JLCPCB stocks NO 7.5nF MLCC in any package). Yageo CC0402KRX7R9BB822, 50V X7R. Chosen over 6.8nF by ngspice loop-gain study (sim/c23_study_results.txt): raises phase margin +1.2 deg at both 14.8V and 25.2V where 6.8nF lowers it. Schematic and board updated; ERC 0."
+8.2nF,C23,C_0402_1005Metric,C107032,Extended,"RESOLVED 2026-08-18: value changed 7.5nF -> 8.2nF (JLCPCB stocks no 7.5nF MLCC in 0402; the two existing 7.5nF parts are 0603/0805 and would need a footprint edit). Yageo CC0402KRX7R9BB822, 50V X7R. Chosen over 6.8nF by ngspice loop-gain study (sim/c23_study_results.txt): raises phase margin +1.2 deg at both 14.8V and 25.2V where 6.8nF lowers it. Schematic and board updated; ERC 0."
 10uF 16V,C25,C_0805_2012Metric,C15850,Basic,"25V part; on 3V3, margin fine."
 22uF 16V,C26,C_0805_2012Metric,C45783,Basic,"25V part; on 5V_RX, margin fine."
 SS34,D1,D_SMA,C8678,Basic,Verified Basic on the JLCPCB part page.
