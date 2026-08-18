@@ -13210,6 +13210,14 @@
 		(uuid "2d059d43-0d77-46b3-af2e-7680ac234aa7")
 	)
 	(segment
+		(start 31.25 25.1)
+		(end 30.1 26.25)
+		(width 0.15)
+		(layer "F.Cu")
+		(net "/3V3")
+		(uuid "30f2e8bf-d3a9-4ed0-93fa-25df480b1fd1")
+	)
+	(segment
 		(start 11.7492 7.8508)
 		(end 11.6 8)
 		(width 0.6)

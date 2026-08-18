@@ -39,3 +39,4 @@
 2026-08-18 04:02:06Z  FAIL      v=55 u=3 p=93 (base 53/4/93)  board=ce781938f72f  violations 53 -> 55
 2026-08-18 04:02:20Z  FAIL      v=55 u=3 p=93 (base 53/4/93)  board=dd6ffd926e79  violations 53 -> 55
 2026-08-18 04:05:35Z  PASS+     v=53 u=3 p=93 (was 53/4/93, ratcheted)  board=9e042e8df72f
+2026-08-18 04:05:50Z  PASS+     v=53 u=2 p=93 (was 53/3/93, ratcheted)  board=1ac3981fddbc
