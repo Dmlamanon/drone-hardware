@@ -1,11 +1,18 @@
 ---
 type: fab-package
-status: READY-TO-ORDER-WITH-CONDITIONS
+status: SUPERSEDED
 created: 2026-08-18
 tags: [drone, hardware, pcb, fab]
 ---
 
 # Fab package — bench_board, 2026-08-17**c**
+
+> [!danger] SUPERSEDED 2026-08-18 by `fab/2026-08-18a/` — DO NOT ORDER FROM THIS FOLDER
+> **Why, in one line: this revision wires the buck regulator's EN pin to
+> 16.8 V against a 6 V absolute maximum** (found by the datasheet
+> verification pass) — an abs-max violation, not a tidy-up. 18a fixes it
+> with a pack-UVLO divider and also corrects the MPU-6000 charge-pump
+> cap and the crystal load caps.
 
 **Supersedes `fab/2026-08-17b/`** (which is marked superseded in place).
 Regenerated 2026-08-18 from the board at commit `8b12e0c`, after batch 6

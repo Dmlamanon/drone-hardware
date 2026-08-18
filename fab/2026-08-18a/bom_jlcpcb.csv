@@ -1,0 +1,47 @@
+Comment,Designator,Footprint,LCSC Part #,JLCPCB Library,Sourcing Note
+10uF 50V X7S 1210,C1,C_1210_3225Metric,C126612,Extended,"RESOLVED 2026-08-18: Murata GCM32EC71H106KA03, in production (BOM's earlier example GRM32ER71H106KA12L is EOL/NRND at Murata). Murata's own C-vs-Vdc curve read at 16.8V bias: -21.15% -> 7.89uF nominal, 5.54uF at worst-case tolerance+temperature; TPS54336A ripple-voltage and ripple-current requirements pass at every corner. Full working: docs/c1-input-cap-bias-verification-2026-08-17c.md. 28k stock, ~$0.30."
+22uF,C2,C_0805_2012Metric,C45783,Basic,25V part; sits on 3V3 so margin is ample.
+100nF,"C3,C6,C7,C8,C9,C10,C16,C19,C21,C22",C_0402_1005Metric,C1525,Basic,16V X7R decoupling. (C20 split out 2026-08-18: it is the MPU-6000 charge-pump cap and was never a decoupler.)
+2.2uF,"C11,C12",C_0603_1608Metric,C23630,Basic,16V
+1uF,C13,C_0603_1608Metric,C15849,Basic,50V
+10nF,"C14,C24",C_0402_1005Metric,C15195,Basic,50V
+4.7uF,C15,C_0805_2012Metric,C1779,Basic,25V; on 3V3.
+33pF,"C17,C18",C_0402_1005Metric,C1562,Basic,"CHANGED 2026-08-18 from 10pF: Y1 is a 20pF-load crystal (Yangxing spec sheet); 33pF gives CL~19.5pF. FH 0402CG330J500NT, C0G 50V, Basic, 690k stock."
+8.2nF,C23,C_0402_1005Metric,C107032,Extended,"RESOLVED 2026-08-18: value changed 7.5nF -> 8.2nF (JLCPCB stocks no 7.5nF MLCC in 0402; the two existing 7.5nF parts are 0603/0805 and would need a footprint edit). Yageo CC0402KRX7R9BB822, 50V X7R. Chosen over 6.8nF by ngspice loop-gain study (sim/c23_study_results.txt): raises phase margin +1.2 deg at both 14.8V and 25.2V where 6.8nF lowers it. Schematic and board updated; ERC 0."
+2.2nF 50V,C20,C_0402_1005Metric,C106861,Extended,"ADDED 2026-08-18 (split from the 100nF group): MPU-6000 charge-pump cap, PS-MPU-6000A sec.7.3 requires 2.2nF X7R 50V to GND. Yageo CC0402KRX7R9BB222, 1.14M stock. No Basic 2.2nF/50V 0402 exists -- one more Extended fee. Board return re-routed 3V3 -> GND this batch."
+10uF 16V,C25,C_0805_2012Metric,C15850,Basic,"25V part; on 3V3, margin fine."
+22uF 16V,C26,C_0805_2012Metric,C45783,Basic,"25V part; on 5V_RX, margin fine."
+SS34,D1,D_SMA,C8678,Basic,Verified Basic on the JLCPCB part page.
+BATT_4S,J1,PinHeader_1x02_P2.54mm_Vertical,,HAND-SOLDER,Through-hole 2.54mm header.
+BOOT0_JUMPER,J2,PinHeader_1x02_P2.54mm_Vertical,,HAND-SOLDER,Through-hole.
+USB-C,J3,USB_C_Receptacle_Amphenol_12401548E4-2A,,HAND-FIT,"RESOLVED 2026-08-18: NO JLCPCB-stocked USB-C is pad-compatible with this footprint -- measured, not assumed (docs/j3-usbc-substitute-verification-2026-08-17c.md). Buy the genuine Amphenol 12401548E4#2A from Digi-Key/Mouser (~$2) and hand-fit: B row + shield are through-hole and alone yield a working USB 2.0 port; drag-solder the 0.5mm SMT A row for full contact redundancy. JLCPCB skips this line."
+CRSF_UART,J4,PinHeader_1x04_P2.54mm_Vertical,,HAND-SOLDER,Through-hole.
+DSHOT_M1-M4,J5,PinHeader_1x05_P2.54mm_Vertical,,HAND-SOLDER,Through-hole.
+SWD,J6,PinHeader_1x05_P2.54mm_Vertical,,HAND-SOLDER,Through-hole.
+RX_PWR_5V,J7,PinHeader_1x02_P2.54mm_Vertical,,HAND-SOLDER,Through-hole.
+TELEM_TX,J8,PinHeader_1x03_P2.54mm_Vertical,,HAND-SOLDER,Through-hole.
+EXPANSION_BUS,J9,PinHeader_1x14_P2.54mm_Vertical,,HAND-SOLDER,Through-hole.
+10uH,"L1,L2",L_1210_3225Metric,C17701247,Extended,"CANDIDATE 2026-08-18, David sanity-checks before ordering: MTQH322510S100MBT molded, Isat 2.2A, 325mohm, 11.8k stock. The math: L1 (buck out) ripple 0.78A p-p at 340kHz so peak = Iload+0.39A, <=1.4A at the board's real <=1A rail; L2 (MT3608 boost, Vin=3V3 confirmed from board nets) peak ~0.9A at 0.5A receiver load. Both inside 2.2A with margin. NOT verified: a receiver load at the full 1A would push L2 peak to ~1.9A -- still under Isat but thin; if the RX stack grows, upsize L2."
+31.6k,R1,R_0402_1005Metric,C11463,Extended,"RESOLVED 2026-08-18: UNI-ROYAL 0402WGF3162TCE 1% E96, 116k stock. Exact value match, buck feedback divider - sets the 3.3V output."
+10.0k,"R2,R10",R_0402_1005Metric,C25744,Basic,1%
+10k,"R3,R4",R_0402_1005Metric,C25744,Basic,Same physical part as R2/R10; schematic writes the value two ways (10k vs 10.0k).
+22R,"R5,R6",R_0402_1005Metric,C25092,Basic,USB series termination.
+5.1k,"R7,R8",R_0402_1005Metric,C25905,Basic,USB-C CC pulldowns.
+75.0k,R9,R_0402_1005Metric,C25798,Basic,Battery sense divider (VBAT_4S -> VBAT_SENSE).
+2k,R11,R_0402_1005Metric,C4109,Basic,1%
+73.2k,R12,R_0603_1608Metric,C14890,Extended,"RESOLVED 2026-08-18: UNI-ROYAL 0603WAF7322T5E 1% E96, 94k stock. Exact value match, boost feedback divider - sets the 5V rail."
+182k,R16,R_0402_1005Metric,C11481,Extended,"ADDED 2026-08-18: EN UVLO divider top (TI SLVSCD5D Fig.15). UNI-ROYAL 0402WGF1823TCE 1%. No Basic 180k/182k 0402 exists -- Extended fee. Sets pack UVLO start 12.01V / stop 11.01V with R17."
+20k,R17,R_0402_1005Metric,C25765,Basic,"ADDED 2026-08-18: EN UVLO divider bottom. 1%, 2.9M stock, Basic."
+10.0k,R13,R_0603_1608Metric,C25804,Basic,Boost feedback divider bottom leg.
+STM32F405RGT6,U1,LQFP-64_10x10mm_P0.5mm,C15742,Extended,"Needs an assembly fixture per the JLCPCB part page. 264 in stock, $6.68/1, $5.88/10+ (verified 2026-08-17). RE-VERIFY stock at order time - 264 is thin for qty 5."
+TPS54336ADDA,U2,SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.41x3.81mm,C1355769,Extended,"IN STOCK, verified against the LCSC part page 2026-08-17: 245 units, $1.0689/1, $0.8633/10+. 245 is a thin buffer for a part with no drop-in alternate on this footprint - fine for a run of 5, re-check before any larger order."
+MPU-6000,U4,InvenSense_QFN-24_4x4mm_P0.5mm,C92401,Extended,"~USD 10.42 each - the single most expensive line by a wide margin, roughly 2/3 of parts cost. KEPT for v1 by David's decision 2026-08-17."
+USBLC6-2SC6,U5,SOT-23-6,C7519,Extended,USB ESD protection.
+MT3608,U6,SOT-23-6,C84817,Extended,~USD 0.06-0.10. Boost converter for the 5V receiver rail.
+8MHz,Y1,Crystal_SMD_5032-2Pin_5.0x3.2mm,C115962,Basic,"Verify C115962 against a live JLCPCB page before ordering; it came from a community snapshot."
+AO3400A,Q1,SOT-23,C20917,Extended,"N-ch MOSFET, 30V 5.7A. Low-side switch for the buzzer. Deliberate overkill: costs the same as the marginal ones."
+100R,R14,R_0402_1005Metric,C25076,Basic,"RESOLVED 2026-08-18: UNI-ROYAL 0402WGF1000TCE 1%, 9.8M stock. Gate series resistor."
+10k,R15,R_0402_1005Metric,C25744,Basic,"RESOLVED 2026-08-18: same physical part as R2/R3/R4/R10. Gate pull-down -- holds the FET off while PA8 floats (reset, boot, SWD halt)."
+1N4148W,D2,D_SOD-123,C81598,Basic,Flyback across the buzzer. Does nothing for a piezo buzzer and saves the FET for a magnetic one -- fitted so the board is buzzer-type-independent.
+10uF 16V,C27,C_0805_2012Metric,C15850,Basic,"RESOLVED 2026-08-18: same physical part as C25. Local bulk at the buzzer connector."
+BUZZER,J10,PinHeader_1x02_P2.54mm_Vertical,,NOT FITTED,"2-pin header, hand-fitted. The buzzer itself is a flying-lead part and is not a JLCPCB assembly line item."
