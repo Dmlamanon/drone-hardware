@@ -117,8 +117,10 @@ def main():
                  "where 6.8nF lowers it (-1.4/-1.5 deg), with crossover "
                  "essentially unchanged. Both are Extended parts, so the "
                  "per-order fee is identical either way. JLCPCB stocks no "
-                 "7.5nF MLCC in any package (searched 7.5nF / 7500pF / 752 "
-                 "codes).")
+                 "7.5nF MLCC in the board's 0402 footprint; the two 7.5nF "
+                 "parts that DO exist (C907758 0603, C710950 0805, C0G 50V) "
+                 "would need a footprint edit -- evidence in "
+                 "c23_jlcpcb_7p5nF_search.txt.")
     text = "\n".join(lines) + "\n"
     print(text)
     open(os.path.join(HERE, "c23_study_results.txt"), "w",
