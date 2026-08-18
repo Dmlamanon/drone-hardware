@@ -301,6 +301,38 @@ def cmd_nearcu(layer, x, y, r):
               % (d, kind, nm, extra, px, py))
 
 
+def cmd_nearmain(net, x, y, r):
+    """Nearest MAIN-cluster copper of a net to a point -- the anchor a
+    closing trace should aim for. Reports exact segment endpoints so a
+    route can land on them rather than near them."""
+    islands, areas, main_idx = build_islands(net)
+    rows = []
+    for connected, members in islands:
+        if not connected:
+            continue
+        for it in members:
+            if it.kind == "seg":
+                (x1, y1), (x2, y2) = it.geom
+                d = seg_pt_dist(x, y, x1, y1, x2, y2)
+                if d <= r:
+                    lay = b.GetLayerName(it.layers[0]) if it.layers and                         it.layers[0] != "*" else "*"
+                    rows.append((d, "seg %s w=%.2f (%.3f,%.3f)->(%.3f,%.3f)"
+                                 % (lay, it.r * 2, x1, y1, x2, y2)))
+            else:
+                px, py = it.geom
+                d = math.hypot(px - x, py - y)
+                if d <= r:
+                    rows.append((d, "%s %s r=%.2f at (%.3f,%.3f)"
+                                 % (it.kind, it.name, it.r, px, py)))
+    rows.sort()
+    print("MAIN-connected %s copper within %.1f mm of (%.2f, %.2f):"
+          % (net, r, x, y))
+    for d, desc in rows[:12]:
+        print("  %.3f mm  %s" % (d, desc))
+    if not rows:
+        print("  none")
+
+
 if __name__ == "__main__":
     cmd = sys.argv[1]
     if cmd == "islands":
@@ -308,6 +340,9 @@ if __name__ == "__main__":
     elif cmd == "vias":
         cmd_vias(sys.argv[2], float(sys.argv[3]), float(sys.argv[4]),
                  float(sys.argv[5]) if len(sys.argv) > 5 else 10.0)
+    elif cmd == "nearmain":
+        cmd_nearmain(sys.argv[2], float(sys.argv[3]), float(sys.argv[4]),
+                     float(sys.argv[5]) if len(sys.argv) > 5 else 4.0)
     elif cmd == "nearcu":
         cmd_nearcu(sys.argv[2], float(sys.argv[3]), float(sys.argv[4]),
                    float(sys.argv[5]) if len(sys.argv) > 5 else 3.0)
