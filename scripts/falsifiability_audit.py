@@ -254,6 +254,21 @@ CASES = [
          "this batch the tests read the SAME macro the table reads, so "
          "both sides moved together and all 46 binaries passed."),
 
+    Case("board-guard",
+         "the board guard catches a DRC regression",
+         os.path.join(HW, "bench_board", "bench_board.kicad_pcb"),
+         "(width 0.2)", "(width 9.2)",
+         [[sys.executable, os.path.join(HW, "scripts", "board_guard.py"),
+           "check", "--no-revert"]],
+         HW,
+         "one trace widened 0.2 -> 9.2 mm: guaranteed clearance carnage "
+         "(54 -> 60 violations when first proven). --no-revert inside the "
+         "audit so the audit's own byte-restore machinery stays the single "
+         "authority on file state -- the guard's live auto-revert path was "
+         "proven separately and fires on every real regression. This is "
+         "batch 6's revert contract: the exact mechanism whose absence let "
+         "attempt 3 turn 43 violations into 387."),
+
     Case("fc-drill",
          "the mounting pattern check requires a hole an M3 fits",
          os.path.join(HW, "bench_board", "bench_board.kicad_pcb"),

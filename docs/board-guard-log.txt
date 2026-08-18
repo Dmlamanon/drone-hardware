@@ -1,0 +1,4 @@
+2026-08-18 03:03:57Z  BASELINE  v=54 u=13 p=93  board=502b23935fc5
+2026-08-18 03:04:14Z  FAIL      v=60 u=13 p=93 (base 54/13/93)  board=ff8acb1fdc9d  violations 54 -> 60
+2026-08-18 03:04:14Z  REVERTED  board ff8acb1fdc9d -> HEAD  (violations 54 -> 60)
+2026-08-18 03:04:16Z  PASS      v=54 u=13 p=93  board=502b23935fc5
