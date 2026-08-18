@@ -1,11 +1,15 @@
 ---
 type: fab-package
-status: NOT-READY-TO-ORDER
+status: SUPERSEDED
 created: 2026-08-17
 tags: [drone, hardware, pcb, fab]
 ---
 
 # Fab package — bench_board, 2026-08-17**b**
+
+> [!warning] SUPERSEDED 2026-08-18 by `fab/2026-08-17c/` — DO NOT ORDER FROM THIS FOLDER
+> 17c closes 11 of the 13 unconnected items, resolves C1/C23/J3, and adds
+> the mandatory filled-and-capped via requirement. Use `fab/2026-08-17c/ORDER-SHEET.md`.
 
 **Supersedes `fab/2026-08-17/`**, which predated the mounting-pattern
 restoration, the buzzer, and the zone refill, and which is now marked

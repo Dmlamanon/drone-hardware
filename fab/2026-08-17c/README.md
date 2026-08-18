@@ -1,0 +1,63 @@
+---
+type: fab-package
+status: READY-TO-ORDER-WITH-CONDITIONS
+created: 2026-08-18
+tags: [drone, hardware, pcb, fab]
+---
+
+# Fab package — bench_board, 2026-08-17**c**
+
+**Supersedes `fab/2026-08-17b/`** (which is marked superseded in place).
+Regenerated 2026-08-18 from the board at commit `8b12e0c`, after batch 6
+closed 11 of 13 unconnected pads and resolved all three BOM blockers.
+
+**To order: follow `ORDER-SHEET.md` in this directory.** It contains the
+exact options, the mandatory filled-and-capped via requirement, and the
+two STOP conditions.
+
+## Gates
+
+| gate | state |
+|---|---|
+| Schematic ERC | **0 violations** (re-run 2026-08-18 after the C23 edit) |
+| Board DRC | **53 violations / 2 unconnected / 93 parity** (verbatim, `drc.json`) |
+| CPL vs board | **PASS** — `check_cpl.py`: 61 placeable, 61 rows, same set |
+| BOM blockers | **0** — C1, C23, J3 resolved with evidence (see docs/) |
+| Guard log | every committed board state has a matching PASS entry |
+
+## What changed since 17b
+
+| | 17b | 17c |
+|---|---|---|
+| Unconnected | 13 | **2** (both sub-mm bench bridges — see order sheet) |
+| DRC violations | 54 | **53** |
+| C23 | 7.5 nF, unsourceable | **8.2 nF, C107032**, chosen by loop-gain study |
+| C1 | example part EOL, curve unread | **C126612**, Murata bias curve read at 16.8 V |
+| J3 | "verify pad compatibility" | measured: **no stocked substitute; hand-fit Amphenol** |
+| BOM rows without LCSC # | 9 | **3** (J1-family headers/buzzer, deliberately hand-work) |
+| Via-in-pad | none | **U1×5, L1×1 in-pad; 3 tangent — filled & capped mandatory** |
+
+The 93 parity issues are unchanged from 17b and all benign:
+61 metadata-field mismatches, 24 KiCad auto-nets for deliberately
+unconnected MCU/IMU pins, 4 PWR_FLAGs without footprints, 4 mounting
+holes without symbols. The full itemization is in
+`fab/2026-08-17b/README.md` and still applies row-for-row.
+
+## Files
+
+| file | what |
+|---|---|
+| `gerbers/` | 11 layers + PTH/NPTH Excellon + maps + job file |
+| `cpl_top.csv` | 61 placeable parts; mounting holes excluded |
+| `cpl_bottom.csv` | header only — nothing on the back |
+| `bom_jlcpcb.csv` | 43 lines, every assembly line carries an LCSC part |
+| `bom_from_schematic.csv` | grouped BOM straight from the schematic (8.2 nF confirmed) |
+| `drc.json` | the 53/2/93 run quoted above |
+| `ORDER-SHEET.md` | the ordering procedure — start there |
+
+## Reproducing
+
+Same commands as `fab/2026-08-17/README.md` §"Reproducing these
+outputs", with `2026-08-17c` as the output folder, plus
+`--side back` pos export for `cpl_bottom.csv`. Always pass
+`--schematic-parity` to DRC.
