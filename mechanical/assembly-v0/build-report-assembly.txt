@@ -55,9 +55,10 @@ against the derivation chain (docs/fable-reeval-2026-08-16.md):
   estimates, and the point-mass inertia omits each component's own
   spread about its centre, which makes it a LOWER bound.
 
-STEP  -> NOT WRITTEN: FreeCAD exception thrown (Writing of STEP failed)
+STEP  -> D:\claude-obsidian\engineering\drone-hardware\mechanical\assembly-v0\stevie-assembly-v0.step
 STL   -> D:\claude-obsidian\engineering\drone-hardware\mechanical\assembly-v0\stevie-assembly-v0.stl
+SVG   -> D:\claude-obsidian\engineering\drone-hardware\mechanical\assembly-v0\assembly-v0-exploded-2026-08-17.svg
 SVG   -> D:\claude-obsidian\engineering\drone-hardware\mechanical\assembly-v0\assembly-v0-plan-2026-08-17.svg
 DOC   -> D:\claude-obsidian\engineering\drone-hardware\docs\assembly-mass-cg-2026-08-17.md
 
-RESULT: 1 CHECK(S) FAILED
+RESULT: all assembly checks passed

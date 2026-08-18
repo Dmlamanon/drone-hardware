@@ -71,6 +71,7 @@ purpose — reserving space must not inflate the AUW.
 | `stevie-assembly-v0.step` | full assembly, all bodies |
 | `stevie-assembly-v0.stl` | assembly mesh |
 | `assembly-v0-plan-2026-08-17.svg` | plan view with prop discs and the CG marked |
+| `assembly-v0-exploded-2026-08-17.svg` | exploded elevation — the stack, which is where the clearances live |
 | `build-report-assembly.txt` | the run's own numbers and check results |
 | `../../docs/assembly-mass-cg-2026-08-17.md` | generated mass/CG/inertia derivation |
 

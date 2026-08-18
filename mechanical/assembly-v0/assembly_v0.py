@@ -621,6 +621,51 @@ try:
                % (-half + 12, -half + 22, total))
     svg.append("</svg>")
     io_path = out("assembly-v0-plan-2026-08-17.svg")
+    _plan_svg = list(svg)
+
+    # --- EXPLODED VIEW ------------------------------------------------
+    # The brief asked for exploded AND assembled; the first pass shipped
+    # only assembled. An exploded elevation is the more useful of the two
+    # here: the assembled plan shows the footprint, but the STACK -- pack
+    # under the plate, ESC on it, board on standoffs above -- is the part
+    # that is hard to hold in your head from a parts list, and it is
+    # where the clearances live.
+    ex = ["<svg xmlns='http://www.w3.org/2000/svg' width='560' "
+          "height='520' viewBox='-280 -300 560 520'>",
+          "<rect x='-280' y='-300' width='560' height='520' "
+          "fill='#101418'/>"]
+    GAP = 26.0     # extra separation per level, drawing units only
+    ES = 2.0       # scale
+    levels = sorted(
+        [(nm, c, COMPONENTS.get(nm.split("_")[0], {}).get("size"))
+         for nm, shp, ms, c in placed
+         if COMPONENTS.get(nm.split("_")[0], {}).get("size")],
+        key=lambda t: t[1][2])
+    for idx, (nm, c, size) in enumerate(levels):
+        w, d, h = size
+        # x from the real x, y from the real z, pulled apart vertically
+        x = c[0] * ES
+        y = -(c[2] * ES + idx * GAP - 120.0)
+        base = nm.split("_")[0]
+        col = {"battery": "#b5651d", "fc": "#2e8b57", "esc": "#8b2e5f",
+               "motor": "#555f6a", "rx": "#c0a02c", "antenna": "#c0392b",
+               "buzzer": "#7d3c98", "expansion": "#16a085"}.get(base, "#888")
+        ex.append("<rect x='%.1f' y='%.1f' width='%.1f' height='%.1f' "
+                  "fill='%s' fill-opacity='0.8' stroke='#e8eef4' "
+                  "stroke-width='0.7'/>"
+                  % (x - w * ES / 2, y - h * ES / 2, w * ES, h * ES, col))
+        ex.append("<text x='%.1f' y='%.1f' fill='#9fb0c0' "
+                  "font-family='sans-serif' font-size='11'>%s</text>"
+                  % (x + w * ES / 2 + 6, y + 4, nm))
+    ex.append("<text x='-268' y='-278' fill='#e8eef4' "
+              "font-family='sans-serif' font-size='13'>STEVIE assembly v0 "
+              "-- EXPLODED elevation (vertical spacing exaggerated)</text>")
+    ex.append("</svg>")
+    ex_path = out("assembly-v0-exploded-2026-08-17.svg")
+    with open(ex_path, "w", encoding="utf-8") as fh:
+        fh.write("\n".join(ex))
+    say("SVG   -> %s" % ex_path)
+    svg = _plan_svg
     with open(io_path, "w", encoding="utf-8") as fh:
         fh.write("\n".join(svg))
     say("SVG   -> %s" % io_path)
