@@ -12,3 +12,7 @@
 2026-08-18 03:25:58Z  PASS+     v=53 u=11 p=93 (was 53/12/93, ratcheted)  board=b88b539628fa
 2026-08-18 03:28:21Z  PASS      v=53 u=11 p=93  board=b88b539628fa
 2026-08-18 03:50:19Z  PASS+     v=53 u=10 p=93 (was 53/11/93, ratcheted)  board=7abab53edae0
+2026-08-18 03:50:38Z  FAIL      v=57 u=9 p=93 (base 53/10/93)  board=88798d5f73fe  violations 53 -> 57
+2026-08-18 03:50:38Z  REVERTED  board 88798d5f73fe -> HEAD  (violations 53 -> 57)
+2026-08-18 03:50:56Z  FAIL      v=57 u=9 p=93 (base 53/10/93)  board=9c288ced6f07  violations 53 -> 57
+2026-08-18 03:51:16Z  PASS      v=53 u=10 p=93  board=a6abfc5e4d15
