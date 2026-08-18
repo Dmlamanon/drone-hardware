@@ -1,0 +1,157 @@
+                                                                  USBLC6-2SC6
+
+                                             Low Capacitance 2-Line ESD Protection
+
+    Features                                               I/O1 VBUS I/O2
+
+ Ultra low leakage: nA level                               I/O1 GND I/O2
+ Operating voltage: 5V
+ Low clamping voltage                              Mechanical Characteristics
+ Complies with following standards:
+                                                 Package: SOT23-6 Lead
+       - IEC 61000-4-2 (ESD) immunity test        Finish: Matte Tin
+            Air discharge: ±30kV                 UL Flammability Classification Rating 94V-0
+            Contact discharge: ±30kV             Pb-Free, Halogen Free, RoHS/WEEE Compliant
+
+       - IEC61000-4-4 (EFT) 40A (5/50ns)
+       -IEC61000-4-5 (Lightning) 6A (8/20s)
+ RoHS Compliant
+
+    Applications
+
+ USB 2.0 interface
+ 10/100 Ethernet
+ Personal digital assistants (PDA's)
+ Notebooks, Desktops and Servers
+ Portable instrumentation
+ Digital cameras
+
+Absolute Maximum Ratings (TA=25°C unless otherwise specified)
+
+Parameter                                       Symbol  Value        Unit
+
+Peak Pulse Power (8/20µs)                       Ppk            150    W
+                                                                       A
+Peak Pulse Current (8/20µs)                      Ipp           6      kV
+ESD per IEC 61000-4-2 (Air)                     VESD         ±30      °C
+ESD per IEC 61000-4-2 (Contact)                              ±30      °C
+Operating Temperature Range                       TJ    -55 to +125
+
+Storage Temperature Range                       Tstg    -55 to +150
+
+   www.umw-ic.com                            1                 
+
+A
+                                                      USBLC6-2SC6
+
+                                 Low Capacitance 2-Line ESD Protection
+
+Electrical Characteristics (TA=25°C unless otherwise specified)
+
+ParamRetaetring              Symbol Test Condition Min              Typ Max             Unit
+
+Reverse stand-off voltage    VRWM     IBR=1mA                    6                  5      V
+Reverse breakdown voltage     VBR                                                    9     V
+                                                                                   0.1    A
+Reverse leakage current      IR       VR=5V                                        10      V
+                                                                                    15      V
+Clamping voltage (tp=8/20s)  VC       IPP=1A                                              pF
+Clamping voltage (tp=8/20s)
+                             VC       IPP=6A                                              pF
+     Junction capacitance
+                                      0Vdc,f=1MHz
+
+                             CJ       Between I/O                   0.8   1
+
+                                      pins and GND
+
+                             CJ 0Vdc,f=1MHz                         0.35  0.4
+                                              I/O to I/O
+
+www.umw-ic.com                     2                                
+                                                                                                                                       USBLC6-2SC6
+
+                                                                                                                  Low Capacitance 2-Line ESD Protection
+
+TypTicyalpchiacraatelrCistihcsaracteristics
+
+Fig1. 8/20µ s Pulse Waveform                                                                              TEST            Percent of Peak Pulse Current %Fig2. ESD Pulse Waveform (according to IEC 61000-4-2)
+                                                                                                          WAVEFORM
+      120                                                                                                 PARAMETERS            100%
+       100 tr Peak Value IPP                                                                              tr=8 s                  90%
+                                                                                                          td=20 s
+        80IPP - Peak Pulse Current - % of IPP
+        60
+
+                                                       40                                                                                                  10%
+                                                                                              td=t IPP/2
+
+                                                       20
+
+                                                       0                                                                                                        tr = 0.7~1ns        Time (ns)
+                                                                                                                                                                 30ns
+                                                          0      5   10  15                               20  25      30
+                                                                                                                                                                              60ns
+                                                                         t - Time ( s)
+
+Fig3. Power Derating Curve
+
+                                     % of Rated Power  110
+                                                       100
+                                                                 25  50  75 100 125 150
+                                                        90
+                                                        80
+                                                        70
+
+                                                        60
+                                                        50
+                                                        40
+                                                        30
+                                                        20
+
+                                                        10
+                                                          0
+                                                              0
+
+                                                                     Ambient Temperature -TA (ºC)
+
+www.umw-ic.com                                                                                                    3                                             
+                                                   USBLC6-2SC6
+
+                                         Low Capacitance 2-Line ESD Protection
+
+Outline Drawing - SOD323
+
+         X
+
+                                           DIMENSIONS
+
+                                     DIM INCHES MILLIMETERS
+
+                                     C  (.098)    (2.50)
+
+         (C)          G              G  .055           1.40
+
+                               Z     P  .037           0.95
+
+                                     X  .024           0.60
+
+                         Y           Y  .043           1.10
+
+                                     Z  .141           3.60
+
+                P
+
+Marking
+
+                                  UL26
+
+                               1        2
+
+Ordering information  Package           Base qty             Delivery mode
+                      SOD323              3000                Tape and reel
+         Order code
+  UMW USBLC6-2SC6
+
+www.umw-ic.com                    4                          
+

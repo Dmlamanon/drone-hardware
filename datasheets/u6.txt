@@ -1,0 +1,237 @@
+          AEROSEMI                                                MT3608
+
+FEATURES                                                   High Efficiency 1.2MHz
+                                                            2A Step Up Converter
+· Integrated 80m Power MOSFET
+· 2V to 24V Input Voltage                    GENERAL DESCRIPTION
+· 1.2MHz Fixed Switching Frequency
+· Internal 4A Switch Current Limit           The MT3608 is a constant frequency, 6-pin SOT23
+· Adjustable Output Voltage                  current mode step-up converter intended for small,
+· Internal Compensation                      low power applications. The MT3608 switches at
+· Up to 28V Output Voltage                   1.2MHz and allows the use of tiny, low cost
+· Automatic Pulse Frequency Modulation       capacitors and inductors 2mm or less in height.
+ Mode at Light Loads                         Internal soft-start results in small inrush current and
+· up to 97% Efficiency                       extends battery life.
+· Available in a 6-Pin SOT23-6 Package       The MT3608 features automatic shifting to pulse
+                                             frequency modulation mode at light loads. The
+APPLICATIONS                                 MT3608 includes under-voltage lockout, current
+                                             limiting, and thermal overload protection to prevent
+· Battery-Powered Equipment                  damage in the event of an output overload. The
+· Set-Top Boxed                              MT3608 is available in a small 6-pin SOT-23
+· LCD Bais Supply                            package.
+· DSL and Cable Modems and Routers
+· Networking cards powered from PCI
+ or PCI express slots
+
+TYPICAL APPLICATION                                          Efficiency
+
+                                             Efficiency (%)
+
+        Figure 1. Basic Application Circuit                                  Iout (mA)
+
+Aerosemi Technology Co., Ltd                                 Figure 2. Efficiency Curve
+
+                                                                             1
+                                                                                     MT3608
+
+ABSOLUTE MAXIMUM RATINGS
+
+IN, EN voltages ..................... -0.3V to 26V                         SW Voltage ..........................-0.3V to 30V
+
+Operating Temperature....... -40°C to +85°C                                Storage Temperature Range -65°C to 150°C
+
+FB Voltages ................................-0.3V to 6V                    Peak SW Sink and Source Current .........4A
+
+Junction Temperature .....................160°C                            Lead Temperature (Soldering, 10s) ...+300°C
+
+PACKAGE/ORDER INFORMATION
+
+                              SW 1                                         6 NC
+
+                              GND 2                                        5 IN
+
+                                               FB 3                        4 EN
+
+PIN DESCRIPTION                                          SOSOTT2233--56
+                                                         (M(MTT33650408))
+
+PIN  NAME                                                                  FUNCTION
+
+1 SW Power Switch Output. SW is the drain of the internal MOSFET switch. Connect the
+                      power inductor and output rectifier to SW. SW can swing between GND and 28V.
+
+2    GND Ground Pin
+
+3    FB Feedback Input. The FB voltage is 0.6V. Connect a resistor divider to FB.
+
+           Regulator On/Off Control Input. A high input at EN turns on the converter, and a
+
+4    EN low input turns it off. When not used, connect EN to the input supply for automatic
+
+           startup.
+
+5 IN Input Supply Pin. Must be locally bypassed.
+
+6    NC NC
+
+Aerosemi Technology Co., Ltd                                                                                                  2
+                                                                            MT3608
+
+ELECTRICAL CHARACTERISTICS
+
+(VIN=VEN=5V, TA = 25°C, unless otherwise noted.)
+
+Parameter                                  Conditions      MIN TYP          MAX unit
+                                                            2
+Operating Input Voltage                                                     24     V
+                                                                       100
+Under Voltage Lockout                                                  0.1  1.98   V
+                                                                       100
+Under Voltage Lockout Hysteresis                                       1.6         mV
+                                                                       1.2
+Current (Shutdown)                VEN= 0V                  90               1      µA
+                                                           1.5
+Quiescent Current (PFM)           VFB=0.7VNo switch                         200    µA
+
+Quiescent Current (PWM)           VFB=0.5Vswitch                            2.2    mA
+
+Switching Frequency                                                                MHz
+
+Maximum Duty Cycle                VFB = 0V                                         %
+
+EN Input High Voltage                                                              V
+
+EN Input Low Voltage                                                        0.4    V
+
+FB Voltage                                                 0.588 0.6        0.612  V
+FB Input Bias Current
+SW On Resistance (1)              VFB = 0.6V               -50  -10                nA
+SW Current Limit (1)
+                                                                80          150    m
+
+                                  VIN= 5V, Duty cycle=50%       4                  A
+
+SW Leakage                        VSW = 20V                                 1      A
+
+Thermal Shutdown                                                155                
+
+Note:
+1) Guaranteed by design, not tested.
+
+Aerosemi Technology Co., Ltd 3
+OPERATION                                                                    MT3608
+
+The MT3608 uses a fixed frequency, peak current          The output voltage of the error amplifier the power
+mode boost regulator architecture to regulate            MOSFET is turned off. The voltage at the output of
+voltage at the feedback pin. The operation of the        the error amplifier is an amplified version of the
+MT3608 can be understood by referring to the block       difference between the 0.6V bandgap reference
+diagram of Figure 3. At the start of each oscillator     voltage and the feedback voltage. In this way the
+cycle the MOSFET is turned on through the control        peak current level keeps the output in regulation. If
+circuitry. To prevent sub-harmonic oscillations at       the feedback voltage starts to drop, the output of the
+duty cycles greater than 50 percent, a stabilizing       error amplifier increases. These results in more
+ramp is added to the output of the current sense         current to flow through the power MOSFET, thus
+amplifier and the result is fed into the negative input  increasing the power delivered to the output. The
+of the PWM comparator. When this voltage equals          MT3608 has internal soft start to limit the amount of
+                                                         input current at startup and to also limit the amount
+                                                         of overshoot on the output.
+
+                                         Figure 3. Functional Block Diagram
+
+Aerosemi Technology Co., Ltd 4
+                                                                   MT3608
+
+TYPICAL OPERATING CHARACTERISTICS
+
+            Efficiency Curve                    Efficiency Curve
+
+Efficiency                    Current limit(A)
+
+                Iout (mA)                             Iout(mA)
+            line Regulation                     Load regualation
+
+Vout(V)                       Vout(V)
+
+                Vin (V)                              Iout (mA)
+            Freq VS Vin                         Efficiency VS Vin
+
+Aerosemi Technology Co., Ltd 5
+                                                         MT3608
+
+APPLICATION INFORMATION
+
+Setting the Output Voltage                               Layout Consideration
+
+The internal reference VREF is 0.6V (Typical).The        For best performance of the MT3608, the following
+output voltage is divided by a resistor divider,R1 and   guidelines must be strictly followed.
+R2 to the FB pin. The output voltage is given by          Input and Output capacitors should be placed
+
+               VOUT = VREF × (1 + R1 )                        close to the IC and connected to ground plane
+                                      R2                      to reduce noise coupling.
+                                                          The GND should be connected to a strong
+Inductor Selection                                            ground plane for heat sinking and noise
+                                                              protection.
+The recommended values of inductor are 4.7 to             Keep the main current traces as possible as
+22H. Small size and better efficiency are the major           short and wide.
+concerns for portable device, such as MT3608 used         SW node of DC-DC converter is with high
+for mobile phone. The inductor should have low core           frequency voltage swing. It should be kept at a
+loss at 1.2MHz and low DCR for better efficiency. To          small area.
+avoid inductor saturation current rating should be        Place the feedback components as close as
+considered.                                                   possible to the IC and keep away from the
+                                                              noisy devices.
+Capacitor Selection
+
+Input and output ceramic capacitors of 22F are
+recommended for MT3608 applications. For better
+voltage filtering, ceramic capacitors with low ESR
+are recommended. X5R and X7R types are suitable
+because of their wider voltage and temperature
+ranges.
+
+Diode Selection
+
+Schottky diode is a good choice for MT3608
+because of its low forward voltage drop and fast
+reverses recovery. Using Schottky diode can get
+better efficiency. The high speed rectification is also
+a good characteristic of Schottky diode for high
+switching frequency. Current rating of the diode must
+meet the root mean square of the peak current and
+output average current multiplication as following :
+
+             I D (RMS)  I OUT × I PEAK
+
+The diode' s reverse breakdown voltage should be
+larger than the output voltage.
+
+Aerosemi Technology Co., Ltd 6
+                                                                                 MT3608
+
+PACKAGE DESCRIPTION
+
+TOP VIEW                                               RECOMMENDED LAND PATTERN
+
+FRONT VIEW                                                           SIDE VIEW
+
+DETAIL "A"
+         Figure 4. TSOT23-6/SOT23-6 Physical Dimensions
+
+NOTE:
+
+1)ALL DIMENSIONS ARE IN MILLIMETERS.
+2) PACKAGE LENGTH DOES NOT INCLUDE MOLD FLASH,PROTRUSION OR GATE BURR.
+3) PACKAGE WIDTH DOES NOT INCLUDE INTERLEAD FLASH OR PROTRUSION.
+4) LEAD COPLANARITY (BOTTOM OF LEADS AFTER FORMING) SHALL BE 0.10 MILLIMETERS MAX.
+5) DRAWING CONFORMS TO JEDEC MO-193, VARIATION AB.
+6) DRAWING IS NOT TO SCALE.
+7) PIN 1 IS LOWER LEFT PIN WHEN READING TOP MARK FROM LEFT TO RIGHT, (SEE EXAMPLE TOP MARK)
+
+Xi' an Aerosemi Technology Co., Ltd                                              MT3608/V1.0
+
+T e l : 029-88868021 0755-82879616                     021-51905952                  7
+
+Fax: 029-88445284 0755-82877171                        021-51905952
+
+Http://www.aerosemi.com
+
+AEe-mroasile: msaileTse@chaneorolosgemy iC.coo.m, Ltd
+

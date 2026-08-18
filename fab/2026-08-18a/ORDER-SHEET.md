@@ -21,12 +21,22 @@ GND per its datasheet) and the crystal load caps (33 pF for the 20 pF
 crystal).
 
 > [!note] NEW BEHAVIOUR DAVID WILL SEE ON THE BENCH — by design
-> The 3.3 V rail now implements **pack undervoltage lockout**: it does
-> not start until the battery is above **12.0 V** (3.00 V/cell on 4S)
-> and shuts down cleanly if the pack sags below **11.0 V**
-> (2.75 V/cell), with ~1 V of hysteresis so it cannot chatter. **A
-> board that refuses to power from a flat or half-charged pack is
-> working correctly, not broken.** Bench supplies: set ≥ 12.5 V.
+> The 3.3 V rail now implements **pack undervoltage lockout**. Nominal
+> thresholds: start **12.0 V** (3.00 V/cell on 4S), stop **11.0 V**,
+> ~1 V hysteresis so it cannot chatter. **The independent review's
+> worst-case numbers, using the EN comparator's datasheet LIMITS rather
+> than typicals: start may be anywhere in 12.0–13.0 V and stop anywhere
+> in 10.1–11.0 V**, part-to-part — the comparator tolerance dominates
+> the 1% resistors. Two practical consequences:
+> **(1) Bench supplies: set ≥ 13.5 V** — a worst-case part refuses to
+> start until ~12.95 V, and a board doing that is working, not broken.
+> **(2) This UVLO is brownout protection for the electronics, NOT LiPo
+> cell protection** — a worst-case part runs the pack down to
+> 2.53 V/cell before cutting off. The firmware's low-battery policy
+> remains the actual pack guardian.
+> One more line for storage habits: the divider draws a standing
+> **~83 µA from the pack whenever one is plugged in** (~62 mAh/month)
+> — don't leave a pack connected for storage.
 
 ---
 
@@ -77,7 +87,8 @@ crystal).
 > affected:
 > *"Via-in-pad (filled & capped required): U1 pads 12, 13, 18, 19, 63
 > (0.3/0.15 mm vias fully inside pads); L1 pad 1 (0.6/0.4 mm via inside
-> pad); R16 pad 2 (0.6/0.3 mm via overlapping the pad edge — added
+> pad); R16 pad 2 (0.6/0.3 mm via-in-pad — 0.22 mm of the 0.30 mm drill
+> sits inside the pad copper, the deepest overlap on the board; added
 > 2026-08-18 with the EN fix); via barrels overlapping pad edges at U4
 > pad 11 (0.3/0.15, 0.075 mm penetration) and C27 pad 2 (0.6/0.3,
 > 0.178 mm penetration). One near-tangent worth the same treatment: a
@@ -108,6 +119,10 @@ crystal).
    TPS54336ADDA (C1355769 — 245). If either shows zero: **STOP** — there
    is no drop-in alternate on these footprints; wait for restock or
    source the chips yourself and switch to consignment.
+   Also re-verify **R16's 182 k (C11481)** — a brand-new Extended part
+   whose stock reads inconsistently across sources (19k vs 335 units);
+   if thin, the drop-in alternate is C327365 (Yageo RC0402FR-07182KL,
+   1%, same value/size).
    Two more verify-before-paying checks from the BOM's own notes:
    **L1/L2 (C17701247)** is a candidate David sanity-checks — the
    saturation math is in the BOM row, and the caveat is that a full
@@ -189,7 +204,8 @@ mismatch as the other 61 components.)
   0.298 mm against our 0.3 mm rule — JLCPCB's own floor is 0.2 mm, so it
   fabricates fine), 2 starved thermals (J9.1, J3.B1 — solder them with
   a bigger iron tip). None are shorts, crossings, or hole errors.
-- **The 93 parity issues** are all metadata/no-net-by-design; itemized
+- **The 95 parity issues** (93 baseline + the two new UVLO resistors'
+  empty Description fields) are all metadata/no-net-by-design; itemized
   in `README.md` here.
 
 ## Step 6 — cost at qty 5 (estimate; the cart is the truth)

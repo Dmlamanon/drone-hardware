@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "project": "bench_board.kicad_pro",
+  "current": "2026-08-18_0837",
+  "runs": {
+    "2026-08-18_0837": {
+      "source_hashes": {
+        "bench_board.kicad_sch": "sha256:771cf5c3ede75c6dbcd7c72b8ed912d17642aa94010c67d140a0b5ddae9cce9b",
+        "bench_board.kicad_pcb": "sha256:0a5187c95102d5e0cd75fc1c61f5a8474b99cfc6f290287d355672e6082155b7",
+        "schematic.json": "sha256:05ad5a5caf9898df7dca4455e9bb599d2012a2fb5d09b61f7d0c2759b16acede",
+        "pcb.json": "sha256:4ca968d2196fd07638727bc15e6adfb2b47a28595a783cec98e1b5856894e8c3"
+      },
+      "outputs": {
+        "schematic": "schematic.json",
+        "pcb": "pcb.json",
+        "cross_analysis": "cross_analysis.json",
+        "emc": "emc.json",
+        "thermal": "thermal.json",
+        "gerber": "gerber.json"
+      },
+      "scripts": {
+        "schematic": "analyze_schematic.py bench_board.kicad_sch"
+      },
+      "generated": "2026-08-18T08:37:48-04:00",
+      "pinned": false
+    }
+  }
+}

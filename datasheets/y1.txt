@@ -1,0 +1,89 @@
+                                              CRYSTAL RESONATOR
+
+                                              YSX530GA X50328MSB2GI
+
+                                              Features
+
+                                              External dimensions: 5.0 x 3.2 x 1.2 mm.
+                                              Frequency range: 8MHz ~ 54MHz.
+                                              2 pads SMD glass sealed crystal units.
+                                              High reliable environmental performance.
+                                              Tight tolerance and stability parts are available.
+                                              Designed for automatic mounting and reflow soldering.
+                                              Reasonable cost and good delivery performance.
+                                              Contains Pb in sealing glass exempted by RoHS directive.
+                                              The best choice of portable PC, PDA, DSC, and USB interface card.
+
+ElectricalSpecifications                      X50328MSB2GI
+Part Number                                   8 MHz
+                                              AT Fundamental
+Nominal Frequency Range                       20 pF
+Vibration Mode                                ± 10 ppm
+Load Capacitance                              ± 20 ppm
+Frequency Tolerance (at 25 )                  - 40 ~ + 85 
+Frequency Versus Temperature Characteristics  - 40 ~ + 105 
+Operating Temperature                         7 pF Max.
+Storage Temperature                           1~100 W Max. (10 uW typical)
+Shunt Capacitance                             ± 3 ppm / year Max.
+Level Of Drive                                More Than 500M at DC 100V
+Frequency Aging (at 25 )
+Insulation Resistance
+
+Equivalent Series Resistance(ESR)             60  ~ 80 
+Fundamental                                   40  ~ 60 
+                                              30  ~ 40 
+8 ~ 12 MHz
+12 ~ 25 MHz
+25 ~ 54 MHz
+
+Dimensions
+
+              YXC
+            16.0XXX
+
+                                                                                                               Units: mm
+                                              1/2
+                                     YSX530GA X50328MSB2GI
+
+ PART NUMBER GUIDE  e.g. X50328MSB2GI                                        YSX530G A =5.0×3.2 SMD SEAM TYPE
+
+                                                                                        Frequency  Material  Operating Temp.
+Quartz Crystal Resonator Dimensions (Hz) (Pf) Overall Frequency Load Capacitance Stability Pin     Ceramic          Range
+
+                                                                                           (ppm)                  -40~+85 
+
+   Passive Crystal    5032     8MHz           20pf                10ppm 2
+
+ TAPING SPECIFICATION (Unit: mm) 
+
+      4.0                      1.8            1.07
+
+                                                                                                   5.28                       13
+                                                                                                                                GA
+C                                                   B
+
+   D                  E                                        F
+
+       SMD5032            A              B                 C             D                              E          F                G
+   1000 pcs per reel  178±2.0       12.0±0.3        5.80±0.10     4.05±0.10                        7.95±0.1  1.70 ±0.10       57.15±1.0
+
+ REFLOW SOLDERING PROFILE 
+                           Temperature ()
+
+                                                                                                   260 max
+
+                                                                                                   220
+                                                                                                   180
+
+                                                               
+
+                                                                  
+
+                      Pb free reflow  Preheat                  160~180                                  Times (S)
+
+                            A  Primary heat 220                                                    120sec. max
+                                      Peak                     260                                 60sec. max
+                                                                                                   10sec. max.
+
+                                                                  2/2
+

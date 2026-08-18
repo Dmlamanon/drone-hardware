@@ -16,10 +16,12 @@ load caps (33 pF for the manufacturer-confirmed 20 pF crystal).
 Generated 2026-08-18 from board commit `e06a699` (batch 7).
 
 **To order: follow `ORDER-SHEET.md` here.** New behaviour: the 3.3 V
-rail implements pack UVLO — start 12.01 V, stop 11.01 V, ~1 V
-hysteresis (TI Figure-15 divider, R16 = 182k / R17 = 20k; EN sits at
-1.74 V at 16.8 V input, 2.58 V at the 6S corner — never above 2.6 V
-against the 6 V abs-max).
+rail implements pack UVLO — start 12.01 V typ (12.0–13.0 V across the
+EN comparator's datasheet limits), stop 11.01 V typ (10.1–11.0 V
+worst-case), ~1 V hysteresis (TI Figure-15 divider, R16 = 182k /
+R17 = 20k; EN sits at 1.74 V at 16.8 V input, 2.58 V at the 6S corner,
+2.62 V at worst-case tolerance — never above 2.7 V against the 6 V
+abs-max). Not LiPo cell protection — see the order sheet's note.
 
 ## Gates
 
@@ -29,7 +31,7 @@ against the 6 V abs-max).
 | Board DRC | **53 violations / 2 unconnected / 95 parity** (verbatim, `drc.json`) |
 | CPL vs board | **PASS** — `python scripts/check_cpl.py` (default now points here): 63 placeable, 63 rows, same set |
 | BOM | every assembly row carries an LCSC part; 13 Extended numbers |
-| Guard | every board-touching commit carries a matching PASS, ratcheted baseline 53/2/95 |
+| Guard | every board-touching commit carries a matching measured entry, hash-for-hash (reviewer-verified). Honest caveat: the item-1 commit's own entry is a FAIL (parity 93→95) followed by a re-baseline in the same commit — the +2 was verified to be exactly the two new footprints' empty-Description mismatches, argued in that commit's message rather than hidden |
 
 ## What changed since 17c
 

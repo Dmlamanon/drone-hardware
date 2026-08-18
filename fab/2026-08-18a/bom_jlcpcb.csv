@@ -31,14 +31,14 @@ EXPANSION_BUS,J9,PinHeader_1x14_P2.54mm_Vertical,,HAND-SOLDER,Through-hole.
 2k,R11,R_0402_1005Metric,C4109,Basic,1%
 73.2k,R12,R_0603_1608Metric,C14890,Extended,"RESOLVED 2026-08-18: UNI-ROYAL 0603WAF7322T5E 1% E96, 94k stock. Exact value match, boost feedback divider - sets the 5V rail."
 182k,R16,R_0402_1005Metric,C11481,Extended,"ADDED 2026-08-18: EN UVLO divider top (TI SLVSCD5D Fig.15). UNI-ROYAL 0402WGF1823TCE 1%. No Basic 180k/182k 0402 exists -- Extended fee. Sets pack UVLO start 12.01V / stop 11.01V with R17."
-20k,R17,R_0402_1005Metric,C25765,Basic,"ADDED 2026-08-18: EN UVLO divider bottom. 1%, 2.9M stock, Basic."
+20k,R17,R_0402_1005Metric,C25765,Basic,"ADDED 2026-08-18: EN UVLO divider bottom. 1%, Basic, ~1M stock at last check."
 10.0k,R13,R_0603_1608Metric,C25804,Basic,Boost feedback divider bottom leg.
 STM32F405RGT6,U1,LQFP-64_10x10mm_P0.5mm,C15742,Extended,"Needs an assembly fixture per the JLCPCB part page. 264 in stock, $6.68/1, $5.88/10+ (verified 2026-08-17). RE-VERIFY stock at order time - 264 is thin for qty 5."
 TPS54336ADDA,U2,SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.41x3.81mm,C1355769,Extended,"IN STOCK, verified against the LCSC part page 2026-08-17: 245 units, $1.0689/1, $0.8633/10+. 245 is a thin buffer for a part with no drop-in alternate on this footprint - fine for a run of 5, re-check before any larger order."
 MPU-6000,U4,InvenSense_QFN-24_4x4mm_P0.5mm,C92401,Extended,"~USD 10.42 each - the single most expensive line by a wide margin, roughly 2/3 of parts cost. KEPT for v1 by David's decision 2026-08-17."
 USBLC6-2SC6,U5,SOT-23-6,C7519,Extended,USB ESD protection.
 MT3608,U6,SOT-23-6,C84817,Extended,~USD 0.06-0.10. Boost converter for the 5V receiver rail.
-8MHz,Y1,Crystal_SMD_5032-2Pin_5.0x3.2mm,C115962,Basic,"Verify C115962 against a live JLCPCB page before ordering; it came from a community snapshot."
+8MHz,Y1,Crystal_SMD_5032-2Pin_5.0x3.2mm,C115962,Basic,"CONFIRMED live 2026-08-18 by the independent review: Basic, 339k stock, 20pF/8MHz/+-10ppm. Oscillator gain margin with 33pF load caps independently checked: gm_crit 0.59mA/V vs STM32F405 limit 1mA/V."
 AO3400A,Q1,SOT-23,C20917,Extended,"N-ch MOSFET, 30V 5.7A. Low-side switch for the buzzer. Deliberate overkill: costs the same as the marginal ones."
 100R,R14,R_0402_1005Metric,C25076,Basic,"RESOLVED 2026-08-18: UNI-ROYAL 0402WGF1000TCE 1%, 9.8M stock. Gate series resistor."
 10k,R15,R_0402_1005Metric,C25744,Basic,"RESOLVED 2026-08-18: same physical part as R2/R3/R4/R10. Gate pull-down -- holds the FET off while PA8 floats (reset, boot, SWD halt)."
