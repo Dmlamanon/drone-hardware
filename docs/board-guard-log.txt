@@ -61,3 +61,18 @@
 2026-08-18 20:32:35Z  PASS      v=53 u=2 p=95  board=a0696d1b9580
 2026-08-18 20:44:32Z  PASS      v=53 u=2 p=95  board=a0696d1b9580
 2026-08-18 20:56:13Z  PASS      v=53 u=2 p=95  board=a0696d1b9580
+2026-08-19 03:18:05Z  PASS      v=53 u=2 p=95  board=a0696d1b9580
+2026-08-19 03:52:03Z  FAIL      v=62 u=2 p=95 (base 53/2/95)  board=e9c13360aa9b  violations 53 -> 62
+2026-08-19 03:52:03Z  REVERTED  board e9c13360aa9b -> HEAD  (violations 53 -> 62)
+2026-08-19 03:52:06Z  PASS      v=53 u=2 p=95  board=a0696d1b9580
+2026-08-19 04:12:34Z  PASS      v=53 u=2 p=95  board=a0696d1b9580
+2026-08-19 04:27:00Z  FAIL      v=53 u=6 p=95 (base 53/2/95)  board=dfd745e35050  unconnected 2 -> 6
+2026-08-19 04:27:23Z  FAIL      v=53 u=6 p=95 (base 53/2/95)  board=9e8c80ff8134  unconnected 2 -> 6
+2026-08-19 04:27:40Z  FAIL      v=53 u=6 p=95 (base 53/2/95)  board=9e8c80ff8134  unconnected 2 -> 6
+2026-08-19 04:27:53Z  FAIL      v=56 u=2 p=95 (base 53/2/95)  board=5fb5565c1172  violations 53 -> 56
+2026-08-19 04:29:25Z  FAIL      v=56 u=2 p=95 (base 53/2/95)  board=5fb5565c1172  violations 53 -> 56
+2026-08-19 04:29:48Z  FAIL      v=56 u=2 p=95 (base 53/2/95)  board=5fb5565c1172  violations 53 -> 56
+2026-08-19 04:30:30Z  FAIL      v=58 u=2 p=95 (base 53/2/95)  board=0b6e65a4afe8  violations 53 -> 58
+2026-08-19 04:32:19Z  PASS      v=53 u=2 p=95  board=42929a8520af
+2026-08-19 04:32:38Z  PASS+     v=51 u=2 p=95 (was 53/2/95, ratcheted)  board=9cb3be255238
+2026-08-19 04:40:38Z  PASS      v=51 u=2 p=95  board=9cb3be255238
