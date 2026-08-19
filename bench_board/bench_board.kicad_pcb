@@ -17255,7 +17255,7 @@
 	)
 	(segment
 		(start 7.82 44.2)
-		(end 8.75 45.1)
+		(end 9.25 45.9)
 		(width 0.6)
 		(layer "F.Cu")
 		(net "/SW_NODE")
